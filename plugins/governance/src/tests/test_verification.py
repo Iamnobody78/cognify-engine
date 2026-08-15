@@ -28,6 +28,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from src.protocol_gateway import ProtocolGateway  # noqa: E402
 from src.verification import (  # noqa: E402
     BaselineDeclarationValidator,
+    LLMSemanticValidator,
     NoopValidator,
     VerificationResult,
 )
@@ -254,3 +255,141 @@ class TestVceLinkage:
         assert report["Verification_Channel"]["validator"] == "baseline"
         cats = [s["category"] for s in report["BlindSpots"]]
         assert "declaration_only" not in cats
+
+
+# ── S1: LLM 语义验证器 (策略 A 插槽) ─────────────────────────────────
+
+class TestLLMSemanticValidator:
+    """S1 审计缺陷修复: LLM 语义验证层 (fail-open 组合策略)。"""
+
+    def _anchored_body(self):
+        """带真实锚点的声明 (基线通过, 需要语义复核)。"""
+        return {"governance": {"protocols": {"logic_chain_check": {
+            "satisfied": True, "evidence": "logic_chain_check_passed"}}}}
+
+    def _fake_anchored_body(self):
+        """锚点存在但语义不支撑 satisfied=true (语义伪造样本)。"""
+        return {"governance": {"protocols": {"logic_chain_check": {
+            "satisfied": True, "evidence": "logic_chain_check_failed"}}}}
+
+    def _rule(self, gateway):
+        return {r.name: r for r in gateway.rules}["protocol-logic_chain_check-ok"]
+
+    # -- fail-open: LLM 缺席 -------------------------------------------
+
+    def test_no_provider_fails_open_to_baseline(self, gateway):
+        """未注入 LLM → 回退基线判定, 锚点存在则 verified=True。"""
+        v = LLMSemanticValidator(llm_provider=None)
+        res = v.validate(self._rule(gateway), "/v1/agents", "POST",
+                         self._anchored_body())
+        assert res.validator == "semantic-llm"
+        assert res.verified is True
+        assert "semantic-llm-unavailable" in res.reason
+
+    def test_no_provider_still_blocks_zero_cost_lie(self, gateway):
+        """未注入 LLM 时基线拦截仍生效 (零成本谎报 → verified=False)。"""
+        v = LLMSemanticValidator(llm_provider=None)
+        res = v.validate(self._rule(gateway), "/v1/agents", "POST", {})
+        assert res.verified is False
+        assert res.confidence >= 0.6
+
+    # -- fail-open: LLM 异常 / 超时 -------------------------------------
+
+    def test_provider_exception_fails_open(self, gateway):
+        def boom(ctx):
+            raise RuntimeError("llm down")
+
+        v = LLMSemanticValidator(llm_provider=boom, timeout=0.5)
+        res = v.validate(self._rule(gateway), "/v1/agents", "POST",
+                         self._anchored_body())
+        assert res.verified is True          # 回退基线 → 不误伤
+        assert "semantic-llm-unavailable" in res.reason
+
+    def test_provider_timeout_fails_open(self, gateway):
+        def slow(ctx):
+            import time
+            time.sleep(2.0)
+            return {"verified": True, "confidence": 0.9, "reason": "late"}
+
+        v = LLMSemanticValidator(llm_provider=slow, timeout=0.3)
+        res = v.validate(self._rule(gateway), "/v1/agents", "POST",
+                         self._anchored_body())
+        assert res.verified is True
+        assert "semantic-llm-unavailable" in res.reason
+
+    def test_malformed_provider_output_fails_open(self, gateway):
+        v = LLMSemanticValidator(llm_provider=lambda ctx: "not-a-dict",
+                                 timeout=0.5)
+        res = v.validate(self._rule(gateway), "/v1/agents", "POST",
+                         self._anchored_body())
+        assert res.verified is True
+        assert "semantic-llm-unavailable" in res.reason
+
+    # -- 语义复核: 拦截 / 通过 -----------------------------------------
+
+    def test_semantic_intercept_fake_evidence(self, gateway):
+        """锚点存在但 LLM 判定语义伪造 → verified=False (S1 核心)。"""
+
+        def judge(ctx):
+            out = ctx["protocol_state"]["evidence"]
+            return {"verified": out == "logic_chain_check_passed",
+                    "confidence": 0.95,
+                    "reason": f"evidence={out} vs satisfied=true"}
+
+        v = LLMSemanticValidator(llm_provider=judge, timeout=0.5)
+        res = v.validate(self._rule(gateway), "/v1/agents", "POST",
+                         self._fake_anchored_body())
+        assert res.verified is False
+        assert res.confidence == pytest.approx(0.95)
+
+    def test_semantic_confirm_legit_evidence(self, gateway):
+        """锚点 + LLM 语义一致 → verified=True, 置信度取保守值。"""
+
+        def judge(ctx):
+            return {"verified": True, "confidence": 0.99,
+                    "reason": "evidence consistent"}
+
+        v = LLMSemanticValidator(llm_provider=judge, timeout=0.5)
+        res = v.validate(self._rule(gateway), "/v1/agents", "POST",
+                         self._anchored_body())
+        assert res.verified is True
+        assert res.confidence <= 0.99          # min(基线0.8, LLM0.99)
+        assert "语义复核通过" in res.reason
+
+    # -- 网关集成 ------------------------------------------------------
+
+    def test_gateway_with_llm_validation(self, gateway):
+        """with_llm_validation 工厂 → 通道 = semantic-llm。"""
+        gw = ProtocolGateway.with_llm_validation(
+            llm_provider=lambda ctx: {"verified": True, "confidence": 0.9,
+                                      "reason": "ok"},
+            timeout=0.5)
+        assert gw.validator.name == "semantic-llm"
+
+    def test_gateway_escalates_on_semantic_fake(self, gateway):
+        """语义伪造 → 网关将 ALLOW_WITH_WARNING 降级为 ESCALATE。"""
+
+        def judge(ctx):
+            out = ctx["protocol_state"]["evidence"]
+            return {"verified": out == "logic_chain_check_passed",
+                    "confidence": 0.95,
+                    "reason": "semantic check"}
+
+        gw = ProtocolGateway.with_llm_validation(llm_provider=judge,
+                                                 timeout=0.5)
+        verdict = gw.evaluate_verified(
+            "/v1/agents", "POST", self._fake_anchored_body())
+        assert verdict["action"] == "ESCALATE"
+        assert verdict["verification"]["verified"] is False
+
+    def test_gateway_allows_legit_under_llm(self, gateway):
+        """合法声明 + LLM 语义通过 → 保持 ALLOW_WITH_WARNING。"""
+        gw = ProtocolGateway.with_llm_validation(
+            llm_provider=lambda ctx: {"verified": True, "confidence": 0.9,
+                                      "reason": "ok"},
+            timeout=0.5)
+        verdict = gw.evaluate_verified(
+            "/v1/agents", "POST", self._anchored_body())
+        assert verdict["action"] == "ALLOW_WITH_WARNING"
+        assert verdict["verification"]["verified"] is True
+        assert verdict["channel"] == "semantic-llm"

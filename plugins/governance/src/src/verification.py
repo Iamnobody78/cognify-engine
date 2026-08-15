@@ -9,17 +9,27 @@ enforce 升级路径 — 即 `declaration_only` 盲点。
   - DeclarationValidator: 验证器协议 (T2 接口)
   - NoopValidator:        默认无验证器 (诚实边界, 不伪称验证能力)
   - BaselineDeclarationValidator: 基线一致性验证器 (T3)
+  - LLMSemanticValidator: 语义验证器 (S1 — 审计缺陷修复, 策略 A 插槽落地)
 
 设计原则:
   - 可插拔: 单一协议接口, LLM 语义验证器/签名验证器可作为未来实现插槽
   - 确定性: 基线验证器全部检查为确定性逻辑 (可复现、可测试、可审计)
   - 诚实边界: 基线只做一致性检查, 不声称能证明 agent 真的执行了协议;
-    深层语义验证留给 LLM 层 (见 docs/s66_verification_channel.md)
+    深层语义验证由 LLM 层承担 (见 docs/s66_verification_channel.md)
   - 向后兼容: 无验证器时网关行为与 S65 完全一致
+
+S1 (审计缺陷修复 — LLM 语义验证插槽):
+  BaselineDeclarationValidator 仅做确定性一致性检查, 无法识别"锚点存在但
+  语义无关"的伪造证据 (如 evidence="passed" 但实际并未执行)。
+  LLMSemanticValidator 组合基线 + LLM 语义判断:
+    - 基线失败 → 直接采纳 (确定性, 无需 LLM)
+    - 基线通过 + LLM 可用 → 语义复核 (拦截语义伪造)
+    - 基线通过 + LLM 不可用 → fail-open 回退基线判定 (不阻塞裁决)
 """
 
 import json
 import re
+import threading
 from dataclasses import dataclass
 from typing import Any, Dict, Optional, Protocol, runtime_checkable
 
@@ -240,5 +250,135 @@ class BaselineDeclarationValidator:
             verified=True,
             confidence=1.0,
             reason=reason,
+            validator=self.name,
+        )
+
+
+# ── LLM 语义验证器 (S1 / 策略 A 插槽) ────────────────────────────────
+
+class LLMSemanticValidator:
+    """LLM 语义验证器 (S1 审计缺陷修复 — declaration_only 盲点语义缓解)。
+
+    动机 (审计缺陷 S1): BaselineDeclarationValidator 只能做**确定性一致性**
+    检查。攻击者可构造"锚点存在但语义无关"的伪造证据 (如 evidence="passed"
+    而实际未执行协议), 绕过基线的零成本谎报拦截 — 这是 declaration_only
+    盲点的**语义层**残余。
+
+    本验证器组合策略 (fail-open 优先):
+      1. 先跑基线一致性检查 (确定性, 低延迟, 可复现)
+      2. 基线失败 → 直接采纳基线结论 (确定性判定优先, 无需 LLM)
+      3. 基线通过 (声明有锚点) → 调用注入的 LLM 语义复核
+         - LLM 判定语义一致   → verified=True (置信度取基线/LLM 较低者, 保守)
+         - LLM 判定语义伪造   → verified=False (降级 → 网关升级为 ESCALATE)
+      4. LLM 不可用 (未注入 / 异常 / 超时) → **fail-open**: 回退基线判定,
+         verified 保持基线结论 (锚点存在 → 不因 LLM 缺席而误伤合法声明),
+         但 reason 标注 "semantic-llm-unavailable" 供审计侧观测。
+
+    注入契约:
+      llm_provider: Callable[[dict], dict] — 接收语义上下文 dict, 返回
+        {"verified": bool, "confidence": float, "reason": str}
+      timeout: 秒 (默认 10.0); 超时视为 LLM 不可用 (fail-open)
+
+    诚实边界: LLM 层不伪称确定性 — 置信度上限受基线约束 (取 min),
+    语义结论仅为"降级触发"用途, 不提升放行置信度。
+    """
+
+    name = "semantic-llm"
+
+    def __init__(self, llm_provider=None, timeout: float = 10.0,
+                 baseline: Optional[BaselineDeclarationValidator] = None):
+        self._llm_provider = llm_provider
+        self._timeout = timeout
+        self._baseline = baseline or BaselineDeclarationValidator()
+
+    # -- 公共接口 -----------------------------------------------------
+
+    def validate(self, rule: Any, path: str, method: str,
+                 body: Optional[Dict]) -> VerificationResult:
+        base = self._baseline.validate(rule, path, method, body)
+
+        # 1) 基线失败或平凡通过 → 确定性结论优先, 无需 LLM
+        if not base.verified or base.claim == "(n/a)":
+            return base
+
+        # 2) 基线通过 (有锚点) → 语义复核
+        if self._llm_provider is None:
+            return self._unavailable(
+                base, "未注入 llm_provider — 语义层缺席 (fail-open 回退基线)")
+
+        ctx = self._build_semantic_context(rule, path, method, body, base)
+        try:
+            verdict = self._call_llm(ctx)
+        except Exception as exc:  # 任何异常/超时 → fail-open 回退基线
+            return self._unavailable(
+                base, f"LLM 调用异常: {exc} — fail-open 回退基线")
+
+        if not isinstance(verdict, dict) or "verified" not in verdict:
+            return self._unavailable(
+                base, f"LLM 返回畸形结果 {verdict!r} — fail-open 回退基线")
+
+        if verdict.get("verified"):
+            return VerificationResult(
+                claim=base.claim,
+                verified=True,
+                confidence=min(base.confidence, float(verdict.get("confidence", 1.0))),
+                reason=f"基线锚点 + LLM 语义一致: "
+                       f"{verdict.get('reason', '')} (语义复核通过)",
+                validator=self.name,
+            )
+        return VerificationResult(
+            claim=base.claim,
+            verified=False,
+            confidence=float(verdict.get("confidence", 0.6)),
+            reason=f"LLM 语义判定声明伪造: "
+                   f"{verdict.get('reason', '')} — 锚点存在但语义不支撑 "
+                   f"satisfied=true (S1 语义层拦截)",
+            validator=self.name,
+        )
+
+    # -- 内部逻辑 -----------------------------------------------------
+
+    def _call_llm(self, ctx: Dict) -> dict:
+        """调用 LLM provider, 带超时保护 (超时 → fail-open)。"""
+        result_box: dict = {}
+
+        def _run() -> None:
+            result_box["verdict"] = self._llm_provider(ctx)
+
+        worker = threading.Thread(target=_run, daemon=True)
+        worker.start()
+        worker.join(timeout=self._timeout)
+        if worker.is_alive():
+            raise TimeoutError(
+                f"LLM provider 超时 ({self._timeout}s)")
+        return result_box.get("verdict")
+
+    def _build_semantic_context(self, rule: Any, path: str, method: str,
+                                body: Optional[Dict],
+                                base: VerificationResult) -> Dict:
+        """构造供 LLM 判断的语义上下文 (结构化, 无 prompt 注入面)。"""
+        json_path = getattr(rule, "json_path", None) or ""
+        module = self._baseline._module_from_path(json_path)
+        state = self._baseline._extract_state(body, module)
+        return {
+            "rule": {
+                "name": getattr(rule, "name", "?"),
+                "action": getattr(rule, "action", None),
+                "json_path": json_path,
+                "json_pattern": getattr(rule, "json_pattern", None) or "",
+            },
+            "request": {"path": path, "method": method},
+            "claim": base.claim,
+            "protocol_module": module,
+            "protocol_state": state,
+        }
+
+    def _unavailable(self, base: VerificationResult, why: str) -> VerificationResult:
+        """fail-open: 语义层不可用时回退基线判定, 但 reason 显式标注。"""
+        return VerificationResult(
+            claim=base.claim,
+            verified=base.verified,       # 保持基线结论 — 不误伤合法声明
+            confidence=base.confidence,
+            reason=f"{base.reason} | [semantic-llm-unavailable] {why}",
             validator=self.name,
         )

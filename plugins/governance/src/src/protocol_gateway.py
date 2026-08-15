@@ -44,6 +44,7 @@ import yaml
 from .policy import Rule
 from .verification import (
     DeclarationValidator,
+    LLMSemanticValidator,
     NoopValidator,
     VerificationResult,
 )
@@ -293,6 +294,27 @@ class ProtocolGateway:
     def set_validator(self, validator: DeclarationValidator) -> None:
         """热切换验证器 (可插拔: baseline / LLM 语义 / 签名实现均实现同一协议)。"""
         self.validator = validator
+
+    @classmethod
+    def with_llm_validation(
+        cls,
+        protocols_dir: Optional[str] = None,
+        llm_provider=None,
+        timeout: float = 10.0,
+        audit_sink: Optional[Callable[[dict], None]] = None,
+    ) -> "ProtocolGateway":
+        """S1: 构造启用 LLM 语义验证层的网关 (策略 A 插槽)。
+
+        llm_provider: Callable[[dict], dict] — 接收语义上下文, 返回
+            {"verified": bool, "confidence": float, "reason": str}。
+        fail-open: LLM 缺席/异常/超时 → 回退基线判定, 不阻塞裁决。
+        """
+        return cls(
+            protocols_dir=protocols_dir,
+            validator=LLMSemanticValidator(
+                llm_provider=llm_provider, timeout=timeout),
+            audit_sink=audit_sink,
+        )
 
     def verify_declaration(self, rule: Rule, path: str, method: str,
                            body=None) -> VerificationResult:
