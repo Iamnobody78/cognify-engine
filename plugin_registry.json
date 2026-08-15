@@ -1,0 +1,194 @@
+{
+  "generated": "2026-08-15T15:59:11",
+  "count": 7,
+  "plugins": [
+    {
+      "id": "cognify.cognitive",
+      "name": "Cognitive Engine",
+      "version": "1.0.0",
+      "description": "认知操作系统: CVE-S 编译/VCE 扫描/CEE 推演 + MMC 代理心跳 (cve_s + mmc_agent)",
+      "author": "Iamnobody78",
+      "license": "MIT",
+      "source": "~/.aionui-tri-sync/daemon (frozen snapshot, 见 VENDORED.md)",
+      "verified": true,
+      "status": "unloaded",
+      "capabilities": [
+        "cognitive",
+        "mce",
+        "vce",
+        "cee",
+        "heartbeat"
+      ],
+      "hooks": [
+        "on_load",
+        "on_enable",
+        "on_disable",
+        "on_unload"
+      ],
+      "dependencies": {
+        "cognify.core": ">=1.0.0 <3.0.0"
+      },
+      "path": "C:\\Users\\ivy\\AppData\\Roaming\\AionUi\\aionui\\conversations\\2026\\07\\27\\aionrs-temp-48324704\\cognify-engine\\plugins\\cognitive"
+    },
+    {
+      "id": "cognify.dashboard",
+      "name": "Governance Dashboard",
+      "version": "0.0.1",
+      "description": "治理仪表板: Web 实时总览 (DEBT-016 待偿 — 当前为诚实桩, 不伪称功能)",
+      "author": "Iamnobody78",
+      "license": "MIT",
+      "source": "DEBT-016 (debt_library.yaml)",
+      "verified": false,
+      "status": "unloaded",
+      "capabilities": [
+        "dashboard",
+        "web"
+      ],
+      "hooks": [
+        "on_load",
+        "on_enable",
+        "on_disable",
+        "on_unload"
+      ],
+      "dependencies": {
+        "cognify.core": ">=1.0.0 <3.0.0"
+      },
+      "path": "C:\\Users\\ivy\\AppData\\Roaming\\AionUi\\aionui\\conversations\\2026\\07\\27\\aionrs-temp-48324704\\cognify-engine\\plugins\\dashboard"
+    },
+    {
+      "id": "cognify.debt",
+      "name": "Debt Engine",
+      "version": "1.1.0",
+      "description": "债务即资产: 自动挖掘/分类/偿还/验证 (debt_miner + debt_engine + debt_library)",
+      "author": "Iamnobody78",
+      "license": "MIT",
+      "source": "~/.aionui-tri-sync/debt (frozen snapshot, 见 VENDORED.md)",
+      "verified": true,
+      "status": "unloaded",
+      "capabilities": [
+        "debt",
+        "mining",
+        "repayment",
+        "verification"
+      ],
+      "hooks": [
+        "on_load",
+        "on_enable",
+        "on_disable",
+        "on_unload"
+      ],
+      "dependencies": {
+        "cognify.core": ">=1.0.0 <3.0.0"
+      },
+      "path": "C:\\Users\\ivy\\AppData\\Roaming\\AionUi\\aionui\\conversations\\2026\\07\\27\\aionrs-temp-48324704\\cognify-engine\\plugins\\debt"
+    },
+    {
+      "id": "cognify.governance",
+      "name": "Governance Engine",
+      "version": "0.1.0",
+      "description": "AI agent governance: protocol gateway, VCE scanning, declaration verification (agent-governance-v2)",
+      "author": "Iamnobody78",
+      "license": "MIT",
+      "source": "https://github.com/Iamnobody78/agent-governance-v2",
+      "verified": true,
+      "status": "unloaded",
+      "capabilities": [
+        "governance",
+        "vce",
+        "verification",
+        "audit"
+      ],
+      "hooks": [
+        "on_load",
+        "on_enable",
+        "on_disable",
+        "on_unload"
+      ],
+      "dependencies": {
+        "cognify.core": ">=1.0.0 <3.0.0"
+      },
+      "path": "C:\\Users\\ivy\\AppData\\Roaming\\AionUi\\aionui\\conversations\\2026\\07\\27\\aionrs-temp-48324704\\cognify-engine\\plugins\\governance"
+    },
+    {
+      "id": "cognify.meta",
+      "name": "Meta Capability Suite",
+      "version": "1.0.0",
+      "description": "25 维元能力体系: 元认知/元决策/元架构/能力自检 (meta_capabilities + meta_cognition + meta_decision + meta_architect)",
+      "author": "Iamnobody78",
+      "license": "MIT",
+      "source": "~/.aionui-tri-sync/daemon (frozen snapshot, 见 VENDORED.md)",
+      "verified": true,
+      "status": "unloaded",
+      "capabilities": [
+        "meta",
+        "metacognition",
+        "metadecision",
+        "selfcheck"
+      ],
+      "hooks": [
+        "on_load",
+        "on_enable",
+        "on_disable",
+        "on_unload"
+      ],
+      "dependencies": {
+        "cognify.core": ">=1.0.0 <3.0.0"
+      },
+      "path": "C:\\Users\\ivy\\AppData\\Roaming\\AionUi\\aionui\\conversations\\2026\\07\\27\\aionrs-temp-48324704\\cognify-engine\\plugins\\meta"
+    },
+    {
+      "id": "cognify.simulation",
+      "name": "BottleSumo Simulation",
+      "version": "2.0.0",
+      "description": "140GB 旗舰仿真平台: Renode HIL, firmware-in-the-loop, CVE-S 闭环 (bottlesumo-pi)",
+      "author": "Iamnobody78",
+      "license": "MIT",
+      "source": "https://github.com/Iamnobody78/bottlesumo-pi",
+      "verified": true,
+      "status": "unloaded",
+      "capabilities": [
+        "simulation",
+        "hil",
+        "firmware"
+      ],
+      "hooks": [
+        "on_load",
+        "on_enable",
+        "on_disable",
+        "on_unload"
+      ],
+      "dependencies": {
+        "cognify.core": ">=1.0.0 <3.0.0"
+      },
+      "path": "C:\\Users\\ivy\\AppData\\Roaming\\AionUi\\aionui\\conversations\\2026\\07\\27\\aionrs-temp-48324704\\cognify-engine\\plugins\\simulation"
+    },
+    {
+      "id": "cognify.sync",
+      "name": "Tri-Sync Daemon",
+      "version": "1.1.0",
+      "description": "AionUi/Hermes/DSH 三方实时同步: 30s 守护 + 看门狗 + 时间戳冲突仲裁",
+      "author": "Iamnobody78",
+      "license": "MIT",
+      "source": "~/.aionui-tri-sync/daemon (frozen snapshot, 见 VENDORED.md)",
+      "verified": true,
+      "status": "unloaded",
+      "capabilities": [
+        "sync",
+        "daemon",
+        "watchdog",
+        "conflict-resolution"
+      ],
+      "hooks": [
+        "on_load",
+        "on_enable",
+        "on_disable",
+        "on_unload"
+      ],
+      "dependencies": {
+        "cognify.core": ">=1.0.0 <3.0.0",
+        "cognify.cognitive": ">=1.0.0"
+      },
+      "path": "C:\\Users\\ivy\\AppData\\Roaming\\AionUi\\aionui\\conversations\\2026\\07\\27\\aionrs-temp-48324704\\cognify-engine\\plugins\\sync"
+    }
+  ]
+}

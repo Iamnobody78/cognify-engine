@@ -1,7 +1,8 @@
 {
   "name": "cognify-engine",
-  "version": "1.0.0",
-  "generated": "2026-08-15T15:25:45",
+  "version": "2.0.0",
+  "architecture": "plugin-platform",
+  "generated": "2026-08-15T15:56:59",
   "assets": [
     {
       "key": "governance",
@@ -52,5 +53,6 @@
       "present": true,
       "probe": "C:\\Users\\ivy\\AppData\\Roaming\\AionUi\\aionui\\conversations\\2026\\07\\27\\aionrs-temp-48324704\\.aionui\\meta_prompts"
     }
-  ]
+  ],
+  "plugins": 7
 }

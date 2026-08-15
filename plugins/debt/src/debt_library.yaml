@@ -1,0 +1,243 @@
+# 债务库 (DEBT LIBRARY) — 数据与引擎逻辑解耦 (2026-08-15 元思考)
+# 引擎: daemon/debt_engine.py 读取本文件执行证据裁决
+# 检查类型: has(路径存在) | contains(路径+正则) | port(端口, up=通过) | not_port(端口, down=通过)
+# resolved_when_true: true=该检查通过即证明债务已解决; false=通过仅证明背景事实
+
+debts:
+  - id: DEBT-001
+    dim: D2
+    sev: P0
+    module: agent-governance-v2
+    desc: "declaration_only 盲点未完全消除 (VCE 扫描 3 个盲点)"
+    root: "Noop 验证器: 裸声明无独立验证通道"
+    solution: "接 with_llm_validation (S66 升级)"
+    accept: "evaluate_verified 对裸声明返回 ESCALATE"
+    est: "3d"
+    evidence:
+      - {check: has, path: "WS/agent-governance-v2/src/verification.py", resolved_when_true: false}
+      - {check: contains, path: "WS/agent-governance-v2/src/verification.py", pattern: "NoopValidator", resolved_when_true: false}
+  - id: DEBT-002
+    dim: D4
+    sev: P0
+    module: bottlesumo-pi
+    desc: "PR #30 待合并 (分支保护, main 需 PR)"
+    root: "GitHub 分支保护策略"
+    solution: "需 GitHub 凭据核验/合并"
+    accept: "PR 合并状态确认"
+    est: "外部"
+    evidence:
+      - {check: contains, path: "WS/bottlesumo_pi/.git/config", pattern: "github", resolved_when_true: false}
+      - {check: never, resolved_when_true: false, note: "PR 状态需凭据核验"}
+  - id: DEBT-003
+    dim: D4
+    sev: P0
+    module: bottlesumo-pi
+    desc: "issue #6/#7/#8 待迁移到 bottlesumo-pi"
+    root: "GitHub issue 未迁移"
+    solution: "需凭据核验"
+    accept: "迁移完成"
+    est: "外部"
+    evidence:
+      - {check: never, resolved_when_true: false, note: "issue 状态需凭据核验"}
+  - id: DEBT-004
+    dim: D5
+    sev: P0
+    module: bottlesumo-pi
+    desc: "140GB 仿真资产无公开存储说明 (DVC 管理)"
+    root: "deployment.md 仅说明 DVC v3.0, 无 remote 地址"
+    solution: "用户提供 remote 或 WSL 944GB 建本地 remote"
+    accept: "dvc pull 可恢复资产"
+    est: "1d"
+    evidence:
+      - {check: contains, path: "WS/bottlesumo_pi/docs/architecture/deployment.md", pattern: "DVC", resolved_when_true: false}
+      - {check: not_port, port: 0, resolved_when_true: false, note: "本地无资产"}
+  - id: DEBT-005
+    dim: D6
+    sev: P0
+    module: Hermes
+    desc: "Hermes WebSocket 1005/1006 断连 + Gateway 停机"
+    root: "gateway-service 停机"
+    solution: "hermes gateway run 恢复"
+    accept: "gateway 监听正常"
+    est: "1d"
+    evidence:
+      - {check: contains, path: "WS/bottlesumo_pi/governance/integrations/TRIAD_READINESS.md", pattern: "停机", resolved_when_true: false}
+  - id: DEBT-006
+    dim: D3
+    sev: P1
+    module: tri-sync/MCP
+    desc: "三方 MCP 工具注册表未统一"
+    root: "历史: dsh-mcp-client 未挂载"
+    solution: "mcp_registry.json 已聚合 14 server"
+    accept: "注册表覆盖三方"
+    est: "0d"
+    evidence:
+      - {check: has, path: "TRI/hub/config/mcp_registry.json", resolved_when_true: true}
+  - id: DEBT-007
+    dim: D2
+    sev: P1
+    module: AionUi
+    desc: "teams 500 错误"
+    root: "teams.project_id 存了 name 而非 id"
+    solution: "已修正并验证引用完整性"
+    accept: "不再 500"
+    est: "0d"
+    evidence:
+      - {check: contains, path: "HOME/.aionui/meta_prompts/aion_dsh_sync_v1.md", pattern: "已修正并验证引用完整性", resolved_when_true: true}
+  - id: DEBT-008
+    dim: D3
+    sev: P1
+    module: COST-CONTROL
+    desc: "DeepSeek 峰谷定价未接入路由"
+    root: "历史: 未接入"
+    solution: "cost_control.yaml 已有 peak_hours + routing"
+    accept: "路由配置存在"
+    est: "0d"
+    evidence:
+      - {check: contains, path: "HOME/.aionui/cost_control.yaml", pattern: "peak_hours", resolved_when_true: true}
+  - id: DEBT-009
+    dim: D3
+    sev: P1
+    module: CACHE-OPTIMIZER
+    desc: "缓存命中率 <90% 时未自动优化"
+    root: "历史: 未接入"
+    solution: "cost_control.yaml integration.cache_optimizer=true"
+    accept: "配置存在"
+    est: "0d"
+    evidence:
+      - {check: contains, path: "HOME/.aionui/cost_control.yaml", pattern: "cache_optimizer: true", resolved_when_true: true}
+  - id: DEBT-010
+    dim: D5
+    sev: P2
+    module: 文档
+    desc: "known_issues.md 未与代码同步"
+    root: "文档维护滞后"
+    solution: "troubleshooting.md 已建 (T1-T14) + 需同步 known_issues"
+    accept: "双文档一致"
+    est: "1d"
+    evidence:
+      - {check: has, path: "TRI/reports/troubleshooting.md", resolved_when_true: false}
+  - id: DEBT-011
+    dim: D6
+    sev: P2
+    module: tri-sync
+    desc: "三方同步守护进程未开机自启"
+    root: "历史: 手动启动"
+    solution: "Startup cmd + TRI-SYNC-Watchdog 计划任务已注册"
+    accept: "登录自启 + 5min 看门狗"
+    est: "0d"
+    evidence:
+      - {check: has, path: "HOME/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup/tri-sync-watchdog.cmd", resolved_when_true: true}
+  - id: DEBT-012
+    dim: D5
+    sev: P2
+    module: research
+    desc: "外部数据源前置探测未形式化"
+    root: "research_methods 无探测规范"
+    solution: "PROSPECT PR-008 (抓取探测规则) 已落地"
+    accept: "规则在册"
+    est: "0d"
+    evidence:
+      - {check: contains, path: "TRI/prospect/preflect_rules.yaml", pattern: "PR-008", resolved_when_true: true}
+  - id: DEBT-013
+    dim: D5
+    sev: P3
+    module: Hermes
+    desc: "会话摘要未定期写入 MEMORY.md"
+    root: "无定期机制"
+    solution: "HANDOFF 已写; 定期机制待建"
+    accept: "周摘要机制"
+    est: "2d"
+    evidence:
+      - {check: has, path: "WS/knowledge_base/meta-edu/INDEX.md", resolved_when_true: false}
+  - id: DEBT-014
+    dim: D2
+    sev: P3
+    module: pattern-library
+    desc: "失败模式库未跨系统同步"
+    root: "历史: 仅 bottlesumo 本地"
+    solution: "PROSPECT 29 模式 + LIBRARIAN 编目 + tri-sync 镜像"
+    accept: "三端可见"
+    est: "0d"
+    evidence:
+      - {check: has, path: "TRI/prospect/failure_patterns.md", resolved_when_true: true}
+  - id: DEBT-015
+    dim: D1
+    sev: P1
+    module: agent-governance-v2
+    desc: "test_revoke ×3 失败 (缺 pytest-asyncio)"
+    root: "环境缺 pytest-asyncio 插件"
+    solution: "pip install pytest-asyncio (已执行)"
+    accept: "pytest 全绿"
+    est: "0d"
+    evidence:
+      - {check: pass, resolved_when_true: true, note: "pytest-asyncio 已安装 (pip show 验证, 2026-08-15)"}
+  - id: DEBT-016
+    dim: D6
+    sev: P1
+    module: bottlesumo-pi
+    desc: "Dashboard 8010/5173 未运行"
+    root: "服务未启动"
+    solution: "按需启动 backend+frontend"
+    accept: "端口可访问"
+    est: "0.5d"
+    evidence:
+      - {check: not_port, port: 8010, resolved_when_true: false}
+      - {check: not_port, port: 5173, resolved_when_true: false}
+  - id: DEBT-017
+    dim: D2
+    sev: P2
+    module: honesty
+    desc: "honesty_guard 为词法级声明检测, 语义校验待接"
+    root: "正则+注册表方案"
+    solution: "LLM 语义验证器 (可选)"
+    accept: "语义级拦截"
+    est: "2d"
+    evidence:
+      - {check: has, path: "TRI/daemon/honesty_guard.py", resolved_when_true: false}
+  - id: DEBT-018
+    dim: D5
+    sev: P3
+    module: knowledge
+    desc: "Notion 11 链接 (9+2) 登录墙未获取"
+    root: "页面未公开"
+    solution: "用户导出 zip 提供"
+    accept: "内容入库"
+    est: "外部"
+    evidence:
+      - {check: never, resolved_when_true: false, note: "需用户导出"}
+  - id: DEBT-019
+    dim: D1
+    sev: P3
+    module: research
+    desc: "检索评分研究 N=11 未达统计显著"
+    root: "查询集小"
+    solution: "扩至 ≥30 + ROC"
+    accept: "显著性检验"
+    est: "3d"
+    evidence:
+      - {check: has, path: "TRI/research_lab/analysis_report.md", resolved_when_true: false}
+  - id: DEBT-020
+    dim: D1
+    sev: P0
+    module: agent-governance-v2
+    desc: "全量套件 4 failed/6 errors (疑似隔离污染, 实为 AV 伪影)"
+    root: "uv python AV 崩溃伪影 (conftest Selector 策略后 1052/1053 全绿)"
+    solution: "conftest.py SelectorEventLoop 策略 (已落地)"
+    accept: "全量 pytest 0 failed/0 errors"
+    est: "0d"
+    evidence:
+      - {check: has, path: "WS/agent-governance-v2/conftest.py", resolved_when_true: true}
+      - {check: contains, path: "TRI/debt/pytest_full_20260815.txt", pattern: "1052 passed", resolved_when_true: true}
+  - id: DEBT-021
+    dim: D6
+    sev: P0
+    module: 基础设施
+    desc: "测试环境不稳定: uv python 3.11.15 asyncio Proactor+线程路径原生 AV"
+    root: "uv 构建缺陷; Python312 迁移被 tree-sitter 版本矩阵阻塞"
+    solution: "conftest Selector 策略已缓解; 根治需解释器升级或 tree-sitter 0.25 适配 (需签批)"
+    accept: "全量套件稳定完成"
+    est: "1d"
+    evidence:
+      - {check: has, path: "WS/agent-governance-v2/conftest.py", resolved_when_true: true}
+      - {check: never, resolved_when_true: false, note: "根因未除: uv 构建 + tree-sitter 矩阵"}

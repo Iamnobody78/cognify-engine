@@ -1,0 +1,16 @@
+{
+  "id": "cognify.debt",
+  "name": "Debt Engine",
+  "version": "1.1.0",
+  "description": "债务即资产: 自动挖掘/分类/偿还/验证 (debt_miner + debt_engine + debt_library)",
+  "author": "Iamnobody78",
+  "license": "MIT",
+  "main": "plugin.py",
+  "dependencies": {
+    "cognify.core": ">=1.0.0 <3.0.0"
+  },
+  "capabilities": ["debt", "mining", "repayment", "verification"],
+  "hooks": ["on_load", "on_enable", "on_disable", "on_unload"],
+  "verified": true,
+  "source": "~/.aionui-tri-sync/debt (frozen snapshot, 见 VENDORED.md)"
+}

@@ -1,0 +1,37 @@
+{
+  "pluginify": "v1.0",
+  "generated": "2026-08-15T15:56:59",
+  "ok": true,
+  "steps": [
+    {
+      "name": "P Prepare: core/plugin_manager + event_bus",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "L Label: 插件 manifest",
+      "pass": true,
+      "detail": "7/7"
+    },
+    {
+      "name": "U Unify: plugin.py 入口",
+      "pass": true,
+      "detail": "7/7"
+    },
+    {
+      "name": "G Gate: 依赖拓扑 + 生命周期冒烟",
+      "pass": true,
+      "detail": "cognify.cognitive -> cognify.dashboard -> cognify.debt -> cognify.governance -> cognify.meta -> cognify.simulation -> cognify.sync"
+    },
+    {
+      "name": "I Install: plugin_registry.json",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "N Network: source 映射",
+      "pass": true,
+      "detail": "7/7"
+    }
+  ]
+}
