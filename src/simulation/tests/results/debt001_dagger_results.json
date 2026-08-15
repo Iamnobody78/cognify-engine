@@ -1,0 +1,42 @@
+{
+  "debt": "DEBT-001",
+  "approach": "DAgger (Dataset Aggregation) from V11 Expert",
+  "timestamp": "2026-07-28T02:15:00",
+  "architecture": "16→128→64→11",
+  "params": 10944,
+  "iterations": {
+    "v1_distill": {"win_rate": 0.10, "method": "DQN teacher [128,128,64], 150 episodes"},
+    "v2_bc_only": {"win_rate": 0.10, "method": "BC from V11, [64,32], 100 epochs", "bc_accuracy": 0.8426},
+    "v3_dagger": {
+      "expert_episodes": 300,
+      "dagger_iterations": 2,
+      "dagger_eps_per_iter": 80,
+      "round_0_expert_wins": "300/300 (100%)",
+      "round_1_bc_eval_50ep": "0.04",
+      "dagger_1_eval_50ep": "0.02",
+      "dagger_2_eval_50ep": "0.60",
+      "final_100ep": 0.52
+    }
+  },
+  "hil_30ep_seed42": {
+    "win_rate": 0.467,
+    "wins": 14,
+    "losses": 6,
+    "timeouts": 10,
+    "action_distribution": {
+      "T_L": 1818,
+      "T_R": 1897,
+      "PUSH": 640,
+      "F_L": 240,
+      "BACK": 165
+    }
+  },
+  "gate_30_percent": "PASS",
+  "output_file": "dqn_weights_dagger.c",
+  "status": "partially_resolved — virtual HIL verified, pending firmware integration + physical STM32 test",
+  "next_steps": [
+    "Replace firmware dqn_weights.c with dqn_weights_dagger.c",
+    "Update DQN inference in main_rule_fallback.c for new architecture (16→128→64→11)",
+    "Physical HIL test with STM32 board"
+  ]
+}

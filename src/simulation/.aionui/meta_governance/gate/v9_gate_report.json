@@ -1,0 +1,145 @@
+{
+  "gate": "V9",
+  "timestamp": 1785923973.342457,
+  "agent_name": "v11",
+  "threshold": 0.6,
+  "total_episodes": 10,
+  "wins": 10,
+  "losses": 0,
+  "winrate": 1.0,
+  "passed": true,
+  "mode": "real",
+  "backend": "mujoco",
+  "agent_mode": "v11",
+  "strategies": [
+    "random",
+    "aggressive",
+    "defensive",
+    "circler",
+    "counter"
+  ],
+  "per_strategy": {
+    "random": {
+      "wins": 2,
+      "total": 2,
+      "winrate": 1.0,
+      "avg_steps": 83.5
+    },
+    "aggressive": {
+      "wins": 2,
+      "total": 2,
+      "winrate": 1.0,
+      "avg_steps": 49.5
+    },
+    "defensive": {
+      "wins": 2,
+      "total": 2,
+      "winrate": 1.0,
+      "avg_steps": 58.0
+    },
+    "circler": {
+      "wins": 2,
+      "total": 2,
+      "winrate": 1.0,
+      "avg_steps": 81.0
+    },
+    "counter": {
+      "wins": 2,
+      "total": 2,
+      "winrate": 1.0,
+      "avg_steps": 68.0
+    }
+  },
+  "episode_results": [
+    {
+      "episode": 0,
+      "opponent": "random",
+      "win": true,
+      "steps": 78,
+      "reward": 415.85,
+      "mode": "real",
+      "agent_mode": "v11"
+    },
+    {
+      "episode": 1,
+      "opponent": "random",
+      "win": true,
+      "steps": 89,
+      "reward": 457.54,
+      "mode": "real",
+      "agent_mode": "v11"
+    },
+    {
+      "episode": 0,
+      "opponent": "aggressive",
+      "win": true,
+      "steps": 7,
+      "reward": 233.68,
+      "mode": "real",
+      "agent_mode": "v11"
+    },
+    {
+      "episode": 1,
+      "opponent": "aggressive",
+      "win": true,
+      "steps": 92,
+      "reward": 423.86,
+      "mode": "real",
+      "agent_mode": "v11"
+    },
+    {
+      "episode": 0,
+      "opponent": "defensive",
+      "win": true,
+      "steps": 58,
+      "reward": 312.36,
+      "mode": "real",
+      "agent_mode": "v11"
+    },
+    {
+      "episode": 1,
+      "opponent": "defensive",
+      "win": true,
+      "steps": 58,
+      "reward": 322.8,
+      "mode": "real",
+      "agent_mode": "v11"
+    },
+    {
+      "episode": 0,
+      "opponent": "circler",
+      "win": true,
+      "steps": 102,
+      "reward": 509.53,
+      "mode": "real",
+      "agent_mode": "v11"
+    },
+    {
+      "episode": 1,
+      "opponent": "circler",
+      "win": true,
+      "steps": 60,
+      "reward": 364.64,
+      "mode": "real",
+      "agent_mode": "v11"
+    },
+    {
+      "episode": 0,
+      "opponent": "counter",
+      "win": true,
+      "steps": 89,
+      "reward": 481.58,
+      "mode": "real",
+      "agent_mode": "v11"
+    },
+    {
+      "episode": 1,
+      "opponent": "counter",
+      "win": true,
+      "steps": 47,
+      "reward": 366.34,
+      "mode": "real",
+      "agent_mode": "v11"
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+site_name: BottleSumo 旗舰版
+site_description: 140GB 物理仿真 + AI 治理旗舰仓库 — Governance Center Dashboard
+repo_url: https://github.com/Iamnobody78/bottlesumo-pi
+site_url: https://iamnobody78.github.io/bottlesumo-pi/
+
+theme:
+  name: material
+  language: zh
+  palette:
+    scheme: slate
+    primary: indigo
+  features:
+    - navigation.sections
+    - navigation.top
+    - toc.integrate
+
+nav:
+  - 首页: index.md
+  - 架构: architecture.md
+  - 架构文档:
+    - 架构总纲: architecture_overview.md
+    - 生产化路线图: architecture/ROADMAP_PRODUCTION.md
+    - 架构演进路线: architecture/ROADMAP_v2.md
+    - 数据库设计: architecture/database.md
+    - 可观测性: architecture/observability.md
+    - 部署指南: architecture/deployment.md
+    - 认证与授权: architecture/authz.md
+  - 治理: governance.md
+  - 审计记录:
+    - 审计队列 S4 关账: audits/audit_queue4_closeout.md
+  - 工程记录:
+    - 治理审计 20260807: engineering/governance_audit_20260807.md
+    - Nano 系列关账: engineering/nano_series_closeout_20260809.md
+    - P1L2 环境引导证据: engineering/p1l2_env_bootstrap_evidence_20260807.md
+    - 性能基线 20260807: engineering/performance_baseline_20260807.md
+    - S11 MCP 集成证据: engineering/s11_mcp_integration_evidence_20260807.md
+    - S13 MCP 采用证据: engineering/s13_mcp_adoption_evidence_20260807.md
+    - S17 评估器差异测试: engineering/s17_evaluator_diff_test_evidence_20260808.md
+    - S18 S26 跨域证据: engineering/s18_s26_cross_domain_evidence_20260808.md
+    - S20 P1 恒假证据: engineering/s20_p1_always_false_evidence_20260808.md
+    - S20 P2 蒸馏设计: engineering/s20_p2_distill_design_20260808.md
+    - S20 P2 蒸馏证据: engineering/s20_p2_distill_evidence_20260808.md
+    - S27 架构优化证据: engineering/s27_architecture_optimization_evidence_20260808.md
+    - S28 速度增益证据: engineering/s28_speed_gain_evidence_20260808.md
+    - S29 规则拓扑证据: engineering/s29_rule_topology_evidence_20260808.md
+    - S30 M2 四通道证据: engineering/s30_m2_four_channel_evidence_20260808.md
+    - S31 拓扑分支历史证据: engineering/s31_topo2_branch_hist_evidence_20260808.md
+    - S32 覆盖蒸馏证据: engineering/s32_coverage_distill_evidence_20260808.md
+    - S33 候选 G 蒸馏证据: engineering/s33_candidate_g_distill_evidence_20260808.md
+    - S34 规则剪枝证据: engineering/s34_rule_prune_distill_evidence_20260808.md
+    - S35 符号验证证据: engineering/s35_symbolic_verify_evidence_20260808.md
+    - S36 RL 基础设施证据: engineering/s36_rl_infra_evidence_20260808.md
+    - S37 观测升级证据: engineering/s37_obs_upgrade_evidence_20260808.md
+    - S51 GICI 原生路径否决: engineering/s51_gici_native_path_veto.md
+  - MSAN 研究记录:
+    - 数据集下载指南: msan/msan_dataset_download_guide.md
+    - 评估规范 v1: msan/msan_evaluation_spec_v1.md
+    - 初步调研: msan/msan_initial_survey.md
+    - 研究方法: msan/research_methods.md
+    - S48 T1 Oxford 格式报告: msan/s48_t1_oxford_format_report.md
+    - S50 研究方法: msan/s50_research_methods.md
+    - S51 批统计报告: msan/s51_batch_stats_report.md
+    - S52 判据回测: msan/s52_criteria_backtest.md
+    - S52 评估判据 v2: msan/s52_evaluation_criteria_v2.md
+    - S53 1117 退化报告: msan/s53_1117_degradation_report.md
+    - S54 位置优化: msan/s54_position_opt.md
+    - S55 位置判据: msan/s55_position_criteria.md
+    - S56 偏差处理: msan/s56_bias_handling.md
+    - S58 F2 质量自适应: msan/s58_f2_quality_adaptive.md
+  - 产品化:
+    - Dashboard 规格: productization/dashboard_spec.md
+    - ROS 2 集成协议: productization/ros_integrate_protocol_v1.md
+    - ROS 2 集成 ROUND 0 报告: productization/ros_int_round0_report.md
+  - Sprint 队列:
+    - 队列 5 清单: sprints/queue5_manifest.md
+  - 开发: contributing.md
+  - 变更: changelog.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - tables
+
+extra:
+  generator: false

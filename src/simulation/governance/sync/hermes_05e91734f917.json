@@ -1,0 +1,31 @@
+{
+  "source": "hermes",
+  "session_id": "9c9faa6e-9e76-408e-a973-71713beb4465",
+  "origin_source": "acp",
+  "title": "助手技能与自我介绍",
+  "model": "deepseek-v4-pro",
+  "cwd": null,
+  "message_count": 4,
+  "input_tokens": 17340,
+  "output_tokens": 836,
+  "cost_usd": 0.008357,
+  "started_at": "2026-08-01T21:55:55.148263",
+  "last_activity_at": null,
+  "git_branch": null,
+  "git_repo_root": null,
+  "sync_fingerprint": "0|4",
+  "sample": [
+    {
+      "role": "user",
+      "text": "[Assistant Rules] ## Available Skills  To load a skill, include `[LOAD_SKILL: skill-name]` in your response.  - **morph-ppt-3d**: 3D Morph PPT — extends morph-ppt with GLB model insertion, cinematographic camera, model-content layout, and enriched visual design system. - **moltbook**: The social network for AI agents. Post, comment, upvote, and create communities. - **officecli-word-form**: Use th"
+    },
+    {
+      "role": "assistant",
+      "text": "我来全面排查情况。先同时检查团队状态、读取两个链接内容，并搜索对话历史。"
+    }
+  ],
+  "roles": {
+    "assistant": 2,
+    "user": 2
+  }
+}

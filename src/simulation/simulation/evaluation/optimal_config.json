@@ -1,0 +1,78 @@
+{
+  "config_name": "bayesopt_best_trial13",
+  "source": "meta_harness_bayesopt.py — CausalPriorBayesianOptimizer, 20 trials",
+  "best_win_rate": 87.0,
+  "trial": 13,
+  "parameters": {
+    "push_threshold": {
+      "value": 0.28479,
+      "type": "float",
+      "range": [0.15, 0.50],
+      "description": "Normalized push threshold — lower = more aggressive pushing",
+      "causal_evidence": "SCM: lower threshold → earlier push initiation → higher win rate"
+    },
+    "edge_penalty_weight": {
+      "value": 71.58911,
+      "type": "float",
+      "range": [1.0, 100.0],
+      "description": "Edge penalty multiplier (x normal penalty). Confirms 'Penalty Paradox'",
+      "causal_evidence": "SCM: penalty >40x → +20% WR. Agent forced to stay in combat zone."
+    },
+    "action_bins": {
+      "value": 20,
+      "type": "int",
+      "range": [7, 31],
+      "description": "Number of discrete action bins",
+      "causal_evidence": "More bins = finer control, but diminishing returns >20"
+    },
+    "learning_rate": {
+      "value": 0.00003,
+      "type": "float",
+      "range": [0.00001, 0.001],
+      "description": "AdamW learning rate",
+      "causal_evidence": "Lower LR = more stable distillation"
+    },
+    "target_update_freq": {
+      "value": 400,
+      "type": "int",
+      "range": [50, 1000],
+      "description": "Target network update frequency (steps)",
+      "causal_evidence": "Double DQN requires sufficiently delayed target updates"
+    },
+    "n_episodes": {
+      "value": 750,
+      "type": "int",
+      "range": [500, 4000],
+      "description": "Training episodes. 750 optimal, >3500 causes catastrophic forgetting.",
+      "causal_evidence": "Training non-monotonicity: 3500 < 1500 in V10-E"
+    }
+  },
+  "fixed_parameters": {
+    "use_double_dqn": true,
+    "use_dueling": false,
+    "use_action_masking": false,
+    "use_curriculum": true,
+    "use_distillation": true,
+    "distillation_temperature": 4.0,
+    "distillation_alpha": 0.5,
+    "n_actions": 21,
+    "state_dim": 7,
+    "hidden_dim": 128,
+    "n_hidden_layers": 2
+  },
+  "causal_insights_incorporated": [
+    "Distillation Paradox: KL+MSE de-noises teacher Q-values",
+    "Dueling Trap: Dueling V/A separation unstable in 11-discrete-action BottleSumo",
+    "Penalty Paradox: Strong edge penalty → forced engagement → higher win rate",
+    "Training Non-monotonicity: Over-training causes catastrophic forgetting"
+  ],
+  "recommended_firmware_mapping": {
+    "file": "main_rule_fallback.c",
+    "fields": {
+      "PUSH_THRESHOLD_NORM": 0.285,
+      "EDGE_PENALTY_WEIGHT": 72,
+      "ACTION_BINS": 20,
+      "TARGET_UPDATE_STEPS": 400
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "source": "hermes",
+  "session_id": "7d6cf561-d7d0-4293-9f36-f2ed378a5d28",
+  "origin_source": "acp",
+  "title": "Hermes Agent Greets User and Offers Help",
+  "model": "deepseek-v4-flash",
+  "cwd": null,
+  "message_count": 108,
+  "input_tokens": 126894,
+  "output_tokens": 34855,
+  "cost_usd": 0.034379,
+  "started_at": "2026-08-14T16:18:35.968123",
+  "last_activity_at": null,
+  "git_branch": null,
+  "git_repo_root": null,
+  "sync_fingerprint": "0|108",
+  "sample": [
+    {
+      "role": "user",
+      "text": "[Assistant Rules] ## Available Skills  To load a skill, include `[LOAD_SKILL: skill-name]` in your response.  - **aionui-troubleshooting**: Diagnose a running AionUi installation: inspect stuck or errored conversations, read provider health, scheduled task state, MCP server health, team member state, backend health, and aioncore logs. Use when the user reports AionUi is misbehaving, a conversation"
+    },
+    {
+      "role": "assistant",
+      "text": "记忆后端有编码问题（可能是底层存储损坏），改用 fact_store 保存："
+    }
+  ],
+  "roles": {
+    "assistant": 45,
+    "tool": 58,
+    "user": 5
+  }
+}

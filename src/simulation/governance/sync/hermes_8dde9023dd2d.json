@@ -1,0 +1,19 @@
+{
+  "source": "hermes",
+  "session_id": "dcca2940-261d-4bbf-b508-0b36ba2d15c4",
+  "origin_source": "acp",
+  "title": "",
+  "model": "deepseek-v4-pro",
+  "cwd": null,
+  "message_count": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "cost_usd": 0,
+  "started_at": "2026-08-01T21:46:07.866555",
+  "last_activity_at": null,
+  "git_branch": null,
+  "git_repo_root": null,
+  "sync_fingerprint": "0|0",
+  "sample": [],
+  "roles": {}
+}

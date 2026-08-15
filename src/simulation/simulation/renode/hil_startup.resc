@@ -1,0 +1,22 @@
+# HIL Bridge startup script — loads both MCUs, starts robot port
+using sysbus
+
+$fw_main = @/mnt/c/Users/ivy/AppData/Roaming/AionUi/aionui/conversations/2026/07/27/aionrs-temp-48324704/bottlesumo_pi/firmware/stm32_mcu/build/bottlesumo_main.elf
+$fw_aux  = @/mnt/c/Users/ivy/AppData/Roaming/AionUi/aionui/conversations/2026/07/27/aionrs-temp-48324704/bottlesumo_pi/firmware/stm32_mcu/build/bottlesumo_aux.elf
+
+mach add "F407"
+mach set "F407"
+machine LoadPlatformDescription @platforms/cpus/stm32f4.repl
+sysbus LoadELF $fw_main
+
+mach add "F103"
+mach set "F103"
+machine LoadPlatformDescription @platforms/cpus/stm32f103.repl
+sysbus LoadELF $fw_aux
+
+mach set "F407"
+start
+mach set "F103"
+start
+
+echo "READY"

@@ -1,0 +1,76 @@
+{
+  "experiment": "ablation_curriculum_vs_penalty",
+  "executed_at": "2026-07-29 01:07:22",
+  "n_episodes_per_run": 500,
+  "total_duration_s": 506.1984660625458,
+  "results": {
+    "A_baseline": {
+      "mean_wr": 44.444444444444436,
+      "std": 6.136311676215148
+    },
+    "B_penalty_only": {
+      "mean_wr": 37.77777777777778,
+      "std": 2.832788618662661
+    },
+    "C_curriculum_only": {
+      "mean_wr": 38.333333333333336,
+      "std": 7.200822998230957
+    },
+    "D_full_V10CD": {
+      "mean_wr": 42.77777777777777,
+      "std": 7.973722274670736
+    }
+  },
+  "causal_effects": {
+    "penalty_main_effect": {
+      "value": -1.1111111111111143,
+      "interpretation": "Penalty strength causal effect on WR"
+    },
+    "curriculum_main_effect": {
+      "value": -0.55555555555555,
+      "interpretation": "Curriculum causal effect on WR"
+    },
+    "interaction": {
+      "value": 11.111111111111093,
+      "interpretation": "Super-additive (+) or sub-additive (-) interaction"
+    }
+  },
+  "per_condition_details": {
+    "A": {
+      "label": "Baseline (V10-C eq.)",
+      "config": {
+        "curriculum": false,
+        "edge_penalty_mult": 1.0
+      },
+      "mean_wr": 44.444444444444436,
+      "std_wr": 6.136311676215148
+    },
+    "B": {
+      "label": "Strong Penalty Only",
+      "config": {
+        "curriculum": false,
+        "edge_penalty_mult": 50.0
+      },
+      "mean_wr": 37.77777777777778,
+      "std_wr": 2.832788618662661
+    },
+    "C": {
+      "label": "Reverse Curriculum Only",
+      "config": {
+        "curriculum": true,
+        "edge_penalty_mult": 1.0
+      },
+      "mean_wr": 38.333333333333336,
+      "std_wr": 7.200822998230957
+    },
+    "D": {
+      "label": "V10-C+D Full",
+      "config": {
+        "curriculum": true,
+        "edge_penalty_mult": 50.0
+      },
+      "mean_wr": 42.77777777777777,
+      "std_wr": 7.973722274670736
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "source": "hermes",
+  "session_id": "52c10e5e-adf6-49e1-96e8-ae154c9dbaf7",
+  "origin_source": "acp",
+  "title": "高级组的软件环境搭建，核心就是装好 **Python、OpenCV、VS Code（代码编辑器）** 和 **Arduino IDE** 这几样。为了让你在没有机器人实体的时候也能调试，我还会介绍 **Webots 仿真软件**的安装。\n\n",
+  "model": "deepseek-v4-flash",
+  "cwd": null,
+  "message_count": 490,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "cost_usd": 0,
+  "started_at": "2026-07-18T10:59:16.060000",
+  "last_activity_at": "2026-07-19T14:26:57.926000",
+  "git_branch": null,
+  "git_repo_root": null,
+  "sync_fingerprint": "1784442417.926|490",
+  "sample": [
+    {
+      "role": "user",
+      "text": "高级组的软件环境搭建，核心就是装好 **Python、OpenCV、VS Code（代码编辑器）** 和 **Arduino IDE** 这几样。为了让你在没有机器人实体的时候也能调试，我还会介绍 **Webots 仿真软件**的安装。  整个安装过程可以分为以下几步。  ### 第一步：安装 Python 环境  Python 是编写视觉识别代码的基础。  1.  **访问官网下载**：打开 Python 官方网站 [python.org](https://www.python.org)。 2.  **选择版本**：在 Downloads 菜单中，根据你的操作系统（Windows/macOS/Linux）选择最新的 Python 3 版本。 3.  **安装与验证**：     *   **Windows**：运行下载的 `.exe` 文件。**务必勾选“Add Python to PA"
+    },
+    {
+      "role": "assistant",
+      "text": "**PyBullet 已经装好了！** 刚才的编译后台跑完了。下面是完整清单：  ---  ## 📦 已安装清单  ### 一、编程语言 | 软件 | 版本 | 位置 | 用途 | |------|------|------|------| | **Python 3.11** (32-bit) | 3.11.5 | `PATH` 默认 | 系统遗留，**别用它** | | **Python 3.12** (64-bit) | 3.12.10 | `C:\\Users\\ivy\\AppData\\Local\\Programs\\Python\\Python312` | ✅ **主力 Python**，跑仿真/视觉 |  ### 二、Python 包（装在 Python 3.12 64-bit） | 包 | 版本 | 用途 | |----|------|------| | ✅ **pybullet** "
+    }
+  ],
+  "roles": {
+    "assistant": 273,
+    "tool": 192,
+    "user": 25
+  }
+}

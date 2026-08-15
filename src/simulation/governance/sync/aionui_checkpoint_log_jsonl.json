@@ -1,0 +1,7 @@
+{
+  "name": "checkpoint_log.jsonl",
+  "mtime": "2026-08-14T13:45:32.634908",
+  "size": 333,
+  "sha256": "2edf975df67246f0d7c0cc9dc916f6ce8820a345116c01922f5df64bf7182e08",
+  "head": "{\"ts\": \"2026-08-13T16:19:38.254485\", \"verify\": \"PASS\", \"mismatch\": []}\r\n{\"ts\": \"2026-08-14T13:40:18.285267\", \"verify\": \"PASS\", \"mismatch\": []}\r\n{\"ts\": \"2026-08-14T13:42:45.494304\", \"verify\": \"FAIL\", \"mismatch\": [\"ANCHORS.md\", \"BOUNDARY.md\"]}\r\n{\"ts\": \"2026-08-14T13:45:32.634908\", \"verify\": \"FAIL\", \"mismatch\": [\"manifest(缺失)\"]}\r\n"
+}

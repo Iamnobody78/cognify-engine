@@ -1,0 +1,184 @@
+{"ts": "2026-08-07T18:28:10.894", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 3395.47, "status": "ok", "error": ""}
+{"ts": "2026-08-07T18:28:10.910", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 12.65, "status": "ok", "error": ""}
+{"ts": "2026-08-07T18:28:10.920", "server": "meta_cognition_server", "tool": "reasoning_chain_query", "args": "{\"latest_n\": 2}", "duration_ms": 7.15, "status": "ok", "error": ""}
+{"ts": "2026-08-07T18:28:13.559", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"grip decay fallback\", \"top_k\": 2, \"min_score\": 0.45}", "duration_ms": 2637.28, "status": "ok", "error": ""}
+{"ts": "2026-08-07T18:28:16.159", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"mcp integration\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 2596.41, "status": "ok", "error": ""}
+{"ts": "2026-08-07T18:28:16.564", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 403.92, "status": "ok", "error": ""}
+{"ts": "2026-08-07T18:28:16.569", "server": "environment_bootstrap_server", "tool": "check_write_scope", "args": "{\"target_file\": \"governance/meta_harness/meta_config.py\"}", "duration_ms": 2.91, "status": "ok", "error": ""}
+{"ts": "2026-08-07T18:28:16.575", "server": "environment_bootstrap_server", "tool": "check_write_scope", "args": "{\"target_file\": \"../outside_scope.txt\"}", "duration_ms": 4.81, "status": "ok", "error": ""}
+{"ts": "2026-08-07T18:28:16.582", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 3}", "duration_ms": 4.76, "status": "ok", "error": ""}
+{"ts": "2026-08-07T18:28:19.152", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"pareto frontier\", \"top_k\": 1, \"min_score\": 0.45}", "duration_ms": 2568.13, "status": "ok", "error": ""}
+{"ts": "2026-08-07T18:28:19.523", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 369.84, "status": "ok", "error": ""}
+{"ts": "2026-08-07T18:28:19.530", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 5.21, "status": "ok", "error": ""}
+{"ts": "2026-08-07T18:28:19.537", "server": "semantic_retrieval_server", "tool": "nonexistent_tool", "args": "{}", "duration_ms": 4.1, "status": "error", "error": "Unknown tool: nonexistent_tool"}
+{"ts": "2026-08-07T18:29:13.366", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 4167.18, "status": "ok", "error": ""}
+{"ts": "2026-08-07T18:46:27.184", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 5350.04, "status": "ok", "error": ""}
+{"ts": "2026-08-07T18:46:27.215", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 28.45, "status": "ok", "error": ""}
+{"ts": "2026-08-07T18:46:27.223", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 6.61, "status": "ok", "error": ""}
+{"ts": "2026-08-07T18:46:34.957", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 1: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 7731.99, "status": "ok", "error": ""}
+{"ts": "2026-08-07T18:58:00.974", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 4408.3, "status": "ok", "error": ""}
+{"ts": "2026-08-07T18:58:01.008", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 31.69, "status": "ok", "error": ""}
+{"ts": "2026-08-07T18:58:01.036", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 28.33, "status": "ok", "error": ""}
+{"ts": "2026-08-07T18:58:12.351", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 1: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 11313.1, "status": "ok", "error": ""}
+{"ts": "2026-08-07T19:04:25.314", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 495.89, "status": "ok", "error": ""}
+{"ts": "2026-08-07T19:04:25.325", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 7.98, "status": "ok", "error": ""}
+{"ts": "2026-08-07T19:04:25.352", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 25.99, "status": "ok", "error": ""}
+{"ts": "2026-08-07T19:04:35.358", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 2: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 10002.87, "status": "ok", "error": ""}
+{"ts": "2026-08-07T19:10:32.283", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 538.68, "status": "ok", "error": ""}
+{"ts": "2026-08-07T19:10:32.354", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 69.31, "status": "ok", "error": ""}
+{"ts": "2026-08-07T19:10:32.383", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 25.96, "status": "ok", "error": ""}
+{"ts": "2026-08-07T19:10:41.517", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 3: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 9134.41, "status": "ok", "error": ""}
+{"ts": "2026-08-07T19:27:35.613", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 448.13, "status": "ok", "error": ""}
+{"ts": "2026-08-07T19:27:35.649", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 38.19, "status": "ok", "error": ""}
+{"ts": "2026-08-07T19:27:35.668", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 9.54, "status": "ok", "error": ""}
+{"ts": "2026-08-07T19:27:45.606", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 4: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 9937.32, "status": "ok", "error": ""}
+{"ts": "2026-08-07T19:33:46.771", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 371.55, "status": "ok", "error": ""}
+{"ts": "2026-08-07T19:33:46.805", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 33.71, "status": "ok", "error": ""}
+{"ts": "2026-08-07T19:33:46.838", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 28.36, "status": "ok", "error": ""}
+{"ts": "2026-08-07T19:33:56.435", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 5: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 9596.02, "status": "ok", "error": ""}
+{"ts": "2026-08-07T19:39:52.526", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 433.86, "status": "ok", "error": ""}
+{"ts": "2026-08-07T19:39:52.559", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 31.81, "status": "ok", "error": ""}
+{"ts": "2026-08-07T19:39:52.589", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 29.79, "status": "ok", "error": ""}
+{"ts": "2026-08-07T19:40:01.873", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 6: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 9281.39, "status": "ok", "error": ""}
+{"ts": "2026-08-07T19:46:02.028", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 715.01, "status": "ok", "error": ""}
+{"ts": "2026-08-07T19:46:02.073", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 42.73, "status": "ok", "error": ""}
+{"ts": "2026-08-07T19:46:02.104", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 28.16, "status": "ok", "error": ""}
+{"ts": "2026-08-07T19:46:13.869", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 7: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 11763.93, "status": "ok", "error": ""}
+{"ts": "2026-08-07T19:52:31.032", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 343.05, "status": "ok", "error": ""}
+{"ts": "2026-08-07T19:52:31.069", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 35.02, "status": "ok", "error": ""}
+{"ts": "2026-08-07T19:52:31.095", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 23.46, "status": "ok", "error": ""}
+{"ts": "2026-08-07T19:52:40.835", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 8: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 9737.74, "status": "ok", "error": ""}
+{"ts": "2026-08-07T20:35:55.438", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 10}", "duration_ms": 3845.01, "status": "ok", "error": ""}
+{"ts": "2026-08-07T20:36:13.322", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 10}", "duration_ms": 3003.97, "status": "ok", "error": ""}
+{"ts": "2026-08-07T21:49:12.088", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 7314.37, "status": "ok", "error": ""}
+{"ts": "2026-08-07T21:49:12.162", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 68.87, "status": "ok", "error": ""}
+{"ts": "2026-08-07T21:49:12.178", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 13.11, "status": "ok", "error": ""}
+{"ts": "2026-08-07T21:49:22.388", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 1: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 10198.41, "status": "ok", "error": ""}
+{"ts": "2026-08-07T21:55:36.745", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 337.86, "status": "ok", "error": ""}
+{"ts": "2026-08-07T21:55:36.754", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 10.52, "status": "ok", "error": ""}
+{"ts": "2026-08-07T21:55:36.784", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 26.84, "status": "ok", "error": ""}
+{"ts": "2026-08-07T21:55:46.314", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 2: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 9525.9, "status": "ok", "error": ""}
+{"ts": "2026-08-07T22:02:04.980", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 386.36, "status": "ok", "error": ""}
+{"ts": "2026-08-07T22:02:05.019", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 35.96, "status": "ok", "error": ""}
+{"ts": "2026-08-07T22:02:05.048", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 26.22, "status": "ok", "error": ""}
+{"ts": "2026-08-07T22:02:14.548", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 3: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 9498.11, "status": "ok", "error": ""}
+{"ts": "2026-08-07T22:08:25.229", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 401.8, "status": "ok", "error": ""}
+{"ts": "2026-08-07T22:08:25.262", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 33.3, "status": "ok", "error": ""}
+{"ts": "2026-08-07T22:08:25.290", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 22.29, "status": "ok", "error": ""}
+{"ts": "2026-08-07T22:08:34.417", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 4: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 9126.83, "status": "ok", "error": ""}
+{"ts": "2026-08-07T22:14:52.331", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 413.16, "status": "ok", "error": ""}
+{"ts": "2026-08-07T22:14:52.369", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 32.18, "status": "ok", "error": ""}
+{"ts": "2026-08-07T22:14:52.390", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 21.73, "status": "ok", "error": ""}
+{"ts": "2026-08-07T22:15:02.379", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 5: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 9982.4, "status": "ok", "error": ""}
+{"ts": "2026-08-07T22:32:09.830", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 4888.31, "status": "ok", "error": ""}
+{"ts": "2026-08-07T22:32:09.868", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 33.56, "status": "ok", "error": ""}
+{"ts": "2026-08-07T22:32:09.897", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 29.87, "status": "ok", "error": ""}
+{"ts": "2026-08-07T22:32:19.230", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 1: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 9329.82, "status": "ok", "error": ""}
+{"ts": "2026-08-07T22:45:04.377", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 4165.54, "status": "ok", "error": ""}
+{"ts": "2026-08-07T22:45:04.406", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 24.17, "status": "ok", "error": ""}
+{"ts": "2026-08-07T22:45:04.411", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 6.99, "status": "ok", "error": ""}
+{"ts": "2026-08-07T22:45:14.298", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 1: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 9882.15, "status": "ok", "error": ""}
+{"ts": "2026-08-07T22:52:10.784", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 393.54, "status": "ok", "error": ""}
+{"ts": "2026-08-07T22:52:10.801", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 11.93, "status": "ok", "error": ""}
+{"ts": "2026-08-07T22:52:10.829", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 27.1, "status": "ok", "error": ""}
+{"ts": "2026-08-07T22:52:20.155", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 2: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 9321.38, "status": "ok", "error": ""}
+{"ts": "2026-08-07T22:58:28.240", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 528.34, "status": "ok", "error": ""}
+{"ts": "2026-08-07T22:58:28.279", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 38.94, "status": "ok", "error": ""}
+{"ts": "2026-08-07T22:58:28.309", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 24.2, "status": "ok", "error": ""}
+{"ts": "2026-08-07T22:58:38.540", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 3: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 10229.97, "status": "ok", "error": ""}
+{"ts": "2026-08-07T23:04:53.365", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 483.56, "status": "ok", "error": ""}
+{"ts": "2026-08-07T23:04:53.396", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 34.28, "status": "ok", "error": ""}
+{"ts": "2026-08-07T23:04:53.431", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 25.32, "status": "ok", "error": ""}
+{"ts": "2026-08-07T23:05:03.243", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 4: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 9808.93, "status": "ok", "error": ""}
+{"ts": "2026-08-07T23:07:48.641", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 16941.76, "status": "ok", "error": ""}
+{"ts": "2026-08-07T23:07:48.765", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 100.22, "status": "ok", "error": ""}
+{"ts": "2026-08-07T23:07:48.773", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 5.84, "status": "ok", "error": ""}
+{"ts": "2026-08-07T23:07:57.727", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 1: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 8952.68, "status": "ok", "error": ""}
+{"ts": "2026-08-07T23:11:32.073", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 1682.12, "status": "ok", "error": ""}
+{"ts": "2026-08-07T23:11:32.143", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 65.15, "status": "ok", "error": ""}
+{"ts": "2026-08-07T23:11:32.194", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 48.1, "status": "ok", "error": ""}
+{"ts": "2026-08-07T23:11:36.553", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 5: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 4341.89, "status": "ok", "error": ""}
+{"ts": "2026-08-07T23:20:47.441", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 3763.32, "status": "ok", "error": ""}
+{"ts": "2026-08-07T23:20:47.475", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 30.44, "status": "ok", "error": ""}
+{"ts": "2026-08-07T23:20:47.481", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 4.68, "status": "ok", "error": ""}
+{"ts": "2026-08-07T23:20:57.399", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 1: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 9916.86, "status": "ok", "error": ""}
+{"ts": "2026-08-07T23:33:27.110", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 310.73, "status": "ok", "error": ""}
+{"ts": "2026-08-07T23:33:27.132", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 19.91, "status": "ok", "error": ""}
+{"ts": "2026-08-07T23:33:27.140", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 5.6, "status": "ok", "error": ""}
+{"ts": "2026-08-07T23:33:36.512", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 2: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 9371.4, "status": "ok", "error": ""}
+{"ts": "2026-08-07T23:37:14.480", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 5859.68, "status": "ok", "error": ""}
+{"ts": "2026-08-07T23:37:14.524", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 37.75, "status": "ok", "error": ""}
+{"ts": "2026-08-07T23:37:14.533", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 8.29, "status": "ok", "error": ""}
+{"ts": "2026-08-07T23:37:18.235", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 1: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 3700.54, "status": "ok", "error": ""}
+{"ts": "2026-08-07T23:47:56.309", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 281.63, "status": "ok", "error": ""}
+{"ts": "2026-08-07T23:47:56.318", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 8.44, "status": "ok", "error": ""}
+{"ts": "2026-08-07T23:47:56.323", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 4.31, "status": "ok", "error": ""}
+{"ts": "2026-08-07T23:48:05.461", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 2: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 9135.12, "status": "ok", "error": ""}
+{"ts": "2026-08-07T23:56:27.735", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 3769.32, "status": "ok", "error": ""}
+{"ts": "2026-08-07T23:56:27.762", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 25.65, "status": "ok", "error": ""}
+{"ts": "2026-08-07T23:56:27.769", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 6.09, "status": "ok", "error": ""}
+{"ts": "2026-08-07T23:56:38.010", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 1: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 10238.01, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:07:46.846", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 336.78, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:07:46.858", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 11.6, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:07:46.867", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 4.27, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:07:56.276", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 2: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 9408.46, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:11:27.257", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 342.67, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:11:27.295", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 35.47, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:11:27.301", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 4.44, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:11:29.910", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 3: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 2608.02, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:12:41.450", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 3771.55, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:12:41.479", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 27.28, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:12:41.487", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 3.84, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:12:44.803", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 1: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 3314.08, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:16:45.497", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 432.28, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:16:45.509", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 10.13, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:16:45.538", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 27.83, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:16:48.239", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 2: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 2698.3, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:21:29.370", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 346.47, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:21:29.421", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 37.39, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:21:29.447", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 26.49, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:21:32.122", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 3: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 2671.7, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:31:09.569", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 387.17, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:31:09.602", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 31.15, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:31:09.606", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 3.86, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:31:18.392", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 4: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 8785.1, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:34:46.086", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 4145.12, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:34:46.121", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 32.7, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:34:46.133", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 9.92, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:34:48.845", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 1: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 2710.18, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:41:05.274", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 351.39, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:41:05.285", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 9.56, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:41:05.310", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 23.36, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:41:14.300", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 2: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 8988.28, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:48:32.482", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 388.71, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:48:32.517", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 33.82, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:48:32.539", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 22.36, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:48:39.633", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 3: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 7090.17, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:53:25.675", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 424.16, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:53:25.761", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 71.99, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:53:25.798", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 35.7, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:53:28.527", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 4: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 2725.01, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:58:06.093", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 275.85, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:58:06.225", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 130.73, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:58:06.227", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 3.82, "status": "ok", "error": ""}
+{"ts": "2026-08-08T00:58:08.884", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 5: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 2651.04, "status": "ok", "error": ""}
+{"ts": "2026-08-08T01:24:35.149", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 3653.35, "status": "ok", "error": ""}
+{"ts": "2026-08-08T01:24:35.186", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 34.33, "status": "ok", "error": ""}
+{"ts": "2026-08-08T01:24:35.193", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 5.3, "status": "ok", "error": ""}
+{"ts": "2026-08-08T01:24:43.343", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 1: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 8147.86, "status": "ok", "error": ""}
+{"ts": "2026-08-08T01:30:47.939", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 402.87, "status": "ok", "error": ""}
+{"ts": "2026-08-08T01:30:47.956", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 11.33, "status": "ok", "error": ""}
+{"ts": "2026-08-08T01:30:47.984", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 26.37, "status": "ok", "error": ""}
+{"ts": "2026-08-08T01:30:56.972", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 2: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 8987.47, "status": "ok", "error": ""}
+{"ts": "2026-08-08T01:35:47.780", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 295.18, "status": "ok", "error": ""}
+{"ts": "2026-08-08T01:35:47.829", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 44.57, "status": "ok", "error": ""}
+{"ts": "2026-08-08T01:35:47.857", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 25.88, "status": "ok", "error": ""}
+{"ts": "2026-08-08T01:35:50.549", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 3: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 2691.23, "status": "ok", "error": ""}
+{"ts": "2026-08-08T01:42:54.745", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 289.33, "status": "ok", "error": ""}
+{"ts": "2026-08-08T01:42:54.772", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 28.65, "status": "ok", "error": ""}
+{"ts": "2026-08-08T01:42:54.792", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 21.62, "status": "ok", "error": ""}
+{"ts": "2026-08-08T01:43:04.088", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 4: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 9289.2, "status": "ok", "error": ""}
+{"ts": "2026-08-08T01:47:51.148", "server": "environment_bootstrap_server", "tool": "environment_snapshot", "args": "{}", "duration_ms": 460.24, "status": "ok", "error": ""}
+{"ts": "2026-08-08T01:47:51.184", "server": "meta_cognition_server", "tool": "meta_config_status", "args": "{}", "duration_ms": 35.26, "status": "ok", "error": ""}
+{"ts": "2026-08-08T01:47:51.214", "server": "meta_cognition_server", "tool": "hypothesis_stats", "args": "{\"top_n\": 5}", "duration_ms": 26.59, "status": "ok", "error": ""}
+{"ts": "2026-08-08T01:47:54.055", "server": "semantic_retrieval_server", "tool": "semantic_search", "args": "{\"query\": \"round 5: 寻找提升门分数与效率的改进\", \"top_k\": 3, \"min_score\": 0.45}", "duration_ms": 2839.8, "status": "ok", "error": ""}

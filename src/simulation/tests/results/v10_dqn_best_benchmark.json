@@ -1,0 +1,32 @@
+{
+  "model": "v10_dqn_best.pt",
+  "n_episodes_per_profile": 20,
+  "results": {
+    "aggressive": {
+      "win_rate_pct": 50.0,
+      "edge_drops": 10,
+      "avg_reward": 42.178720474243164,
+      "total": 20
+    },
+    "moderate": {
+      "win_rate_pct": 35.0,
+      "edge_drops": 13,
+      "avg_reward": 8.405932235717774,
+      "total": 20
+    },
+    "passive": {
+      "win_rate_pct": 40.0,
+      "edge_drops": 12,
+      "avg_reward": 21.68825569152832,
+      "total": 20
+    },
+    "stationary": {
+      "win_rate_pct": 25.0,
+      "edge_drops": 15,
+      "avg_reward": -32.89463348388672,
+      "total": 20
+    }
+  },
+  "overall_win_rate_pct": 37.5,
+  "overall_edge_drops": 50
+}

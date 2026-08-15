@@ -1,0 +1,10 @@
+# BottleSumo Python deps (WSL / colcon-less scripts)
+# TASK-005c (2026-08-05): rerun-sdk for 3D real-time dashboard.
+# Fallback if install fails in CI: visualizer.py degrades to matplotlib CLI
+# + rviz2 for pure 3D (PM-approved), but rerun-sdk is the primary path.
+rerun-sdk>=0.35.0
+numpy>=1.24
+pyyaml>=6.0
+pandas>=2.0
+pyarrow>=14.0
+gym>=0.26

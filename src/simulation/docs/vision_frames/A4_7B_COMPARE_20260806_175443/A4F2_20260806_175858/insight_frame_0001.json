@@ -1,0 +1,39 @@
+{
+  "objects": [
+    {
+      "class": "robot",
+      "position_px": [
+        0,
+        0
+      ],
+      "confidence": 1.0
+    },
+    {
+      "class": "opponent",
+      "position_px": [
+        0,
+        0
+      ],
+      "confidence": 1.0
+    }
+  ],
+  "robot": {
+    "x": 0.0,
+    "y": 0.0,
+    "heading_deg": 0.0
+  },
+  "opponent": {
+    "x": 0.0,
+    "y": 0.0,
+    "heading_deg": 0.0
+  },
+  "edge_min": 0.925,
+  "zone": "safe",
+  "anomaly": null,
+  "confidence": 0.65,
+  "_meta": {
+    "model": "qwen2.5vl:7b",
+    "latency_s": 75.53,
+    "mode": "on_demand"
+  }
+}

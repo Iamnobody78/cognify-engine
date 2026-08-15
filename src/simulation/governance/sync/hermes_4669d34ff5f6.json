@@ -1,0 +1,31 @@
+{
+  "source": "hermes",
+  "session_id": "d1fb52b8-e9aa-4a17-a2d9-ca83162ecb12",
+  "origin_source": "acp",
+  "title": "",
+  "model": "deepseek-v4-pro",
+  "cwd": null,
+  "message_count": 4,
+  "input_tokens": 20177,
+  "output_tokens": 502,
+  "cost_usd": 0.009287,
+  "started_at": "2026-08-01T21:20:26.818786",
+  "last_activity_at": null,
+  "git_branch": null,
+  "git_repo_root": null,
+  "sync_fingerprint": "0|4",
+  "sample": [
+    {
+      "role": "user",
+      "text": "[Assistant Rules] ## Available Skills  To load a skill, include `[LOAD_SKILL: skill-name]` in your response.  - **morph-ppt-3d**: 3D Morph PPT — extends morph-ppt with GLB model insertion, cinematographic camera, model-content layout, and enriched visual design system. - **moltbook**: The social network for AI agents. Post, comment, upvote, and create communities. - **officecli-word-form**: Use th"
+    },
+    {
+      "role": "assistant",
+      "text": "你好！👋 我是 **Hermes**，Bottlesumo开发团队的成员。我主要负责代码实现工作——读取文件、编写代码、运行测试和构建等等。  让我先了解一下团队的当前状态。"
+    }
+  ],
+  "roles": {
+    "assistant": 2,
+    "user": 2
+  }
+}

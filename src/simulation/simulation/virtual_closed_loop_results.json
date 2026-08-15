@@ -1,0 +1,83 @@
+{
+  "test": "virtual_closed_loop",
+  "status": "PARTIAL",
+  "episodes": 10,
+  "total_frames": 482,
+  "elapsed_seconds": 0.0,
+  "avg_fps": 2458.7,
+  "success_rate": 0.0,
+  "avg_reward": 182.9,
+  "crashes": 10,
+  "episode_stats": [
+    {
+      "episode": 1,
+      "steps": 126,
+      "reward": 153.10000610351562,
+      "crashed": true,
+      "fps": 11516.3
+    },
+    {
+      "episode": 2,
+      "steps": 1,
+      "reward": 200.0,
+      "crashed": true,
+      "fps": 91.4
+    },
+    {
+      "episode": 3,
+      "steps": 1,
+      "reward": 200.0,
+      "crashed": true,
+      "fps": 91.4
+    },
+    {
+      "episode": 4,
+      "steps": 1,
+      "reward": 200.0,
+      "crashed": true,
+      "fps": 91.4
+    },
+    {
+      "episode": 5,
+      "steps": 96,
+      "reward": 50.599998474121094,
+      "crashed": true,
+      "fps": 5363.5
+    },
+    {
+      "episode": 6,
+      "steps": 1,
+      "reward": 200.0,
+      "crashed": true,
+      "fps": 55.9
+    },
+    {
+      "episode": 7,
+      "steps": 1,
+      "reward": 200.0,
+      "crashed": true,
+      "fps": 55.9
+    },
+    {
+      "episode": 8,
+      "steps": 1,
+      "reward": 200.0,
+      "crashed": true,
+      "fps": 52.8
+    },
+    {
+      "episode": 9,
+      "steps": 155,
+      "reward": 366.79998779296875,
+      "crashed": true,
+      "fps": 4727.5
+    },
+    {
+      "episode": 10,
+      "steps": 99,
+      "reward": 58.099998474121094,
+      "crashed": true,
+      "fps": 2541.2
+    }
+  ]
+}

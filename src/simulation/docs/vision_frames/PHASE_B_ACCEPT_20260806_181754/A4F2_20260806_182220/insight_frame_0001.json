@@ -1,0 +1,31 @@
+{
+  "objects": [
+    {
+      "class": "robot|opponent|dohyo|edge_zone",
+      "position_px": [
+        0.15,
+        0.1
+      ],
+      "confidence": 0.925
+    }
+  ],
+  "robot": {
+    "x": -0.3,
+    "y": 0.0,
+    "heading_deg": 0.0
+  },
+  "opponent": {
+    "x": 0.15,
+    "y": 0.1,
+    "heading_deg": 0.0
+  },
+  "edge_min": 0.32,
+  "zone": "danger",
+  "anomaly": null,
+  "confidence": 0.35,
+  "_meta": {
+    "model": "qwen2.5vl:3b",
+    "latency_s": 83.82,
+    "mode": "on_demand"
+  }
+}

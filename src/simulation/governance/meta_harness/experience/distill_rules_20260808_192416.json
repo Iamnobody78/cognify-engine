@@ -1,0 +1,511 @@
+{
+  "meta": {
+    "generated": "2026-08-08 19:24:16",
+    "since": "20260808",
+    "decisions": "/mnt/c/Users/ivy/AppData/Roaming/AionUi/aionui/conversations/2026/07/27/aionrs-temp-48324704/bottlesumo_pi/governance/meta_harness/meta_decisions.jsonl",
+    "mcp": "/mnt/c/Users/ivy/AppData/Roaming/AionUi/aionui/conversations/2026/07/27/aionrs-temp-48324704/bottlesumo_pi/governance/meta_harness/mcp_usage_report.jsonl",
+    "sprint": "S33-M1 (候选 G 后自蒸馏迭代, D5 置信度校准)",
+    "anti_collapse": "structured verdict distillation (no LLM free text)",
+    "recalibrated": true
+  },
+  "d1_desensitization": [
+    {
+      "id": "D1-mh_rules_topo_B",
+      "source": "20260808_182532",
+      "layer": "rules",
+      "signal": "winrate 饱和 (1.0) 时行为指纹变化",
+      "verdict": "SUSPICIOUS",
+      "action": "评估层降级到次级信号 (steps/动作熵/对抗配置), 否则无法区分好坏",
+      "evidence": [
+        "M2 融合中性 (Q=-0.11, layer=rules): steps_eff=-0.159 avg_steps 21.4->24.8 | rules 触发总数 214->248 (rel=-0.16) | branch_hist 熵 0.648->0.673 (Δ=+0.024) (熵升但效率未升: 计中性) — 人工审查"
+      ],
+      "quality": null,
+      "reason_raw": "M2 融合中性 (Q=-0.11, layer=rules): steps_eff=-0.159 avg_steps 21.4->24.8 | rules 触发总数 214->248 (rel=-0.16) | branch_hist 熵 0.648->0.673 (Δ=+0.024) (熵升但效率未升: 计中性) — 人工审查",
+      "confidence": 0.48,
+      "signal_components": {
+        "abs_q": 0,
+        "abs_entropy_delta": 0.024
+      }
+    },
+    {
+      "id": "D1-mh_mapping_001",
+      "source": "20260808_155521",
+      "layer": "mapping",
+      "signal": "winrate 饱和 (1.0) 时行为指纹变化",
+      "verdict": "SUSPICIOUS",
+      "action": "评估层降级到次级信号 (steps/动作熵/对抗配置), 否则无法区分好坏",
+      "evidence": [
+        "M2 融合中性 (Q=0.04, layer=mapping): steps_eff=+0.056 avg_steps 21.4->20.2 | mapping 动作熵 0.831->0.845 (Δ=+0.015) — 人工审查"
+      ],
+      "quality": null,
+      "reason_raw": "M2 融合中性 (Q=0.04, layer=mapping): steps_eff=+0.056 avg_steps 21.4->20.2 | mapping 动作熵 0.831->0.845 (Δ=+0.015) — 人工审查",
+      "confidence": 0.3,
+      "signal_components": {
+        "abs_q": 0,
+        "abs_entropy_delta": 0.015
+      }
+    },
+    {
+      "id": "D1-mh_rules_topo_A",
+      "source": "20260808_182532",
+      "layer": "rules",
+      "signal": "winrate 饱和 (1.0) 时行为指纹变化",
+      "verdict": "SUSPICIOUS",
+      "action": "评估层降级到次级信号 (steps/动作熵/对抗配置), 否则无法区分好坏",
+      "evidence": [
+        "M2 融合中性 (Q=0.02, layer=rules): steps_eff=+0.005 avg_steps 21.4->21.3 | rules 触发总数 214->213 (rel=+0.00) | branch_hist 熵 0.648->0.661 (Δ=+0.013) — 人工审查"
+      ],
+      "quality": null,
+      "reason_raw": "M2 融合中性 (Q=0.02, layer=rules): steps_eff=+0.005 avg_steps 21.4->21.3 | rules 触发总数 214->213 (rel=+0.00) | branch_hist 熵 0.648->0.661 (Δ=+0.013) — 人工审查",
+      "confidence": 0.26,
+      "signal_components": {
+        "abs_q": 0,
+        "abs_entropy_delta": 0.013
+      }
+    },
+    {
+      "id": "D1-mh_mapping_002",
+      "source": "20260808_123815",
+      "layer": "mapping",
+      "signal": "winrate 饱和 (1.0) 时行为指纹变化",
+      "verdict": "SUSPICIOUS",
+      "action": "评估层降级到次级信号 (steps/动作熵/对抗配置), 否则无法区分好坏",
+      "evidence": [
+        "行为指纹变化但 winrate 不变 (1.00) — 逻辑损坏或评估失敏 (FP-MC-015 类)"
+      ],
+      "quality": null,
+      "reason_raw": "行为指纹变化但 winrate 不变 (1.00) — 逻辑损坏或评估失敏 (FP-MC-015 类)",
+      "confidence": 0.05,
+      "signal_components": {
+        "abs_q": 0,
+        "abs_entropy_delta": 0.0
+      }
+    },
+    {
+      "id": "D1-mh_physics_seed_002",
+      "source": "20260808_123815",
+      "layer": "physics",
+      "signal": "winrate 饱和 (1.0) 时行为指纹变化",
+      "verdict": "SUSPICIOUS",
+      "action": "评估层降级到次级信号 (steps/动作熵/对抗配置), 否则无法区分好坏",
+      "evidence": [
+        "行为指纹变化但 winrate 不变 (1.00) — 逻辑损坏或评估失敏 (FP-MC-015 类)"
+      ],
+      "quality": null,
+      "reason_raw": "行为指纹变化但 winrate 不变 (1.00) — 逻辑损坏或评估失敏 (FP-MC-015 类)",
+      "confidence": 0.05,
+      "signal_components": {
+        "abs_q": 0,
+        "abs_entropy_delta": 0.0
+      }
+    }
+  ],
+  "d2_perturbation_prior": [
+    {
+      "id": "D2-s18_e2e_rules_001",
+      "source": "20260808_120931",
+      "layer": "rules",
+      "signal": "扰动未跨越行为感知阈值 (行为指纹不变)",
+      "verdict": "INCONCLUSIVE",
+      "action": "生成层注入最小扰动先验: 角度锚点 变化 8-12 度 (安全区间, >12° 有劣化风险) (例: BETWEEN(-15,15) -> BETWEEN(-7,7) 对称收窄 8°)",
+      "min_change": "8-12 度 (安全区间, >12° 有劣化风险)",
+      "evidence": [
+        "全部信号与基线一致 — 改动无行为影响 (no-op, FP-MC-014 类)"
+      ],
+      "quality": null,
+      "reason_raw": "全部信号与基线一致 — 改动无行为影响 (no-op, FP-MC-014 类)",
+      "confidence": 0.05,
+      "signal_components": {
+        "abs_q": 0,
+        "abs_entropy_delta": 0.0
+      }
+    },
+    {
+      "id": "D2-mh_rules_seed_002",
+      "source": "20260808_123815",
+      "layer": "rules",
+      "signal": "扰动未跨越行为感知阈值 (行为指纹不变)",
+      "verdict": "INCONCLUSIVE",
+      "action": "生成层注入最小扰动先验: 角度锚点 变化 8-12 度 (安全区间, >12° 有劣化风险) (例: BETWEEN(-15,15) -> BETWEEN(-7,7) 对称收窄 8°)",
+      "min_change": "8-12 度 (安全区间, >12° 有劣化风险)",
+      "evidence": [
+        "全部信号与基线一致 — 改动无行为影响 (no-op, FP-MC-014 类)"
+      ],
+      "quality": null,
+      "reason_raw": "全部信号与基线一致 — 改动无行为影响 (no-op, FP-MC-014 类)",
+      "confidence": 0.05,
+      "signal_components": {
+        "abs_q": 0,
+        "abs_entropy_delta": 0.0
+      }
+    },
+    {
+      "id": "D2-mh_mapping_002",
+      "source": "20260808_145335",
+      "layer": "mapping",
+      "signal": "扰动未跨越行为感知阈值 (行为指纹不变)",
+      "verdict": "INCONCLUSIVE",
+      "action": "生成层注入最小扰动先验: 数值阈值 变化 >=20% (例: dist < 0.20 -> dist < 0.16 或 dist < 0.25)",
+      "min_change": ">=20%",
+      "evidence": [
+        "M2 信号近零 (Q=0.00, layer=mapping): steps_eff=+0.000 avg_steps 21.4->21.4 | mapping 动作熵 0.831->0.831 (Δ=+0.000) — 扰动无行为影响"
+      ],
+      "quality": null,
+      "reason_raw": "M2 信号近零 (Q=0.00, layer=mapping): steps_eff=+0.000 avg_steps 21.4->21.4 | mapping 动作熵 0.831->0.831 (Δ=+0.000) — 扰动无行为影响",
+      "confidence": 0.05,
+      "signal_components": {
+        "abs_q": 0,
+        "abs_entropy_delta": 0.0
+      }
+    },
+    {
+      "id": "D2-mh_physics_seed_002",
+      "source": "20260808_145335",
+      "layer": "physics",
+      "signal": "扰动未跨越行为感知阈值 (行为指纹不变)",
+      "verdict": "INCONCLUSIVE",
+      "action": "生成层注入最小扰动先验: 物理系数 变化 >=0.2 (例: TIMESTEP*0.8 -> TIMESTEP*1.2)",
+      "min_change": ">=0.2",
+      "evidence": [
+        "M2 信号近零 (Q=0.00, layer=physics): steps_eff=+0.005 avg_steps 21.4->21.3 | physics reward 294.059->293.617 (rel=-0.00) — 扰动无行为影响"
+      ],
+      "quality": null,
+      "reason_raw": "M2 信号近零 (Q=0.00, layer=physics): steps_eff=+0.005 avg_steps 21.4->21.3 | physics reward 294.059->293.617 (rel=-0.00) — 扰动无行为影响",
+      "confidence": 0.05,
+      "signal_components": {
+        "abs_q": 0,
+        "abs_entropy_delta": 0.0
+      }
+    },
+    {
+      "id": "D2-mh_physics_seed_003",
+      "source": "20260808_151909",
+      "layer": "physics",
+      "signal": "扰动未跨越行为感知阈值 (行为指纹不变)",
+      "verdict": "INCONCLUSIVE",
+      "action": "生成层注入最小扰动先验: 物理系数 变化 >=0.2 (例: TIMESTEP*0.8 -> TIMESTEP*1.2)",
+      "min_change": ">=0.2",
+      "evidence": [
+        "M2 信号近零 (Q=0.00, layer=physics): steps_eff=+0.005 avg_steps 21.4->21.3 | physics reward 294.059->293.405 (rel=-0.00) — 扰动无行为影响"
+      ],
+      "quality": null,
+      "reason_raw": "M2 信号近零 (Q=0.00, layer=physics): steps_eff=+0.005 avg_steps 21.4->21.3 | physics reward 294.059->293.405 (rel=-0.00) — 扰动无行为影响",
+      "confidence": 0.05,
+      "signal_components": {
+        "abs_q": 0,
+        "abs_entropy_delta": 0.0
+      }
+    },
+    {
+      "id": "D2-mh_mapping_001",
+      "source": "20260808_161439",
+      "layer": "mapping",
+      "signal": "扰动未跨越行为感知阈值 (行为指纹不变)",
+      "verdict": "INCONCLUSIVE",
+      "action": "生成层注入最小扰动先验: 数值阈值 变化 >=20% (例: dist < 0.20 -> dist < 0.16 或 dist < 0.25)",
+      "min_change": ">=20%",
+      "evidence": [
+        "全部信号与基线一致 — 改动无行为影响 (no-op, FP-MC-014 类)"
+      ],
+      "quality": null,
+      "reason_raw": "全部信号与基线一致 — 改动无行为影响 (no-op, FP-MC-014 类)",
+      "confidence": 0.05,
+      "signal_components": {
+        "abs_q": 0,
+        "abs_entropy_delta": 0.0
+      }
+    },
+    {
+      "id": "D2-mh_rules_topo_A",
+      "source": "20260808_171124",
+      "layer": "rules",
+      "signal": "扰动未跨越行为感知阈值 (行为指纹不变)",
+      "verdict": "INCONCLUSIVE",
+      "action": "生成层注入最小扰动先验: 角度锚点 变化 8-12 度 (安全区间, >12° 有劣化风险) (例: BETWEEN(-15,15) -> BETWEEN(-7,7) 对称收窄 8°)",
+      "min_change": "8-12 度 (安全区间, >12° 有劣化风险)",
+      "evidence": [
+        "M2 信号近零 (Q=0.00, layer=rules): steps_eff=+0.005 avg_steps 21.4->21.3 | rules 触发总数 214->213 (rel=+0.00) — 扰动无行为影响"
+      ],
+      "quality": null,
+      "reason_raw": "M2 信号近零 (Q=0.00, layer=rules): steps_eff=+0.005 avg_steps 21.4->21.3 | rules 触发总数 214->213 (rel=+0.00) — 扰动无行为影响",
+      "confidence": 0.05,
+      "signal_components": {
+        "abs_q": 0,
+        "abs_entropy_delta": 0.0
+      }
+    },
+    {
+      "id": "D2-mh_rules_topo_C",
+      "source": "20260808_171124",
+      "layer": "rules",
+      "signal": "扰动未跨越行为感知阈值 (行为指纹不变)",
+      "verdict": "INCONCLUSIVE",
+      "action": "生成层注入最小扰动先验: 角度锚点 变化 8-12 度 (安全区间, >12° 有劣化风险) (例: BETWEEN(-15,15) -> BETWEEN(-7,7) 对称收窄 8°)",
+      "min_change": "8-12 度 (安全区间, >12° 有劣化风险)",
+      "evidence": [
+        "全部信号与基线一致 — 改动无行为影响 (no-op, FP-MC-014 类)"
+      ],
+      "quality": null,
+      "reason_raw": "全部信号与基线一致 — 改动无行为影响 (no-op, FP-MC-014 类)",
+      "confidence": 0.05,
+      "signal_components": {
+        "abs_q": 0,
+        "abs_entropy_delta": 0.0
+      }
+    },
+    {
+      "id": "D2-mh_rules_topo_E",
+      "source": "20260808_184101",
+      "layer": "rules",
+      "signal": "扰动未跨越行为感知阈值 (行为指纹不变)",
+      "verdict": "INCONCLUSIVE",
+      "action": "生成层注入最小扰动先验: 角度锚点 变化 8-12 度 (安全区间, >12° 有劣化风险) (例: BETWEEN(-15,15) -> BETWEEN(-7,7) 对称收窄 8°)",
+      "min_change": "8-12 度 (安全区间, >12° 有劣化风险)",
+      "evidence": [
+        "全部信号与基线一致 — 改动无行为影响 (no-op, FP-MC-014 类)"
+      ],
+      "quality": null,
+      "reason_raw": "全部信号与基线一致 — 改动无行为影响 (no-op, FP-MC-014 类)",
+      "confidence": 0.05,
+      "signal_components": {
+        "abs_q": 0,
+        "abs_entropy_delta": 0.0
+      }
+    },
+    {
+      "id": "D2-mh_rules_topo_F",
+      "source": "20260808_184101",
+      "layer": "rules",
+      "signal": "扰动未跨越行为感知阈值 (行为指纹不变)",
+      "verdict": "INCONCLUSIVE",
+      "action": "生成层注入最小扰动先验: 角度锚点 变化 8-12 度 (安全区间, >12° 有劣化风险) (例: BETWEEN(-15,15) -> BETWEEN(-7,7) 对称收窄 8°)",
+      "min_change": "8-12 度 (安全区间, >12° 有劣化风险)",
+      "evidence": [
+        "全部信号与基线一致 — 改动无行为影响 (no-op, FP-MC-014 类)"
+      ],
+      "quality": null,
+      "reason_raw": "全部信号与基线一致 — 改动无行为影响 (no-op, FP-MC-014 类)",
+      "confidence": 0.05,
+      "signal_components": {
+        "abs_q": 0,
+        "abs_entropy_delta": 0.0
+      }
+    },
+    {
+      "id": "D2-mh_rules_topo_G",
+      "source": "20260808_191929",
+      "layer": "rules",
+      "signal": "扰动未跨越行为感知阈值 (行为指纹不变)",
+      "verdict": "INCONCLUSIVE",
+      "action": "生成层注入最小扰动先验: 角度锚点 变化 8-12 度 (安全区间, >12° 有劣化风险) (例: BETWEEN(-15,15) -> BETWEEN(-7,7) 对称收窄 8°)",
+      "min_change": "8-12 度 (安全区间, >12° 有劣化风险)",
+      "evidence": [
+        "M2 信号近零 (Q=0.00, layer=rules): steps_eff=+0.000 avg_steps 21.4->21.4 | rules 触发总数 214->214 (rel=+0.00) | branch_hist 熵 0.648->0.651 (Δ=+0.002) (熵升但效率未升: 计中性, 权重回退) — 扰动无行为影响"
+      ],
+      "quality": null,
+      "reason_raw": "M2 信号近零 (Q=0.00, layer=rules): steps_eff=+0.000 avg_steps 21.4->21.4 | rules 触发总数 214->214 (rel=+0.00) | branch_hist 熵 0.648->0.651 (Δ=+0.002) (熵升但效率未升: 计中性, 权重回退) — 扰动无行为影响",
+      "confidence": 0.05,
+      "signal_components": {
+        "abs_q": 0,
+        "abs_entropy_delta": 0.002
+      }
+    }
+  ],
+  "d3_diversity": {
+    "total_blocked": 349,
+    "layer_x_verdict": {
+      "action_map": {
+        "INCONCLUSIVE": 0,
+        "REGRESSION": 9,
+        "SUSPICIOUS": 0
+      },
+      "mapping": {
+        "INCONCLUSIVE": 54,
+        "REGRESSION": 27,
+        "SUSPICIOUS": 45
+      },
+      "physics": {
+        "INCONCLUSIVE": 78,
+        "REGRESSION": 48,
+        "SUSPICIOUS": 21
+      },
+      "rules": {
+        "INCONCLUSIVE": 31,
+        "REGRESSION": 18,
+        "SUSPICIOUS": 18
+      }
+    },
+    "by_verdict": {
+      "INCONCLUSIVE": 163,
+      "REGRESSION": 102,
+      "SUSPICIOUS": 84
+    },
+    "mcp_tools": {}
+  },
+  "d4_governance_discoveries": [
+    {
+      "id": "D4-1",
+      "name": "覆盖连续性预检 (coverage continuity precheck)",
+      "source": "FP-NEG-005 / Sprint 31 topo_D REGRESSION (Q=-0.53)",
+      "symptom": "条件域收窄产生无规则覆盖的连续区间 -> ABDL 落入无命名默认分支, 行为随机化",
+      "evidence": "sensor(opponent_angle) < -10 -> < -15 后 (-15,-10)∪(10,15) 无匹配; 裸 'abdl' 键 92 次; avg_steps +59%",
+      "rule": "规则拓扑候选 apply 前必须执行覆盖连续性预检; 条件域收窄/迁移类变更 需验证邻居规则在收窄区间有覆盖 (或候选同时补足覆盖), 否则标 COVERAGE_GAP 拦截",
+      "trigger": "diff 含 sensor(<dim>) < X -> < Y (Y<X) 或 > X -> > Y (Y>X) 或 BETWEEN 收窄"
+    },
+    {
+      "id": "D4-2",
+      "name": "慢局归因修正 (FLANK 高频重复, 非 stuck 死锁)",
+      "source": "FP-NEG-006 / Sprint 31 topo_E/topo_F 双 no-op 证伪",
+      "symptom": "分支高频触发被误判为死循环/stuck, 导致错误的退出机制设计",
+      "evidence": "ep7 FLANK-RIGHT 45 + CAUTIOUS-EDGE 13; topo_F stuck_counter<3 逐位 no-op (stuck 恒<3); topo_E 0.55->0.60 空采样",
+      "rule": "FLANK 类分支高频重复触发时, 先用 branch_hist 逐局验证触发时 stuck_counter 是否真达到阈值; 若恒<3 则干预点应为触发次数上限 (per-episode cap), 而非 stuck 传感器门控",
+      "trigger": "慢局 (>30 步) 由单一分支 >40 次触发主导"
+    },
+    {
+      "id": "D4-3",
+      "name": "冗余分支识别 (CAUTIOUS-EDGE 可无损替代)",
+      "source": "Sprint 31 topo_A 回放 (INCONCLUSIVE -> SUSPICIOUS, M2 四通道捕获)",
+      "symptom": "分支触发域被邻居规则覆盖时, 分支本身近似冗余",
+      "evidence": "CLOSE-PUSH edge 0.65->0.80 对齐后 CAUTIOUS-EDGE 13->0 消失, 步数仅 -1",
+      "rule": "若某分支的触发域被邻居规则完全包含, 且移除后步数变化 <=1, 标记为冗余候选 (S32 候选 G); 移除评估须在覆盖预检 (D4-1) 稳定后进行",
+      "trigger": "覆盖投影显示分支触发域 ⊆ 邻居触发域"
+    }
+  ],
+  "stats": {
+    "d1": {
+      "count": 84,
+      "saturated": 84,
+      "by_layer": {
+        "mapping": 45,
+        "physics": 21,
+        "rules": 18
+      }
+    },
+    "d2": {
+      "count": 163,
+      "by_layer": {
+        "rules": 31,
+        "mapping": 54,
+        "physics": 78
+      }
+    },
+    "d3": {
+      "total_blocked": 349,
+      "layer_x_verdict": {
+        "action_map": {
+          "INCONCLUSIVE": 0,
+          "REGRESSION": 9,
+          "SUSPICIOUS": 0
+        },
+        "mapping": {
+          "INCONCLUSIVE": 54,
+          "REGRESSION": 27,
+          "SUSPICIOUS": 45
+        },
+        "physics": {
+          "INCONCLUSIVE": 78,
+          "REGRESSION": 48,
+          "SUSPICIOUS": 21
+        },
+        "rules": {
+          "INCONCLUSIVE": 31,
+          "REGRESSION": 18,
+          "SUSPICIOUS": 18
+        }
+      },
+      "by_verdict": {
+        "INCONCLUSIVE": 163,
+        "REGRESSION": 102,
+        "SUSPICIOUS": 84
+      },
+      "mcp_tools": {}
+    },
+    "d4": {
+      "count": 3,
+      "ids": [
+        "D4-1",
+        "D4-2",
+        "D4-3"
+      ]
+    },
+    "d5_calibration": {
+      "d1": {
+        "count": 84,
+        "saturated": 84,
+        "by_layer": {
+          "mapping": 45,
+          "physics": 21,
+          "rules": 18
+        }
+      },
+      "d2": {
+        "count": 163,
+        "by_layer": {
+          "rules": 31,
+          "mapping": 54,
+          "physics": 78
+        }
+      },
+      "calibration": {
+        "d1_total_rules": 5,
+        "d2_total_rules": 11,
+        "d1_high_conf": 0,
+        "d2_high_conf": 0,
+        "d1_top": [
+          {
+            "id": "D1-mh_rules_topo_B",
+            "conf": 0.48,
+            "layer": "rules"
+          },
+          {
+            "id": "D1-mh_mapping_001",
+            "conf": 0.3,
+            "layer": "mapping"
+          },
+          {
+            "id": "D1-mh_rules_topo_A",
+            "conf": 0.26,
+            "layer": "rules"
+          },
+          {
+            "id": "D1-mh_mapping_002",
+            "conf": 0.05,
+            "layer": "mapping"
+          },
+          {
+            "id": "D1-mh_physics_seed_002",
+            "conf": 0.05,
+            "layer": "physics"
+          }
+        ],
+        "d2_top": [
+          {
+            "id": "D2-s18_e2e_rules_001",
+            "conf": 0.05,
+            "layer": "rules"
+          },
+          {
+            "id": "D2-mh_rules_seed_002",
+            "conf": 0.05,
+            "layer": "rules"
+          },
+          {
+            "id": "D2-mh_mapping_002",
+            "conf": 0.05,
+            "layer": "mapping"
+          },
+          {
+            "id": "D2-mh_physics_seed_002",
+            "conf": 0.05,
+            "layer": "physics"
+          },
+          {
+            "id": "D2-mh_physics_seed_003",
+            "conf": 0.05,
+            "layer": "physics"
+          }
+        ]
+      }
+    }
+  }
+}

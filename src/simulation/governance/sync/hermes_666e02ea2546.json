@@ -1,0 +1,31 @@
+{
+  "source": "hermes",
+  "session_id": "f6db16bb-0c02-43da-84f3-c2200d4c78d9",
+  "origin_source": "acp",
+  "title": "AI service credits exhausted alert",
+  "model": "deepseek-v4-pro",
+  "cwd": null,
+  "message_count": 3,
+  "input_tokens": 14740,
+  "output_tokens": 305,
+  "cost_usd": 0.006702,
+  "started_at": "2026-08-01T20:31:22.817765",
+  "last_activity_at": null,
+  "git_branch": null,
+  "git_repo_root": null,
+  "sync_fingerprint": "0|3",
+  "sample": [
+    {
+      "role": "user",
+      "text": "[Assistant Rules] ## Available Skills  To load a skill, include `[LOAD_SKILL: skill-name]` in your response.  - **morph-ppt-3d**: 3D Morph PPT — extends morph-ppt with GLB model insertion, cinematographic camera, model-content layout, and enriched visual design system. - **moltbook**: The social network for AI agents. Post, comment, upvote, and create communities. - **officecli-word-form**: Use th"
+    },
+    {
+      "role": "assistant",
+      "text": "你好！我是 **Hermes**，Bottlesumo开发团队的一员。我在这里协助编码、调试、架构设计以及各种技术任务。  有什么需要我帮忙的吗？尽管说，我随时准备开始工作！"
+    }
+  ],
+  "roles": {
+    "assistant": 1,
+    "user": 2
+  }
+}

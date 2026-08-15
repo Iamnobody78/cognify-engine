@@ -1,0 +1,50 @@
+{
+  "scenes": [
+    {
+      "scene": "d34_near_t0",
+      "env_edge_min": 0.0,
+      "vis_edge_min": 0,
+      "zone": "safe",
+      "confidence": null,
+      "model": "qwen2.5vl:7b",
+      "latency_s": 15.5,
+      "fallback": false
+    },
+    {
+      "scene": "d34_near_t90",
+      "env_edge_min": 0.0,
+      "vis_edge_min": 0,
+      "zone": "safe",
+      "confidence": null,
+      "model": "qwen2.5vl:7b",
+      "latency_s": 9.0,
+      "fallback": false
+    },
+    {
+      "scene": "d36_edge_t0",
+      "error": "timed out"
+    }
+  ],
+  "danger_detected": [
+    {
+      "scene": "d34_near_t0",
+      "env_edge_min": 0.0,
+      "vis_edge_min": 0,
+      "zone": "safe",
+      "confidence": null,
+      "model": "qwen2.5vl:7b",
+      "latency_s": 15.5,
+      "fallback": false
+    },
+    {
+      "scene": "d34_near_t90",
+      "env_edge_min": 0.0,
+      "vis_edge_min": 0,
+      "zone": "safe",
+      "confidence": null,
+      "model": "qwen2.5vl:7b",
+      "latency_s": 9.0,
+      "fallback": false
+    }
+  ]
+}

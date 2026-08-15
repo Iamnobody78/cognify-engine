@@ -1,0 +1,39 @@
+{
+  "source": "2026第二十屆-CTEA機械人對抗比賽港區賽、國際賽.pdf (2026 Rev.0)",
+  "division": "高級組 (Senior Division)",
+  "extracted_at": "2026-08-11",
+  "constraints": {
+    "controllers": {"max": 2, "unit": "個", "rule": "控制器數量 ≤ 2個"},
+    "motors": {"max": 3, "unit": "個", "rule": "摩打類型和數量: 任何種類, ≤3個"},
+    "sensors": {"restriction": "不限 (高級組)", "note": "初級組除鏡頭外不限; 所有感測器必須對人無害"},
+    "dimensions_compact": {"diameter_max_cm": 30, "height_max_cm": 30, "rule": "直徑≤30cm, 高度≤30cm"},
+    "dimensions_extended": {"diameter_max_cm": 35, "height_max_cm": 35, "rule": "延展後 直徑≤35cm, 高度≤35cm"},
+    "weight_kg": {"max": 1.0, "rule": "重量 ≤1kg"},
+    "ground_clearance_mm": {"min": 2, "note": "除移動結構或支撐物外位置"},
+    "battery_voltage": {"max_v": 14, "rule": "電源電壓輸出低於14V", "note": "非原裝充電池需提前兩星期提交申報表"},
+    "movement": "任何 (步行式/履帶式/車輪式等)",
+    "operation": "全自主操作 (可以遙控形式啟動, 不可使用任何遙控方式控制)",
+    "forbidden_parts": ["固定裝置(吸盤/真空泵)", "黏性車輪", "鋒利刀口/尖刺金屬部件"],
+    "field": {
+      "size_cm": "75 x 182 (30x72 inch)",
+      "surface": "白色或淺灰色貼皮的圓角防火木板",
+      "color_published": "比賽當日公佈",
+      "unknown_variables": ["台板實際顏色", "膠紙顏色和材質(高級組)", "水樽顏色帶顏色和材質", "台板支撐物高度(未知)", "水樽內水量(約1L)"]
+    },
+    "bottle": {"capacity_l": 2, "water_approx_l": 1, "wrapped": "附顏色帶的白紙包裹"},
+    "match": {
+      "format": "三局兩勝制 (分組聯賽+淘汰賽)",
+      "round_time_s": 120,
+      "win_conditions": ["將水樽故意推出擂台板", "最後一個留在擂台板上的機械人"],
+      "stay_3s_rule": "勝出後須留在擂台至少3秒",
+      "draw_conditions": ["雙方3秒內先後跌出", "30秒未能啟動", "30秒無進展", "30秒無接觸", "糾纏30秒未回復", "2分鐘時限無勝方"],
+      "repair_time_s": 30
+    },
+    "intentional_push_rules": {
+      "故意": "只有一個機械人正面與水樽持續接觸直到推出場外",
+      "非故意": "非正面接觸致跌出/正面接觸後自行跌出(如旋轉時推出)",
+      "無法判斷": "雙方機械人都正面接觸/一方正面接觸另一方持續接觸"
+    }
+  },
+  "gates": {"G1": "constraints_spec.json 包含所有高級組約束"}
+}

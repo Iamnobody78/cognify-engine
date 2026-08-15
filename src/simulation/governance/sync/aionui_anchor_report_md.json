@@ -1,0 +1,7 @@
+{
+  "name": "anchor_report.md",
+  "mtime": "2026-08-14T13:45:32.637915",
+  "size": 892,
+  "sha256": "5042720054c41346dd874ca476041dfe8d41cfb1543db6cf6f448dd7787489ec",
+  "head": "### ⚓ 锚定报告 [#ANCHOR-ROUND_4]\r\n\r\n[Phase A: Assemble]\r\n- 已签名, 未重签 (防篡改: 合法变更须 --update)\r\n\r\n[Phase N/O: Normalize+Observe]\r\n- 校验状态: FAIL\r\n- manifest 信任根: MISMATCH/未建立\r\n  - ANCHORS.md : MISMATCH/缺失\r\n  - BOUNDARY.md : MISMATCH/缺失\r\n  - REDLINES.md : MISMATCH/缺失\r\n\r\n[Phase C: Checkpoint]\r\n- 校验结果: FAIL\r\n\r\n[Phase H: Halt]\r\n- 阻断状态: BLOCKED\r\n  - 锚点签名不匹配, 已阻断并记录\r\n\r\n[Phase R: Recover]\r\n- 不自动恢复, 由人裁决(--update/--recover)\r\n\r\n[Honest Boundary (内容以锚点文件为准, 引擎不臆造)]\r\n- 锚点全文: governance/anchors/ANCHORS.md (治理栈/优先级契约/C"
+}

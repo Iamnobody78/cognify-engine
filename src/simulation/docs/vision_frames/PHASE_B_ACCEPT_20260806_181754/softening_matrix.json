@@ -1,0 +1,158 @@
+{
+  "rounds": 3,
+  "total_cases": 21,
+  "all_pass": true,
+  "criteria": "PM 标准③ 至少 3 轮复现稳定",
+  "rounds_detail": [
+    {
+      "round": 1,
+      "cases": [
+        {
+          "id": "S1_POS",
+          "pass": true,
+          "rule": "SIM-ADVANCED-CLOSE-PUSH",
+          "action": 8,
+          "scenario": "S1_CLOSE-PUSH_edge_min<0.20"
+        },
+        {
+          "id": "S1_NEG",
+          "pass": true,
+          "rule": "SIM-ADVANCED-CLOSE-PUSH",
+          "action": 5
+        },
+        {
+          "id": "S2_POS",
+          "pass": true,
+          "from": 5,
+          "to": 4,
+          "to_speed": 0.38,
+          "scenario": "S2_OPPONENT-FOUND_zone=danger"
+        },
+        {
+          "id": "S2_NEG",
+          "pass": true,
+          "action": 5
+        },
+        {
+          "id": "GATE_NEG",
+          "pass": true,
+          "rule": "SIM-ADVANCED-CLOSE-PUSH",
+          "action": 5
+        },
+        {
+          "id": "NO_VISION_REGRESSION",
+          "pass": true,
+          "action": 5
+        },
+        {
+          "id": "S2_E2E_NOTE",
+          "pass": true,
+          "rule": "SIM-TACTIC-OPPONENT-FOUND",
+          "action": 4,
+          "speed": 0.38,
+          "note": "OPPONENT-FOUND 下 pursue 输出速度 <= 0.45, 场景②为防御性安全网 (未来规则若输出 >0.45 自动降速)"
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "cases": [
+        {
+          "id": "S1_POS",
+          "pass": true,
+          "rule": "SIM-ADVANCED-CLOSE-PUSH",
+          "action": 8,
+          "scenario": "S1_CLOSE-PUSH_edge_min<0.20"
+        },
+        {
+          "id": "S1_NEG",
+          "pass": true,
+          "rule": "SIM-ADVANCED-CLOSE-PUSH",
+          "action": 5
+        },
+        {
+          "id": "S2_POS",
+          "pass": true,
+          "from": 5,
+          "to": 4,
+          "to_speed": 0.38,
+          "scenario": "S2_OPPONENT-FOUND_zone=danger"
+        },
+        {
+          "id": "S2_NEG",
+          "pass": true,
+          "action": 5
+        },
+        {
+          "id": "GATE_NEG",
+          "pass": true,
+          "rule": "SIM-ADVANCED-CLOSE-PUSH",
+          "action": 5
+        },
+        {
+          "id": "NO_VISION_REGRESSION",
+          "pass": true,
+          "action": 5
+        },
+        {
+          "id": "S2_E2E_NOTE",
+          "pass": true,
+          "rule": "SIM-TACTIC-OPPONENT-FOUND",
+          "action": 4,
+          "speed": 0.38,
+          "note": "OPPONENT-FOUND 下 pursue 输出速度 <= 0.45, 场景②为防御性安全网 (未来规则若输出 >0.45 自动降速)"
+        }
+      ]
+    },
+    {
+      "round": 3,
+      "cases": [
+        {
+          "id": "S1_POS",
+          "pass": true,
+          "rule": "SIM-ADVANCED-CLOSE-PUSH",
+          "action": 8,
+          "scenario": "S1_CLOSE-PUSH_edge_min<0.20"
+        },
+        {
+          "id": "S1_NEG",
+          "pass": true,
+          "rule": "SIM-ADVANCED-CLOSE-PUSH",
+          "action": 5
+        },
+        {
+          "id": "S2_POS",
+          "pass": true,
+          "from": 5,
+          "to": 4,
+          "to_speed": 0.38,
+          "scenario": "S2_OPPONENT-FOUND_zone=danger"
+        },
+        {
+          "id": "S2_NEG",
+          "pass": true,
+          "action": 5
+        },
+        {
+          "id": "GATE_NEG",
+          "pass": true,
+          "rule": "SIM-ADVANCED-CLOSE-PUSH",
+          "action": 5
+        },
+        {
+          "id": "NO_VISION_REGRESSION",
+          "pass": true,
+          "action": 5
+        },
+        {
+          "id": "S2_E2E_NOTE",
+          "pass": true,
+          "rule": "SIM-TACTIC-OPPONENT-FOUND",
+          "action": 4,
+          "speed": 0.38,
+          "note": "OPPONENT-FOUND 下 pursue 输出速度 <= 0.45, 场景②为防御性安全网 (未来规则若输出 >0.45 自动降速)"
+        }
+      ]
+    }
+  ]
+}

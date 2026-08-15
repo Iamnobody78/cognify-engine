@@ -1,0 +1,12 @@
+# TASK-005c visualizer toggles (load_config in scripts/visualizer.py)
+# PM approved: default values = all views on; disable to save perf during
+# long data-collection runs.
+
+window_seconds: 5.0        # sliding window for time-series curves
+arrow_scale_lin: 1.0       # red linear-velocity arrow scale
+arrow_scale_ang: 0.3       # blue angular-velocity arrow scale
+show_chassis: true
+show_vel_arrows: true
+show_goal: true
+show_timeseries: true
+log_interval_hz: 20.0       # ROS subscription tick rate

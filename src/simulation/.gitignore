@@ -1,0 +1,118 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Logs (regenerable)
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# WSL (simulation assets live in WSL side, not git)
+*.wsl
+
+# Temporary scripts / scratch (not product assets)
+_tmp/
+
+# Test cache
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Node
+node_modules/
+dist/
+
+# Meta-Harness 演化实验产物 (working artifacts, not product assets)
+governance/meta_harness/variants/
+governance/meta_harness/candidates/
+governance/meta_harness/_cache/
+governance/meta_harness/_tmp/
+governance/meta_harness/experience/
+
+# TLS 证书私钥 (S6 — 不得入库, 见 deployment/README.md)
+deployment/certs/
+
+# 仿真资产 (140GB 级, WSL 侧/本地, 不入 git)
+models/mujoco_aggressive_trajectories/
+models/*.pt
+models/*.best
+models/cad/
+models/_t1b_smoke.pt
+
+# 固件构建产物 (源码入库, .elf/.o 不入)
+firmware/**/*.elf
+firmware/*.elf
+firmware/stm32_mcu/build/
+
+# 本地产物 (会话记录/仿真截图/日志/归档)
+.aionui/sessions/
+MUJOCO_LOG.TXT
+_archive/
+dashboard/db/
+docs/vision_frames/
+
+# 目录整理 (RULE-MC-015): 调试脚本/日志/测试工件为 scratch 不入库
+# 已跟踪的 product 脚本不受 .gitignore 影响 (git 不 untrack 已跟踪文件)
+governance/meta_harness/logs/
+governance/meta_harness/scripts/
+governance/meta_harness/test_artifacts/
+governance/meta_language/*.bak_*
+governance/research/*probe*.py
+governance/research/compile_r1_input.py
+models/v10_dqn_history.json
+scripts/s61_evaluate.sh
+reports/
+tools/
+training/
+vision/
+rl/causal/**/*.pyc
+rl/**/*.pyc
+
+# 本地开发基础设施 (调试脚本/日志/DB, 非产品资产)
+governance/meta_harness/a1_*.ps1
+governance/meta_harness/a1_*.py
+governance/meta_harness/a2_*.ps1
+governance/meta_harness/a2_*.sh
+governance/meta_harness/a3_*.ps1
+governance/meta_harness/ollama_*.ps1
+governance/meta_harness/check_ollama.sh
+governance/meta_harness/llava_check.ps1
+governance/meta_harness/misc_*.ps1
+governance/meta_harness/p0_*.ps1
+governance/meta_harness/p1_*.ps1
+governance/meta_harness/gamerec_*.ps1
+governance/meta_harness/empty_*.ps1
+governance/meta_harness/start_*.ps1
+governance/meta_harness/stage_round*.sh
+governance/meta_harness/*.log.err
+governance/meta_harness/*.log
+governance/meta_harness/*.db
+governance/meta_harness/s1*.json
+governance/meta_harness/s16_*.err
+governance/meta_harness/s17_*.json
+governance/dashboard/backend/*.db
+governance/dashboard/backend/*.db-journal
+governance/meta_harness/diag_*.py
+governance/meta_harness/disk_*.ps1
+governance/meta_harness/*.jsonl
+
+# SELF-EVOLVE 运行时产物 (自我进化循环输出, 非产品源码; 引擎见 self_evolve.py)
+governance/meta_harness/self_evolve_state.json
+governance/meta_harness/self_evolution_report.md
+governance/meta_harness/self_reports/
+
+# 测试覆盖率产物
+dashboard/backend/.coverage
+
+# PERMANENT-ANCHOR 运行时产物 (锚点内容+manifest 提交; 日志/报告/备份/状态为运行时)
+governance/anchors/backup/
+governance/anchors/checkpoint_log.jsonl
+governance/anchors/recovery_log.jsonl
+governance/anchors/blocked_attempts.jsonl
+governance/anchors/anchor_state.json
+governance/anchors/anchor_report.md

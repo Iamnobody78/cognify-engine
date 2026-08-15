@@ -1,0 +1,12 @@
+{
+  "engineering_rules": [
+    "RULE-DI-006 (S61 I1): teacher GUARD branches are interventions, not policy decisions — mark them during demo collection (select_action_traced branch) and down-weight in BC (intervention-censored distillation)",
+    "RULE-DI-007 (S61 I2): residual injection — student MLP trunk + rule guard activated ONLY at edge_critical states preserves pretrained knowledge (MoDE-VLA); guard activation line = SR-001 critical threshold, not warning band",
+    "RULE-DI-008 (S61): activation-line discipline — guard tests must construct obs below the CRITICAL line; edge_danger_f is only a warning band and does not trigger SR-001 actions"
+  ],
+  "boundaries": [
+    "I1 intervention-weight tuned on 13-slot curriculum with 200 episodes; larger curricula may need re-tuning",
+    "I2 guard is rule-based (S59); a learned residual could replace it when a risk metric exists",
+    "Results valid for 9-dim lightweight obs; richer obs (velocities) may change guard activation statistics"
+  ]
+}

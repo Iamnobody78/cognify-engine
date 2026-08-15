@@ -1,0 +1,83 @@
+# ============================================================================
+# Phase 2-5 Verification: Dual-MCU register/memory inspection
+# ============================================================================
+using sysbus
+
+$firmware_main = @/mnt/c/Users/ivy/AppData/Roaming/AionUi/aionui/conversations/2026/07/27/aionrs-temp-48324704/bottlesumo_pi/firmware/stm32_mcu/build/bottlesumo_main.elf
+$firmware_aux  = @/mnt/c/Users/ivy/AppData/Roaming/AionUi/aionui/conversations/2026/07/27/aionrs-temp-48324704/bottlesumo_pi/firmware/stm32_mcu/build/bottlesumo_aux.elf
+
+mach create "F407_MAIN"
+mach set "F407_MAIN"
+machine LoadPlatformDescription @platforms/cpus/stm32f4.repl
+sysbus LoadELF $firmware_main
+
+mach create "F103_AUX"
+mach set "F103_AUX"
+machine LoadPlatformDescription @platforms/cpus/stm32f103.repl
+sysbus LoadELF $firmware_aux
+
+# Start both
+mach set "F407_MAIN"
+start
+mach set "F103_AUX"
+start
+
+sleep 0.3
+echo ""
+echo "=== Phase 4: SPI/I2C HW Registers @ 0.3s ==="
+
+# Phase 4: SPI Hardware registers
+mach set "F407_MAIN"
+echo "F407 SPI2_CR1 (0x40003800):"
+sysbus ReadDoubleWord 0x40003800
+echo "F407 SPI2_SR (0x40003808):"
+sysbus ReadDoubleWord 0x40003808
+echo "F407 I2C1_CR1 (0x40005400):"
+sysbus ReadDoubleWord 0x40005400
+
+mach set "F103_AUX"
+echo "F103 SPI1_CR1 (0x40013000):"
+sysbus ReadDoubleWord 0x40013000
+echo "F103 SPI1_SR (0x40013008):"
+sysbus ReadDoubleWord 0x40013008
+
+# Run for 2 more seconds
+start
+sleep 2
+echo ""
+echo "=== After ~2.3s total — BSS variables ==="
+
+mach set "F407_MAIN"
+echo "F407 frame_count (0x2000001c):"
+sysbus ReadDoubleWord 0x2000001c
+echo "F407 last_loop_ms (0x20000020):"
+sysbus ReadDoubleWord 0x20000020
+echo "F407 cylinder_detected (0x20000013):"
+sysbus ReadByte 0x20000013
+
+mach set "F103_AUX"
+echo "F103 estop_lock (0x2000001c):"
+sysbus ReadByte 0x2000001c
+echo "F103 spi_frame_ready (0x2000001d):"
+sysbus ReadByte 0x2000001d
+echo "F103 spi_rx_buf[0..2] (0x2000001e):"
+sysbus ReadDoubleWord 0x2000001c
+
+echo ""
+echo "=== Phase 5: IWDG Status ==="
+mach set "F407_MAIN"
+echo "F407 IWDG_SR (0x4000300C):"
+sysbus ReadDoubleWord 0x4000300C
+mach set "F103_AUX"
+echo "F103 IWDG_SR (0x4000300C):"
+sysbus ReadDoubleWord 0x4000300C
+
+echo ""
+echo "=== CPU PC after 2.3s ==="
+mach set "F407_MAIN"
+cpu PC
+mach set "F103_AUX"
+cpu PC
+
+echo ""
+echo "=== Phase 2-5 complete ==="

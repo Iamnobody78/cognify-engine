@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "name": ".aionui memory scaffold",
+  "source": "notion:N3 (Aionui 记忆库设计)",
+  "created": "2026-08-11",
+  "dirs": [
+    "tools",
+    "config",
+    "context",
+    "sessions",
+    "templates"
+  ],
+  "file_count": 16
+}

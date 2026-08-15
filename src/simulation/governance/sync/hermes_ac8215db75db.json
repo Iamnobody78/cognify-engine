@@ -1,0 +1,28 @@
+{
+  "source": "hermes",
+  "session_id": "ce6a4d5f-e759-4e90-a46f-b333e4c7fe44",
+  "origin_source": "acp",
+  "title": "Hermes 请求任务",
+  "model": "deepseek-v4-pro",
+  "cwd": null,
+  "message_count": 6,
+  "input_tokens": 1646,
+  "output_tokens": 534,
+  "cost_usd": 0.001394,
+  "started_at": "2026-08-01T21:56:29.340660",
+  "last_activity_at": null,
+  "git_branch": null,
+  "git_repo_root": null,
+  "sync_fingerprint": "0|6",
+  "sample": [
+    {
+      "role": "user",
+      "text": "[Assistant Rules] ## Available Skills  To load a skill, include `[LOAD_SKILL: skill-name]` in your response.  - **morph-ppt-3d**: 3D Morph PPT — extends morph-ppt with GLB model insertion, cinematographic camera, model-content layout, and enriched visual design system. - **moltbook**: The social network for AI agents. Post, comment, upvote, and create communities. - **officecli-word-form**: Use th"
+    }
+  ],
+  "roles": {
+    "assistant": 3,
+    "tool": 1,
+    "user": 2
+  }
+}

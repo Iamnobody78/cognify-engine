@@ -1,0 +1,30 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# V9 Heuristic Rule Parameters (externalized 2026-08-05, TASK-005 前置配置化)
+# ─────────────────────────────────────────────────────────────────────────────
+# 裁决: Queue #5 首项为 heuristic aggressive/counter gain retuning。
+# 本文件只抽出魔数，数值与 6d1e5d9 时代完全一致 —— 严禁本 commit 改变行为。
+# 调参时改这里即可, 无需触碰代码。行为回归由 tests/test_heuristic_rules.py 守护。
+# 关联: TASK-005, DEBT-016, docs/audits/audit_queue4_closeout.md
+# ─────────────────────────────────────────────────────────────────────────────
+# S59 (2026-08-10): 新增 l1_tactical.shove_dist/charge_dist (defensive 反冲回避)
+# 与 l0_safety.edge_f_turn_streak (边缘规避横向脱离)。行为变更属 S59 有意改进,
+# 由 tests/test_heuristic_rules.py S59 新增用例守护。
+# ─────────────────────────────────────────────────────────────────────────────
+heuristic_rules:
+  l0_safety:
+    edge_danger_f: 0.15      # SR-001: 前缘危险距离阈值
+    edge_critical: 0.1       # SR-001: 任一缘临界距离 (硬规避)
+    edge_f_turn_streak: 3    # S59: 连续 edge_f 规避次数阈值 → 强制横向转向
+  l1_tactical:
+    opp_detect_dist: 0.5     # TR-001: 对手探测距离
+    opp_angle_tol: 0.3       # TR-001: 正对角度容差 (rad)
+    shove_dist: 0.45         # S59: 反冲回避触发距离 (defensive 反冲 0.4 之上留余量)
+    charge_dist: 0.35        # S59: 直线冲锋距离 (须小于反冲区 0.4)
+  l2_strategic:
+    advance_dist: 0.8        # TR-002: 推进距离阈值
+
+# TASK-005 待调参数 (当前值 = 基线; 触发条件: 接近距离 < 0.3m 时转向增益 ×1.5 + 开环前馈)
+task005_retuning:
+  engage_dist: 0.3
+  gain_multiplier: 1.5
+  feedforward_enabled: false

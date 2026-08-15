@@ -1,0 +1,28 @@
+# Dependabot 配置
+
+version: 2
+updates:
+  # Dashboard 后端 (Python)
+  - package-ecosystem: "pip"
+    directory: "/dashboard/backend"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    labels: ["dependencies", "automation"]
+
+  # Dashboard 前端 (npm)
+  - package-ecosystem: "npm"
+    directory: "/dashboard/frontend"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    labels: ["dependencies", "automation"]
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    labels: ["dependencies", "automation"]
