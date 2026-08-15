@@ -1,12 +1,12 @@
 {
   "product": "cognify-engine",
   "version": "2.0.0",
-  "certified_at": "2026-08-15T16:41:23",
+  "certified_at": "2026-08-15T16:44:17",
   "checks": [
     {
       "item": "25 维元能力全部 active",
-      "pass": false,
-      "detail": "24/25"
+      "pass": true,
+      "detail": "25/25"
     },
     {
       "item": "元闭环率 ≥90%",
@@ -29,5 +29,5 @@
       "detail": "7 插件"
     }
   ],
-  "overall": "NOT_CERTIFIED"
+  "overall": "CERTIFIED"
 }
