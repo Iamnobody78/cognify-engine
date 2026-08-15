@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.coverage
+build/
+dist/
+
+# 工具
+.venv/
+venv/
+node_modules/
+
+# 运行时
+*.lock
+state/
+*.log
+
+# OS
+Thumbs.db
+.DS_Store
+
+# 观测快照 (本地)
+observations/snapshot_*.json
