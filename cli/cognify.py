@@ -132,10 +132,18 @@ def cert():
     if cl.exists():
         closure_ok = json.loads(cl.read_text(encoding="utf-8"))["closure_rate"] >= 0.9
     checks.append(("元闭环率 ≥90%", closure_ok, ""))
-    # 3. 治理拦截 (AST 守卫测试证据)
-    gov_ok = (PROD / "plugins/governance/src/conftest.py").exists() and \
-             (TRI / "debt/pytest_full_20260815.txt").exists()
-    checks.append(("治理回归证据 (1052/1053)", gov_ok, ""))
+    # 3. 治理拦截 (AST 守卫测试证据 — 动态读取实际通过数, 元规则③自检)
+    ev = TRI / "debt/pytest_full_20260815.txt"
+    gov_ok = (PROD / "plugins/governance/src/conftest.py").exists() and ev.exists()
+    detail = ""
+    if ev.exists():
+        import re as _re
+        m = _re.search(r"(\d+) passed.*?(\d+) failed", ev.read_text(encoding="utf-8", errors="replace"))
+        if m:
+            passed, failed = int(m.group(1)), int(m.group(2))
+            gov_ok = gov_ok and failed == 0
+            detail = f"{passed} passed / {failed} failed"
+    checks.append(("治理回归证据 (0 failed)", gov_ok, detail))
     # 4. 三方同步一致性 (sessions 镜像)
     sync_ok = False
     src = len(list((TRI / "hub/sessions").rglob("*.zstd"))) if (TRI / "hub/sessions").exists() else 0
@@ -231,7 +239,7 @@ def docs():
         "见 docs/plugin_development.md (生命周期钩子/依赖声明/事件总线/红线)",
         "",
         "## 认证状态", "",
-        "- 25 维元能力: 25/25 active | 闭环率 ≥90% | 治理回归 1052/1053",
+        "- 25 维元能力: 25/25 active | 闭环率 ≥90% | 治理回归 0 failed (动态证据)",
         "- 插件平台: 7 插件 + 生命周期冒烟 (PLUGINIFY v1.0 PASS)",
         "- 详见 certificate.json", "",
         "## 文档", "",

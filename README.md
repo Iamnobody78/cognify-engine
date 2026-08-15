@@ -28,7 +28,7 @@ python cli/cognify.py pluginify --all
 
 ## 认证状态
 
-- 25 维元能力: 25/25 active | 闭环率 ≥90% | 治理回归 1052/1053
+- 25 维元能力: 25/25 active | 闭环率 ≥90% | 治理回归 0 failed (动态证据)
 - 插件平台: 7 插件 + 生命周期冒烟 (PLUGINIFY v1.0 PASS)
 - 详见 certificate.json
 

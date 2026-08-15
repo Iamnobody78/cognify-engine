@@ -5,7 +5,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-REPO = Path(r"C:\Users\ivy\AppData\Roaming\AionUi\aionui\conversations\2026\07\27\aionrs-temp-48324704\agent-governance-v2")
+REPO = Path(__file__).resolve().parent  # 自定位 (cognify-engine plugins/governance/src)
 OUT = Path(r"C:\Users\ivy\.aionui-tri-sync\debt\pytest_full_20260815.txt")
 
 args = sys.argv[1:] or ["tests/", "-q", "--tb=line", "--no-header"]
