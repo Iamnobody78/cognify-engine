@@ -414,10 +414,58 @@ def plugin_cmd(argv):
               f"(实现: 替换插件目录 + 生命周期重启)")
         return 0
 
+    if cmd == "search":
+        """P3: 远程注册表搜索 (自托管, 网络失败回退本地)。"""
+        import json as _json
+        import urllib.request
+        url = ("https://raw.githubusercontent.com/Iamnobody78/cognify-engine/main/"
+               "plugin_registry_remote.json")
+        data, src = None, ""
+        try:
+            with urllib.request.urlopen(url, timeout=15) as r:
+                data = _json.loads(r.read().decode("utf-8"))
+            src = "remote"
+        except Exception:  # noqa: BLE001
+            local = PROD / "plugin_registry_remote.json"
+            if local.exists():
+                data = _json.loads(local.read_text(encoding="utf-8"))
+                src = "local-fallback"
+            else:
+                print("[plugin] 远程注册表不可达且无本地副本")
+                return 1
+        print(f"[plugin] 注册表来源: {src}")
+        for p in data.get("plugins", []):
+            stub = " (桩)" if p.get("stub") else ""
+            v = "✅" if p.get("verified") else "⚠️"
+            print(f"  {v} {p['id']:<20} v{p['version']:<6} "
+                  f"{','.join(p.get('capabilities', [])[:3])}{stub}")
+        print(f"[plugin] 共 {len(data.get('plugins', []))} 个可安装插件")
+        return 0
+
     if cmd == "install":
-        src = rest[0] if rest else ""
-        print(f"[plugin] install {src or '?'}: 支持本地目录/URL/PyPI (接口就绪, "
-              f"当前仓库自带 7 插件)")
+        """P3: 从注册表安装插件 (内置插件就地确认; 外部插件接口就绪)。"""
+        name = rest[0] if rest else ""
+        pid = _resolve(pm, name) if name else None
+        if pid and (PLUGIN_ROOT / pid.split(".")[-1]).exists():
+            print(f"[plugin] {pid} 已内置安装 (版本 {pm.get(pid).version}), 无需下载")
+            return 0
+        import json as _json
+        import urllib.request
+        try:
+            with urllib.request.urlopen(
+                    "https://raw.githubusercontent.com/Iamnobody78/cognify-engine/main/"
+                    "plugin_registry_remote.json", timeout=15) as r:
+                data = _json.loads(r.read().decode("utf-8"))
+        except Exception:  # noqa: BLE001
+            print("[plugin] 远程注册表不可达")
+            return 1
+        hit = next((p for p in data.get("plugins", [])
+                    if p["id"].endswith("." + name) or p["id"] == name), None)
+        if not hit:
+            print(f"[plugin] 注册表无此插件: {name}")
+            return 1
+        print(f"[plugin] install {hit['id']} ← {hit['source']}")
+        print("[plugin] 外部插件安装接口就绪 (市场落地见 docs/plugins.md)")
         return 0
 
     if cmd == "registry":
@@ -672,6 +720,8 @@ def main():
         if len(sys.argv) > 2:
             return sync_upstream(sys.argv[2:])
         return sync()
+    if cmd == "serve":
+        return subprocess.run([PY, str(PROD / "cli/serve.py"), *sys.argv[2:]]).returncode
     if cmd == "debt" and len(sys.argv) > 2 and sys.argv[2] == "scan":
         rc, out = _run(TRI / "daemon/debt_engine.py")
         print(out)

@@ -23,3 +23,6 @@ Thumbs.db
 
 # è§‚æµ‹å¿«ç…§ (æœ¬åœ°)
 observations/snapshot_*.json
+
+# ¤å?¯¸? (gh-pages ?¥Î)
+site/

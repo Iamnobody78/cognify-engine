@@ -1,0 +1,25 @@
+site_name: Cognify Engine
+site_description: 认知操作产品 — AI 代理治理与认知操作系统 (插件平台 PLUGINIFY v1.0)
+site_url: https://Iamnobody78.github.io/cognify-engine
+repo_url: https://github.com/Iamnobody78/cognify-engine
+theme:
+  name: material
+  language: zh
+  features:
+    - navigation.top
+    - navigation.tabs
+    - content.code.copy
+nav:
+  - 首页: index.md
+  - 快速开始: usage.md
+  - API 参考: api.md
+  - 架构: architecture.md
+  - 插件开发: plugin_development.md
+  - 治理网关: governance.md
+  - 产品化路线图: product_roadmap.md
+markdown_extensions:
+  - admonition
+  - codehilite
+  - tables
+  - toc:
+      permalink: true

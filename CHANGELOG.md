@@ -1,0 +1,31 @@
+# Changelog
+
+## v2.1.0 (2026-08-15) — 产品化路线图 (PRODUCT-ROADMAP)
+
+### 新增
+- **P0 认知服务 API**: `cognify serve` — FastAPI 服务, 端点 `/mce` `/vce` `/cee` `/health` (cli/serve.py)
+- **P1 治理网关**: `/governance/evaluate` 五层裁决端点 (复用 protocol_gateway.evaluate_verified)
+- **P1 文档站点**: mkdocs 站点部署 GitHub Pages (https://iamnobody78.github.io/cognify-engine)
+- **P2 PyPI 就绪**: pyproject.toml + `cognify` 包 (__init__/__main__/_cli) + console script, 本地 `pip install -e .` 验证通过
+- **P3 插件注册表**: 自托管 `plugin_registry_remote.json` + `cognify plugin search/install`
+- **CROSS-LEARN-SYNC v1.0**: 跨系统元学习引擎 (L.E.A.R.N. 五步法, learning/ 账本, 一致性红线 ≥90%)
+
+### 修复
+- 元哲学探针 (BOUNDARY.md 迁移 governance/boundary/) → 25/25 恢复
+
+### 工程
+- 债务 13/21 | 认证 CERTIFIED 5/5 | 永续心跳 #1-#5 | CLS-ROUND 1-2
+
+## v2.0.0 (2026-08-15) — PLUGINIFY 插件平台
+
+- core/plugin_manager + event_bus + plugin_base
+- 7 插件 (governance/simulation/cognitive/sync/meta/debt/dashboard)
+- cognify plugin list/info/enable/disable/verify + pluginify --all
+- 统一迭代流程: verify --unified / sync --upstream / redirect / test --plugin
+- 公开仓库 + develop 分支 + 原仓库 CI 收编
+
+## v1.0.0 (2026-08-15) — 认知操作产品
+
+- 七资产统一入口 (status/heartbeat/cert/package/observe/demo/docs)
+- subtree 历史合入 (governance/simulation)
+- 认证 CERTIFIED 4/4

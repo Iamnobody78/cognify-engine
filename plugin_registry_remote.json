@@ -1,0 +1,28 @@
+{
+  "registry": "cognify-engine 自托管注册表 (P3)",
+  "host": "https://raw.githubusercontent.com/Iamnobody78/cognify-engine/main/plugin_registry_remote.json",
+  "generated": "2026-08-15",
+  "plugins": [
+    {"id": "cognify.governance", "name": "Governance Engine", "version": "0.1.0",
+     "source": "https://github.com/Iamnobody78/cognify-engine/tree/main/plugins/governance",
+     "verified": true, "downloads": 0, "capabilities": ["governance", "vce", "verification"]},
+    {"id": "cognify.simulation", "name": "BottleSumo Simulation", "version": "2.0.0",
+     "source": "https://github.com/Iamnobody78/cognify-engine/tree/main/plugins/simulation",
+     "verified": true, "downloads": 0, "capabilities": ["simulation", "hil", "firmware"]},
+    {"id": "cognify.cognitive", "name": "Cognitive Engine", "version": "1.0.0",
+     "source": "https://github.com/Iamnobody78/cognify-engine/tree/main/plugins/cognitive",
+     "verified": true, "downloads": 0, "capabilities": ["cognitive", "mce", "vce", "cee"]},
+    {"id": "cognify.sync", "name": "Tri-Sync Daemon", "version": "1.1.0",
+     "source": "https://github.com/Iamnobody78/cognify-engine/tree/main/plugins/sync",
+     "verified": true, "downloads": 0, "capabilities": ["sync", "daemon", "watchdog"]},
+    {"id": "cognify.meta", "name": "Meta Capability Suite", "version": "1.0.0",
+     "source": "https://github.com/Iamnobody78/cognify-engine/tree/main/plugins/meta",
+     "verified": true, "downloads": 0, "capabilities": ["meta", "metacognition", "metadecision"]},
+    {"id": "cognify.debt", "name": "Debt Engine", "version": "1.1.0",
+     "source": "https://github.com/Iamnobody78/cognify-engine/tree/main/plugins/debt",
+     "verified": true, "downloads": 0, "capabilities": ["debt", "mining", "repayment"]},
+    {"id": "cognify.dashboard", "name": "Governance Dashboard", "version": "0.0.1",
+     "source": "https://github.com/Iamnobody78/cognify-engine/tree/main/plugins/dashboard",
+     "verified": false, "downloads": 0, "capabilities": ["dashboard", "web"], "stub": true}
+  ]
+}
