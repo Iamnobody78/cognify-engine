@@ -304,3 +304,144 @@ servers:
     domain: 浏览器自动化
     status: pending-key
     note: "BROWSERBASE_API_KEY"
+
+  # ---- ME 机械工程 (免费生态, 2026-08 接入) ----
+  - id: loki-cad-mcp
+    name: Loki CAD MCP
+    domain: ME-通用CAD
+    status: ready
+    transport: stdio
+    command: npx
+    args: ["-y", "loki-cad-mcp"]
+    note: "11 工具: 几何体/STL-STEP-OBJ-GLTF 导出/3D 打印验证/网格修复"
+    systems: [hermes, aionui]
+  - id: mcp-cad-studio
+    name: MCP CAD Studio
+    domain: ME-通用CAD
+    status: ready
+    transport: stdio
+    command: npx
+    args: ["-y", "github:flujo-app/mcp-cad-studio", "--stdio"]
+    note: "WASM CAD 内核, 免本地 CAD, 布尔运算/STL-OBJ 导入"
+    systems: [hermes, aionui]
+  - id: cad-mcp-server
+    name: CAD MCP Server
+    domain: ME-通用CAD
+    status: ready
+    transport: stdio
+    command: npx
+    args: ["-y", "cad-mcp-server"]
+    note: "只读 STEP 检查: 尺寸/体积/壁厚/拔模角/DFM 规则"
+    systems: [hermes, aionui]
+  - id: freecad-mcp
+    name: FreeCAD MCP
+    domain: ME-通用CAD
+    status: pending-app
+    note: "pip install freecad-mcp (外部安装=请示区) + 需 FreeCAD (32+ 工具)"
+  - id: mcp-cad
+    name: mcp-cad (Inventor)
+    domain: ME-通用CAD
+    status: pending-app
+    note: "80+ 原子工具, 需 Autodesk Inventor"
+  - id: caid-mcp
+    name: CAiD MCP
+    domain: ME-通用CAD
+    status: pending-app
+    note: "pip install caid-mcp (请示区), 54 工具含验证层"
+  - id: cad-agent-hub
+    name: CAD-Agent-Hub
+    domain: ME-CAD桥接
+    status: pending-app
+    note: "CATIA/SolidWorks/NX/Fusion 桥接"
+  - id: freecad-mcp-blwfish
+    name: FreeCAD MCP (blwfish)
+    domain: ME-CAD
+    status: pending-app
+    note: "32 工具: 参数化设计/CNC 刀具路径/网格"
+  - id: beam-analysis-mcp
+    name: Beam Analysis MCP
+    domain: ME-结构
+    status: pending-app
+    note: "3D 梁/桁架求解器, CalculiX 后端可选, node 本地运行"
+  - id: kratos-mcp-server
+    name: Kratos MCP Server
+    domain: ME-FEA
+    status: pending-app
+    note: "uvx kratos-mcp-server + Kratos Multiphysics (40 工具)"
+  - id: oasis
+    name: OASiS
+    domain: ME-多物理场
+    status: pending-app
+    note: "8 种有限元代码统一接口 (FEniCSx/Kratos/NGSolve/DUNE)"
+  - id: mcp-calculix
+    name: mcp-calculix
+    domain: ME-FEA
+    status: registry-only
+    note: "npm 未发布 (@casys/mcp-calculix 404), 需确认来源; 另需 Gmsh+CalculiX"
+  - id: fea-mcp
+    name: FEA-MCP
+    domain: ME-FEA
+    status: pending-app
+    note: "需 LUSAS/ETABS"
+  - id: abaqus-control-mcp
+    name: Abaqus Control MCP
+    domain: ME-FEA
+    status: pending-app
+    note: "需 Abaqus/CAE 环境"
+  - id: three-ws-3d-studio
+    name: three.ws 3D Studio MCP
+    domain: ME-3D生成
+    status: registry-only
+    note: "免费文本→3D (GLB), 免账号/API 密钥; HTTP 端点待接入格式评估"
+  - id: trellis-mcp
+    name: Trellis MCP Server
+    domain: ME-3D生成
+    status: pending-hardware
+    note: "本地文本→3D, 需 8GB+ VRAM GPU"
+
+  # ---- EE 电子工程 (免费生态, 2026-08 接入) ----
+  - id: kicad-mcp-blwfish
+    name: KiCad MCP (blwfish)
+    domain: EE-PCB
+    status: pending-app
+    note: "71 工具全 PCB 流程, 需 KiCad"
+  - id: kicad-mcp-mixelpixx
+    name: KiCAD MCP Server
+    domain: EE-PCB
+    status: pending-app
+    note: "npm build + 需 KiCad, Freerouting/JLCPCB 集成"
+  - id: ltspice-mcp
+    name: LTspice MCP
+    domain: EE-仿真
+    status: pending-app
+    note: "pip install ltspice-mcp + 需 LTspice/ngspice"
+  - id: circuit-sim-mcp
+    name: Circuit Sim MCP
+    domain: EE-仿真
+    status: pending-app
+    note: "PySpice+ngspice, 需 ngspice 二进制"
+  - id: aelm-mcp
+    name: AELM MCP
+    domain: EE-原理图
+    status: pending-app
+    note: "cargo install (Rust 工具链=请示区)"
+  - id: a2n-easyeda-mcp
+    name: EasyEDA MCP
+    domain: EE-PCB
+    status: pending-app
+    note: "需 EasyEDA Pro"
+  - id: electronics-mcp-servers
+    name: Electronics MCP Servers
+    domain: EE-工具
+    status: pending-app
+    note: "pip install electronics-mcp-servers (请示区), 14 工具 (GPIO/电容/色环)"
+  - id: sheetsdata-mcp
+    name: SheetsData MCP
+    domain: EE-元件数据
+    status: registry-only
+    note: "元件数据表免费端点, 接入格式待评估"
+  - id: universal-netlist-mcp
+    name: Universal Netlist MCP
+    domain: EE-网表
+    status: pending-app
+    note: "npm install @intelligentelectron/universal-netlist (请示区), Altium/Cadence 兼容"

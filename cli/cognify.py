@@ -119,13 +119,13 @@ def status():
 def cert():
     """C: 认证 — 四认证项 + 插件平台检查"""
     checks = []
-    # 1. 25 维 active
+    # 1. 30 维 active
     st = TRI / "meta/status.json"
     active_ok = False
     if st.exists():
         data = json.loads(st.read_text(encoding="utf-8"))
-        active_ok = data["active_count"] == "25/25"
-    checks.append(("25 维元能力全部 active", active_ok, data.get("active_count", "?")))
+        active_ok = data["active_count"] == "30/30"
+    checks.append(("30 维元能力全部 active", active_ok, data.get("active_count", "?")))
     # 2. 闭环率 ≥90%
     cl = TRI / "meta/closure/closure_report.json"
     closure_ok = False
@@ -748,6 +748,96 @@ def _has_cli(name):
     return name in __import__("inspect").getsource(main)
 
 
+def version_cmd(argv):
+    """version: 版本检测/一致性/历史 (VERSION-AUTO-UPDATE v1.0, M31/M32/M35)"""
+    import subprocess as sp
+    unified = TRI / "VERSION"
+    cur = unified.read_text(encoding="utf-8").strip() if unified.exists() else "?"
+    if "--check" in argv or not argv:
+        comps = []
+        pyproj = PROD / "pyproject.toml"
+        if pyproj.exists():
+            import re as _re
+            m = _re.search(r'version\s*=\s*"([^"]+)"', pyproj.read_text(encoding="utf-8"))
+            comps.append(("cognify-engine", m.group(1) if m else "?"))
+        agv = WS / "agent-governance-v2/pyproject.toml"
+        if agv.exists():
+            import re as _re
+            m = _re.search(r'version\s*=\s*"([^"]+)"', agv.read_text(encoding="utf-8"))
+            comps.append(("agent-governance-v2", m.group(1) if m else "?"))
+        bs = WS / "bottlesumo_pi/hardware/VERSION"
+        if bs.exists():
+            comps.append(("bottlesumo-pi", bs.read_text(encoding="utf-8").strip()))
+        print(f"[version] 统一权威版本 (TRI/VERSION): v{cur}")
+        for name, v in comps:
+            match = "✅ 一致" if v == cur else f"独立版本 (组件级)"
+            print(f"  {name:<20} v{v} {match}")
+        return 0
+    if "--upstream" in argv:
+        r = sp.run(["git", "-C", str(PROD), "fetch", "origin"], capture_output=True,
+                   text=True, encoding="utf-8", errors="replace", timeout=120)
+        ahead = sp.run(["git", "-C", str(PROD), "rev-list", "--count", "HEAD..origin/main"],
+                       capture_output=True, text=True, encoding="utf-8", timeout=60)
+        n = ahead.stdout.strip()
+        print(f"[version] cognify-engine: 本地 main @ HEAD, 上游领先 {n} 个提交")
+        print(f"[version] 统一版本 v{cur} | 无 GitHub Release (首次发布待 P2 PyPI token)")
+        return 0
+    if "--history" in argv:
+        hist = TRI / "meta/decision/version_history.jsonl"
+        if hist.exists():
+            for line in hist.read_text(encoding="utf-8", errors="replace").splitlines()[-10:]:
+                print(" ", line[:120])
+        else:
+            print("[version] 更新历史为空 (尚无自动更新事件)")
+        return 0
+    if "--sync" in argv:
+        print(f"[version] 统一版本文件: TRI/VERSION = v{cur} (三系统经 tri-sync 共享)")
+        return 0
+    print("用法: cognify version --check | --upstream | --history | --sync")
+    return 1
+
+
+def update_cmd(argv):
+    """update --auto: 备份 → 拉取 → 验证 → 失败回滚 (VERSION-AUTO-UPDATE, M33-M35)"""
+    import subprocess as sp
+    if "--auto" not in argv:
+        print("用法: cognify update --auto")
+        return 1
+    backup = sp.run(["git", "-C", str(PROD), "rev-parse", "HEAD"], capture_output=True,
+                    text=True, encoding="utf-8", timeout=30)
+    base = backup.stdout.strip()
+    hist = TRI / "meta/decision/version_history.jsonl"
+    entry = {"ts": NOW.isoformat(timespec="seconds"), "action": "update --auto",
+             "from": base}
+    r = sp.run(["git", "-C", str(PROD), "pull", "--ff-only", "origin", "main"],
+               capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=300)
+    if r.returncode != 0:
+        entry["status"] = "failed"
+        entry["error"] = (r.stderr or r.stdout)[-200:].strip()
+        print(f"[update] ❌ 拉取失败: {entry['error']}")
+        entry["rollback"] = "git reset --hard " + base
+        sp.run(["git", "-C", str(PROD), "reset", "--hard", base], capture_output=True, timeout=120)
+        print(f"[update] ↩️ 已回滚到 {base[:8]}")
+    else:
+        new = sp.run(["git", "-C", str(PROD), "rev-parse", "HEAD"], capture_output=True,
+                     text=True, encoding="utf-8", timeout=30).stdout.strip()
+        entry["status"] = "ok" if new != base else "up-to-date"
+        entry["to"] = new
+        if new != base:
+            rc = cert()
+            entry["cert"] = "PASS" if rc == 0 else "FAIL"
+            print(f"[update] ✅ 更新 {base[:8]} → {new[:8]} | cert: {entry['cert']}")
+            if rc != 0:
+                sp.run(["git", "-C", str(PROD), "reset", "--hard", base], capture_output=True, timeout=120)
+                entry["rollback"] = "cert 失败 → 回滚 " + base[:8]
+                print("[update] ↩️ cert 未通过, 已回滚")
+        else:
+            print("[update] 已是最新")
+    with open(hist, "a", encoding="utf-8") as f:
+        f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+    return 0
+
+
 def main():
     cmd = sys.argv[1] if len(sys.argv) > 1 else "status"
     if cmd == "package":
@@ -789,6 +879,21 @@ def main():
         return subprocess.run([PY, str(PROD / "cli/serve.py"), *sys.argv[2:]]).returncode
     if cmd == "unity":
         return unity_cmd(sys.argv[2:])
+    if cmd == "version":
+        return version_cmd(sys.argv[2:])
+    if cmd == "update":
+        return update_cmd(sys.argv[2:])
+    if cmd == "rollback":
+        import subprocess as sp
+        hist = TRI / "meta/decision/version_history.jsonl"
+        print("[rollback] 手动回滚: 见 version --history; 自动回滚由 update --auto 内建")
+        return 0
+    if cmd == "meta-exec":
+        r = subprocess.run([PY, str(TRI / "daemon/meta_executor.py"), *sys.argv[2:]],
+                           capture_output=True, text=True, encoding="utf-8",
+                           errors="replace")
+        print((r.stdout or r.stderr or "")[-1500:])
+        return r.returncode
     if cmd == "cognitive" and len(sys.argv) > 2 and sys.argv[2] in ("--mce", "mce"):
         text = sys.argv[3] if len(sys.argv) > 3 else ""
         code = (f"import sys; sys.path.insert(0, r'{TRI}/daemon'); import cve_s; "
