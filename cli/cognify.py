@@ -213,6 +213,54 @@ def docs():
     return 0
 
 
+def gov():
+    """gov: 治理引擎统一入口 (src/governance = agent-governance-v2)"""
+    g = PROD / "src/governance/src/protocol_gateway.py"
+    ok = g.exists()
+    n = len(list((PROD / "src/governance/src").glob("*.py")))
+    print(f"[gov] 治理引擎: {'✅ 在位' if ok else '❌ 缺失'} | src 模块 {n} 个")
+    if ok:
+        rc, out = _run(PROD / "src/governance/tests/test_revoke.py" if False else
+                       PY, "-c",
+                       "import sys; sys.path.insert(0, r'%s'); "
+                       "from src.protocol_gateway import ProtocolGateway; "
+                       "g=ProtocolGateway(); print('modules:', g.modules)" %
+                       str(PROD / "src/governance"))
+        print(f"  网关冒烟: {out.strip()[:80]}")
+    return 0
+
+
+def sim():
+    """sim: 仿真平台统一入口 (src/simulation = bottlesumo-pi)"""
+    s = PROD / "src/simulation/simulation/abdl_runner.py"
+    ok = s.exists()
+    n = len(list((PROD / "src/simulation/simulation").glob("*.py")))
+    print(f"[sim] 仿真平台: {'✅ 在位' if ok else '❌ 缺失'} | 模块 {n} 个")
+    return 0
+
+
+def sync():
+    """sync: 三方同步统一入口 (tri-sync)"""
+    lock = TRI / "state/daemon.lock"
+    n = len(list((TRI / "hub/sessions").rglob("*.zstd"))) if (TRI / "hub/sessions").exists() else 0
+    print(f"[sync] 守护: {'✅ 运行中' if lock.exists() else '❌ 未运行'} | "
+          f"会话镜像 {n} 个 | 心跳: {len(list((TRI / 'hub/cves/heartbeats').glob('*.md')))} 份")
+    return 0
+
+
+def unify():
+    """unify: 统一状态 (subtree 追溯)"""
+    import subprocess as sp
+    r = sp.run(["git", "-C", str(PROD), "log", "--oneline", "--grep=Add.*src/"],
+               capture_output=True, text=True, encoding="utf-8", errors="replace")
+    lines = [l for l in r.stdout.splitlines() if l.strip()]
+    print("[unify] subtree 合入记录 (历史保留):")
+    for l in lines:
+        print(f"  {l}")
+    print(f"  src/ 文件: {len(list((PROD / 'src').rglob('*.py')))} 个 .py")
+    return 0
+
+
 def main():
     cmd = sys.argv[1] if len(sys.argv) > 1 else "status"
     if cmd == "package":
@@ -231,12 +279,24 @@ def main():
         rc, out = _run(TRI / "daemon/mmc_agent.py", "heartbeat")
         print(out)
         return rc
+    if cmd == "gov":
+        return gov()
+    if cmd == "sim":
+        return sim()
+    if cmd == "sync":
+        return sync()
+    if cmd == "unify":
+        return unify()
     if cmd == "all":
         package()
         status()
         observe()
         demo()
         docs()
+        gov()
+        sim()
+        sync()
+        unify()
         return cert()
     print(__doc__)
     return 1
