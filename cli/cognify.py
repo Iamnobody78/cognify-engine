@@ -672,6 +672,16 @@ def main():
         if len(sys.argv) > 2:
             return sync_upstream(sys.argv[2:])
         return sync()
+    if cmd == "debt" and len(sys.argv) > 2 and sys.argv[2] == "scan":
+        rc, out = _run(TRI / "daemon/debt_engine.py")
+        print(out)
+        return rc
+    if cmd == "meta" and len(sys.argv) > 2 and sys.argv[2] == "--status":
+        rc, out = _run(TRI / "daemon/meta_capabilities.py", "status")
+        print(out)
+        return rc
+    if cmd == "observe" and len(sys.argv) > 2 and sys.argv[2] == "--snapshot":
+        return observe()
     if cmd == "verify":
         return verify_unified(sys.argv[2:])
     if cmd == "redirect":
