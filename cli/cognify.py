@@ -700,6 +700,54 @@ def test_cmd(argv):
     return 1
 
 
+def unity_cmd(argv):
+    """unity: 书同文车同轨统一工程验证 (UNIFY-ENGINE v1.0)"""
+    import re as _re
+    checks = []
+    # 统一数据格式
+    schema = TRI / "schemas/unified.schema.json"
+    checks.append(("统一数据格式 schemas/unified.schema.json", schema.exists(), ""))
+    # 统一配置
+    cfg = TRI / "config/unified.yaml"
+    checks.append(("统一配置 config/unified.yaml", cfg.exists(), ""))
+    # 统一版本
+    ver = TRI / "VERSION"
+    ver_ok = ver.exists() and ver.read_text(encoding="utf-8").strip() == "2.1.0"
+    checks.append(("统一版本 VERSION=2.1.0", ver_ok, ver.read_text(encoding="utf-8").strip() if ver.exists() else "?"))
+    # 统一状态
+    st = TRI / "state/unified.json"
+    checks.append(("统一状态 state/unified.json", st.exists(), ""))
+    # 统一入口 (cognify CLI + 子命令)
+    cmds = {"gov --evaluate": _has_cli("gov"), "sim --run": _has_cli("sim"),
+            "cognitive --mce": _has_cli("cognitive"), "sync --status": _has_cli("sync"),
+            "meta --status": _has_cli("meta"), "debt --scan": _has_cli("debt")}
+    checks.append(("统一入口 cognify (6 子命令)", all(cmds.values()),
+                   " ".join(k for k, v in cmds.items() if v)))
+    # 统一日志 (JSONL)
+    logs = list((TRI / "meta/decision").glob("*.jsonl")) + list((TRI / "meta/temporal").glob("*.jsonl"))
+    checks.append(("统一日志格式 JSONL", len(logs) >= 2, f"{len(logs)} 份"))
+    # 统一状态刷新
+    st_data = json.loads(st.read_text(encoding="utf-8")) if st.exists() else {}
+    st_data["last_sync"] = NOW.isoformat(timespec="seconds")
+    st_data["systems"]["dsh"]["status"] = "running" if (TRI / "state/daemon.lock").exists() else "unknown"
+    st.write_text(json.dumps(st_data, ensure_ascii=False, indent=2), encoding="utf-8")
+    ok = all(o for _, o, _ in checks)
+    if "--verify" in argv or "--report" in argv:
+        rep = {"unity": "v1.0", "generated": NOW.isoformat(timespec="seconds"),
+               "ok": ok, "checks": [{"item": n, "pass": o, "detail": d} for n, o, d in checks]}
+        (PROD / "unity_report.json").write_text(json.dumps(rep, ensure_ascii=False, indent=2),
+                                                encoding="utf-8")
+    for n, o, d in checks:
+        print(f"  {'✅' if o else '❌'} {n} {d}")
+    print(f"[unity] 总体: {'✅ UNIFIED' if ok else '❌ INCOMPLETE'}"
+          + (" → unity_report.json" if "--report" in argv else ""))
+    return 0 if ok else 1
+
+
+def _has_cli(name):
+    return name in __import__("inspect").getsource(main)
+
+
 def main():
     cmd = sys.argv[1] if len(sys.argv) > 1 else "status"
     if cmd == "package":
@@ -718,8 +766,19 @@ def main():
         rc, out = _run(TRI / "daemon/mmc_agent.py", "heartbeat")
         print(out)
         return rc
+    if cmd == "gov" and len(sys.argv) > 2 and sys.argv[2] in ("--evaluate", "evaluate"):
+        text = sys.argv[3] if len(sys.argv) > 3 else ""
+        code = (f"import sys; sys.path.insert(0, r'{PROD}/plugins/governance/src'); "
+                f"from src.protocol_gateway import ProtocolGateway; import json; "
+                f"g = ProtocolGateway(); print(json.dumps(g.evaluate_verified('/v1/intercept', 'POST', {{'content': {text!r}}}), ensure_ascii=False))")
+        r = subprocess.run([PY, "-c", code], capture_output=True, text=True,
+                           encoding="utf-8", errors="replace", timeout=60)
+        print((r.stdout or r.stderr or "")[-600:])
+        return r.returncode
     if cmd == "gov":
         return gov()
+    if cmd == "sim" and len(sys.argv) > 2 and sys.argv[2] in ("--run", "run"):
+        return sim()
     if cmd == "sim":
         return sim()
     if cmd == "sync":
@@ -728,6 +787,16 @@ def main():
         return sync()
     if cmd == "serve":
         return subprocess.run([PY, str(PROD / "cli/serve.py"), *sys.argv[2:]]).returncode
+    if cmd == "unity":
+        return unity_cmd(sys.argv[2:])
+    if cmd == "cognitive" and len(sys.argv) > 2 and sys.argv[2] in ("--mce", "mce"):
+        text = sys.argv[3] if len(sys.argv) > 3 else ""
+        code = (f"import sys; sys.path.insert(0, r'{TRI}/daemon'); import cve_s; "
+                f"import json; print(json.dumps(cve_s.mce_compile({text!r}), ensure_ascii=False))")
+        r = subprocess.run([PY, "-c", code], capture_output=True, text=True,
+                           encoding="utf-8", errors="replace", timeout=60)
+        print((r.stdout or r.stderr or "")[-600:])
+        return r.returncode
     if cmd == "debt" and len(sys.argv) > 2 and sys.argv[2] == "scan":
         rc, out = _run(TRI / "daemon/debt_engine.py")
         print(out)

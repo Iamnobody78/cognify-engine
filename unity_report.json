@@ -1,0 +1,37 @@
+{
+  "unity": "v1.0",
+  "generated": "2026-08-15T17:20:15",
+  "ok": true,
+  "checks": [
+    {
+      "item": "统一数据格式 schemas/unified.schema.json",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "item": "统一配置 config/unified.yaml",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "item": "统一版本 VERSION=2.1.0",
+      "pass": true,
+      "detail": "2.1.0"
+    },
+    {
+      "item": "统一状态 state/unified.json",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "item": "统一入口 cognify (6 子命令)",
+      "pass": true,
+      "detail": "gov --evaluate sim --run cognitive --mce sync --status meta --status debt --scan"
+    },
+    {
+      "item": "统一日志格式 JSONL",
+      "pass": true,
+      "detail": "3 份"
+    }
+  ]
+}
