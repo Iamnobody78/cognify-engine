@@ -1,0 +1,254 @@
+{
+  "version": "MCE-2.0",
+  "protocols": {
+    "entropy_denoise": [
+      {
+        "rule": "protocol-entropy_denoise-ethics",
+        "protocol_module": "entropy_denoise",
+        "rule_type": "ethics",
+        "level": "L3",
+        "origin": {
+          "trigger": "输入信息熵 > 阈值时",
+          "ethics_boundary": "不曲解原始意图",
+          "expected_output": "去噪后的要点列表",
+          "core_purpose": "从噪声输入中提取有效信号"
+        },
+        "ast": {
+          "Core_Directive": "伦理边界守卫: 防止治理对象违反协议伦理约束 (violation → DENY) | 协议 entropy_denoise [L3] | 规则 protocol-entropy_denoise-ethics",
+          "Entities": [
+            "entropy_denoise"
+          ],
+          "Structural_Constraints": [
+            "trigger: 输入信息熵 > 阈值时",
+            "ethics: 不曲解原始意图",
+            "output: 去噪后的要点列表"
+          ],
+          "Tension_Vectors": [
+            "ethics 优先于 enforce/ok: DENY(priority 5) 必须压过业务规则"
+          ],
+          "Entropy_Score": 0.292
+        }
+      },
+      {
+        "rule": "protocol-entropy_denoise-enforce",
+        "protocol_module": "entropy_denoise",
+        "rule_type": "enforce",
+        "level": "L3",
+        "origin": {
+          "trigger": "输入信息熵 > 阈值时",
+          "ethics_boundary": "不曲解原始意图",
+          "expected_output": "去噪后的要点列表",
+          "core_purpose": "从噪声输入中提取有效信号"
+        },
+        "ast": {
+          "Core_Directive": "触发执行: 协议被触发但未满足产出时升级为人工/自动验证 (ESCALATE) | 协议 entropy_denoise [L3] | 规则 protocol-entropy_denoise-enforce",
+          "Entities": [
+            "entropy_denoise"
+          ],
+          "Structural_Constraints": [
+            "trigger: 输入信息熵 > 阈值时",
+            "ethics: 不曲解原始意图",
+            "output: 去噪后的要点列表"
+          ],
+          "Tension_Vectors": [
+            "enforce vs ok: triggered+satisfied 并存时不得误报 ESCALATE (负向前瞻已防)"
+          ],
+          "Entropy_Score": 0.292
+        }
+      },
+      {
+        "rule": "protocol-entropy_denoise-ok",
+        "protocol_module": "entropy_denoise",
+        "rule_type": "ok",
+        "level": "L3",
+        "origin": {
+          "trigger": "输入信息熵 > 阈值时",
+          "ethics_boundary": "不曲解原始意图",
+          "expected_output": "去噪后的要点列表",
+          "core_purpose": "从噪声输入中提取有效信号"
+        },
+        "ast": {
+          "Core_Directive": "放行记录: 协议已满足时放行但留痕 (ALLOW_WITH_WARNING) | 协议 entropy_denoise [L3] | 规则 protocol-entropy_denoise-ok",
+          "Entities": [
+            "entropy_denoise"
+          ],
+          "Structural_Constraints": [
+            "trigger: 输入信息熵 > 阈值时",
+            "ethics: 不曲解原始意图",
+            "output: 去噪后的要点列表"
+          ],
+          "Tension_Vectors": [
+            "ok 放行依赖 agent 声明 satisfied=true, 存在声明即满足的风险"
+          ],
+          "Entropy_Score": 0.292
+        }
+      }
+    ],
+    "feynman_test": [
+      {
+        "rule": "protocol-feynman_test-ethics",
+        "protocol_module": "feynman_test",
+        "rule_type": "ethics",
+        "level": "L2",
+        "origin": {
+          "trigger": "每次新协议入库时",
+          "ethics_boundary": "不用于误导性简化",
+          "expected_output": "理解深度评分 ≥ 80%",
+          "core_purpose": "验证理解深度 — 能否用费曼方式解释协议"
+        },
+        "ast": {
+          "Core_Directive": "伦理边界守卫: 防止治理对象违反协议伦理约束 (violation → DENY) | 协议 feynman_test [L2] | 规则 protocol-feynman_test-ethics",
+          "Entities": [
+            "feynman_test"
+          ],
+          "Structural_Constraints": [
+            "trigger: 每次新协议入库时",
+            "ethics: 不用于误导性简化",
+            "output: 理解深度评分 ≥ 80%"
+          ],
+          "Tension_Vectors": [
+            "ethics 优先于 enforce/ok: DENY(priority 5) 必须压过业务规则"
+          ],
+          "Entropy_Score": 0.292
+        }
+      },
+      {
+        "rule": "protocol-feynman_test-enforce",
+        "protocol_module": "feynman_test",
+        "rule_type": "enforce",
+        "level": "L2",
+        "origin": {
+          "trigger": "每次新协议入库时",
+          "ethics_boundary": "不用于误导性简化",
+          "expected_output": "理解深度评分 ≥ 80%",
+          "core_purpose": "验证理解深度 — 能否用费曼方式解释协议"
+        },
+        "ast": {
+          "Core_Directive": "触发执行: 协议被触发但未满足产出时升级为人工/自动验证 (ESCALATE) | 协议 feynman_test [L2] | 规则 protocol-feynman_test-enforce",
+          "Entities": [
+            "feynman_test"
+          ],
+          "Structural_Constraints": [
+            "trigger: 每次新协议入库时",
+            "ethics: 不用于误导性简化",
+            "output: 理解深度评分 ≥ 80%"
+          ],
+          "Tension_Vectors": [
+            "enforce vs ok: triggered+satisfied 并存时不得误报 ESCALATE (负向前瞻已防)"
+          ],
+          "Entropy_Score": 0.292
+        }
+      },
+      {
+        "rule": "protocol-feynman_test-ok",
+        "protocol_module": "feynman_test",
+        "rule_type": "ok",
+        "level": "L2",
+        "origin": {
+          "trigger": "每次新协议入库时",
+          "ethics_boundary": "不用于误导性简化",
+          "expected_output": "理解深度评分 ≥ 80%",
+          "core_purpose": "验证理解深度 — 能否用费曼方式解释协议"
+        },
+        "ast": {
+          "Core_Directive": "放行记录: 协议已满足时放行但留痕 (ALLOW_WITH_WARNING) | 协议 feynman_test [L2] | 规则 protocol-feynman_test-ok",
+          "Entities": [
+            "feynman_test"
+          ],
+          "Structural_Constraints": [
+            "trigger: 每次新协议入库时",
+            "ethics: 不用于误导性简化",
+            "output: 理解深度评分 ≥ 80%"
+          ],
+          "Tension_Vectors": [
+            "ok 放行依赖 agent 声明 satisfied=true, 存在声明即满足的风险"
+          ],
+          "Entropy_Score": 0.292
+        }
+      }
+    ],
+    "logic_chain_check": [
+      {
+        "rule": "protocol-logic_chain_check-ethics",
+        "protocol_module": "logic_chain_check",
+        "rule_type": "ethics",
+        "level": "L2",
+        "origin": {
+          "trigger": "关键决策前",
+          "ethics_boundary": "不攻击人格只检查逻辑",
+          "expected_output": "逻辑链完整性报告",
+          "core_purpose": "验证推理链完整性"
+        },
+        "ast": {
+          "Core_Directive": "伦理边界守卫: 防止治理对象违反协议伦理约束 (violation → DENY) | 协议 logic_chain_check [L2] | 规则 protocol-logic_chain_check-ethics",
+          "Entities": [
+            "logic_chain_check"
+          ],
+          "Structural_Constraints": [
+            "trigger: 关键决策前",
+            "ethics: 不攻击人格只检查逻辑",
+            "output: 逻辑链完整性报告"
+          ],
+          "Tension_Vectors": [
+            "ethics 优先于 enforce/ok: DENY(priority 5) 必须压过业务规则"
+          ],
+          "Entropy_Score": 0.292
+        }
+      },
+      {
+        "rule": "protocol-logic_chain_check-enforce",
+        "protocol_module": "logic_chain_check",
+        "rule_type": "enforce",
+        "level": "L2",
+        "origin": {
+          "trigger": "关键决策前",
+          "ethics_boundary": "不攻击人格只检查逻辑",
+          "expected_output": "逻辑链完整性报告",
+          "core_purpose": "验证推理链完整性"
+        },
+        "ast": {
+          "Core_Directive": "触发执行: 协议被触发但未满足产出时升级为人工/自动验证 (ESCALATE) | 协议 logic_chain_check [L2] | 规则 protocol-logic_chain_check-enforce",
+          "Entities": [
+            "logic_chain_check"
+          ],
+          "Structural_Constraints": [
+            "trigger: 关键决策前",
+            "ethics: 不攻击人格只检查逻辑",
+            "output: 逻辑链完整性报告"
+          ],
+          "Tension_Vectors": [
+            "enforce vs ok: triggered+satisfied 并存时不得误报 ESCALATE (负向前瞻已防)"
+          ],
+          "Entropy_Score": 0.292
+        }
+      },
+      {
+        "rule": "protocol-logic_chain_check-ok",
+        "protocol_module": "logic_chain_check",
+        "rule_type": "ok",
+        "level": "L2",
+        "origin": {
+          "trigger": "关键决策前",
+          "ethics_boundary": "不攻击人格只检查逻辑",
+          "expected_output": "逻辑链完整性报告",
+          "core_purpose": "验证推理链完整性"
+        },
+        "ast": {
+          "Core_Directive": "放行记录: 协议已满足时放行但留痕 (ALLOW_WITH_WARNING) | 协议 logic_chain_check [L2] | 规则 protocol-logic_chain_check-ok",
+          "Entities": [
+            "logic_chain_check"
+          ],
+          "Structural_Constraints": [
+            "trigger: 关键决策前",
+            "ethics: 不攻击人格只检查逻辑",
+            "output: 逻辑链完整性报告"
+          ],
+          "Tension_Vectors": [
+            "ok 放行依赖 agent 声明 satisfied=true, 存在声明即满足的风险"
+          ],
+          "Entropy_Score": 0.292
+        }
+      }
+    ]
+  }
+}

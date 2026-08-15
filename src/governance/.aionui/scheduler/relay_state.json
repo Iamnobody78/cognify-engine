@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.0",
+  "task_id": "TASK-REAL-012",
+  "title": "Self-Evolution Engine (Meta-Programming Class III): Phase 1-5 — Critic Agent code + Meta-Harness adapter/sandbox + Governance Brain (rationale + five-level) + Context Hook HMAC",
+  "created_at": "2026-08-03T16:00:00Z",
+  "status": "COMPLETED",
+  "current_phase": "ALL_COMPLETE",
+  "round": 1,
+  "max_rounds": 3,
+  "work_dir": ".aionui/scheduler/work/REAL-012",
+  "mcp_channel": {
+    "client": "scripts/mcp_client.py",
+    "server": "filesystem_mcp_server.py",
+    "sandbox": "BOTTLESUMO_ROOT=repo root",
+    "tools": ["write_file", "read_file", "list_directory", "file_info"]
+  },
+  "phases": {
+    "1": {"name": "Critic Agent code (GATE 8)", "status": "COMPLETED", "commit": "0e389ea", "tests": "295 passed (274 + 21)"},
+    "2": {"name": "Meta-Harness light adapter (DENY scan -> pending_rules)", "status": "COMPLETED", "commit": "c6a3a95", "tests": "307 passed (295 + 12)"},
+    "3": {"name": "Meta-Harness full sandbox (conflict + pytest regression + reversible deploy)", "status": "COMPLETED", "commit": "45e4561", "tests": "319 passed (307 + 12)"},
+    "4": {"name": "Governance Brain Phase 1 (rationale + five-level verdict)", "status": "COMPLETED", "commit": "42d938d", "tests": "329 passed (319 + 10)"},
+    "5": {"name": "Context Hook HMAC (header forgery protection)", "status": "COMPLETED", "commit": "be8289b", "tests": "347 passed (331 + 16)"}
+  },
+  "validation_scope": {
+    "propositions": [
+      "HMAC forgery protection: X-Trace-ID/X-Parent-Span-ID/X-Span-ID governance headers signed with HMAC-SHA256 (CONTEXT_HMAC_KEY env gate); tampered/missing signature -> fail-safe downgrade to new root UUID (isolated node, never enters audit chain)",
+      "Anti-replay: ±300s timestamp window; canonical string fixed field order + lowercase names (no ambiguity); header-deletion re-signing prevented (missing headers occupy empty string)",
+      "Backward compatible: unset CONTEXT_HMAC_KEY = compatibility mode (behavior identical to v0.5.0, no signature headers emitted)",
+      "Response integrity: intercept/chat response headers carry X-Governance-Signature + X-Governance-Timestamp (downstream can verify governance headers untouched)",
+      "GATE 8 (critic runner): 5 critics parallel via asyncio + to_thread; verdict = HIGH veto REJECT / 2-3 MEDIUM REVISION / >=4/5 PASS",
+      "Zero regression: 347/347 tests (331 baseline + 16 new); GATE 8 real run 5/5 PASS"
+    ],
+    "evidence": "Full local run: pytest 347 passed (zero regression); GATE 8 runner 5/5 PASS; unit: tampered trace/parent rejected, expired ts rejected, deterministic canonical; integration: forged header -> new UUID (not 'forged-999'), trusted signed header preserved, response carries signature, disabled mode omits signature"
+  },
+  "history": [
+    {
+      "round": 1,
+      "phase": 5,
+      "event": "COMPLETED",
+      "ts": "2026-08-03T19:10:00Z",
+      "summary": "Context Hook HMAC delivered (src/context_hmac.py 113 LOC + tests/test_hmac.py 16 tests). HMAC-SHA256 sign/verify with canonical fixed-order fields + ±300s anti-replay window + compare_digest constant-time. main.py integration: _trace_context trust gate (forged -> new root UUID isolation) + _signed_trace_headers response signing (intercept/chat 3 sites unified). Env gate CONTEXT_HMAC_KEY; unset = compatibility mode. Pre-requisite GATE 8 self-repair commit ae311aa (A3 multi-phase semantics + A5 snapshot sync; baseline 328->331). 347 passed zero regression; GATE 8 5/5. L1-L5 five-layer architecture fully closed.",
+      "commit": "ae311aa (critic self-repair) + be8289b (Phase 5 code) + closeout commit"
+    },
+    {
+      "round": 1,
+      "phase": 4,
+      "event": "COMPLETED",
+      "ts": "2026-08-03T18:24:48Z",
+      "summary": "Governance Brain Phase 1 delivered. src/models.py: Verdict five-level enum + DecisionRecord.rationale. src/policy.py: VALID_ACTIONS + Rule action Literal five-level. src/storage.py: 13-col CREATE TABLE + _migrate() 12->13 lossless ALTER + both INSERTs 13-col + _row_to_dict row[12]. src/main.py: intercept five-level action mapping (SUSPEND->403, ESCALATE->202, ALLOW_WITH_WARNING->200+X-Governance-Warning), chat same-batch edits, _deny_decision rationale param, create_app(config_path) injectable policy. tests/test_governance_brain.py: 10 tests (five-level enum, policy load warn/suspend, rationale roundtrip, 12->13 migration, real-engine HTTP five-level responses + chat upstream forwarding). Execution findings: aiohttp TestCase get_application must be async (patch decorator too late — app built in setUp) -> replaced fake engine with real engine + temp policy YAML injection (matches test_intercept convention, more real); create_app hardcoded policy path -> config_path param. GATE 8: 5/5 PASS. Next: Phase 5 Context Hook HMAC (~100 LOC).",
+      "commit": "42d938d (Phase 4 code) + closeout commit (debt/AUDIT-0027+0028/relay/snapshot v1.10.0)"
+    },
+    {
+      "round": 1,
+      "phase": 3,
+      "event": "COMPLETED",
+      "ts": "2026-08-03T17:20:00Z",
+      "summary": "Meta-Harness full sandbox delivered (src/meta_harness/sandbox.py ~340 LOC): check_conflicts (path+method overlap but different action -> HIGH), run_pytest_regression (real subprocess — anti-forgery), evaluate_candidate_in_sandbox, deploy_candidate (backup .bak-<ts> + name-dedup merge), generate_eval_report, CLI evaluate/deploy. 12 new tests. e2e scan->evaluate->report deployable=True.",
+      "commit": "45e4561"
+    },
+    {
+      "round": 1,
+      "phase": 2,
+      "event": "COMPLETED",
+      "ts": "2026-08-03T16:50:00Z",
+      "summary": "Meta-Harness light adapter delivered (src/meta_harness/adapter.py ~250 LOC): generate_policy_suggestions aggregates DENY counts by (path, method, tool_name) in window, skips covered paths, outputs pending_rules/ candidate YAML with evidence (decision_ids/trace_ids); validate_candidate + CLI scan/validate. e2e scan->validate hit_rate=1.0.",
+      "commit": "c6a3a95"
+    },
+    {
+      "round": 1,
+      "phase": 1,
+      "event": "COMPLETED",
+      "ts": "2026-08-03T16:20:00Z",
+      "summary": "Critic Agent team codeified as GATE 8 (src/critic/ 8 modules): audit_critic (A1-A5), security_critic (S1-S6), arch_critic (R1-R3), test_critic (T1-T4), docs_critic (D1-D3), verdict (HIGH veto REJECT / 2-3 MEDIUM REVISION / LOW non-blocking), runner (asyncio parallel + Windows UTF-8 stdout), __init__. 21 tests; ci.yml critic-gate job added. Execution findings fixed: S2 scoped to INTERCEPT_TIMEOUT, A1 table-row only + DEBT-\\d+, D1 excludes critic_report.md + xxx placeholder, D2 VERSION_RE accepts bare version, A2 empty-block filter, T4 content-based module match.",
+      "commit": "0e389ea"
+    }
+  ]
+}

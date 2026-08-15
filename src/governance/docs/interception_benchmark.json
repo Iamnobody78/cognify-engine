@@ -1,0 +1,12 @@
+{
+  "malicious_total": 29,
+  "blocked_malicious": 29,
+  "missed_malicious": 0,
+  "benign_total": 19,
+  "false_positives": 0,
+  "detection_rate": 1.0,
+  "false_positive_rate": 0.0,
+  "precision": 1.0,
+  "engine": "PolicyEngine.evaluate + ASTGuard (Priority-0 AST gate)",
+  "date": "2026-08-03"
+}

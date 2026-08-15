@@ -1,0 +1,88 @@
+# Governance Gateway — Default Policy Configuration
+# v2 iron law: policies are DATA (YAML), not CODE (hardcoded dict).
+
+name: governance-gateway
+version: "0.2.0"
+
+rules:
+  # ── block dangerous operations ──
+  - name: block-delete
+    path_pattern: /api/delete/*
+    method: POST
+    action: DENY
+    priority: 10
+    reason: "删除操作在生产环境被禁止"
+
+  - name: block-sudo
+    path_pattern: /api/admin/sudo
+    method: POST
+    action: DENY
+    priority: 10
+    reason: "sudo 操作被全局禁止"
+
+  # ── escalate sensitive config changes ──
+  - name: escalate-config-write
+    path_pattern: /api/config/*
+    method: POST
+    action: ESCALATE
+    priority: 20
+    reason: "配置修改需要人工审批"
+    escalation_timeout: 300
+    escalation_channel: slack
+
+  - name: escalate-model-update
+    path_pattern: /api/model/update
+    method: POST
+    action: ESCALATE
+    priority: 20
+    reason: "模型更新需要人工审批"
+    escalation_timeout: 600
+    escalation_channel: slack
+
+  # ── allow common API calls ──
+  - name: allow-chat
+    path_pattern: /api/chat
+    method: POST
+    action: ALLOW
+    priority: 100
+    reason: "标准聊天请求，放行"
+
+  - name: allow-query
+    path_pattern: /api/query
+    method: GET
+    action: ALLOW
+    priority: 100
+    reason: "标准查询请求，放行"
+
+  # ── catch-all: allow health endpoints ──
+  - name: allow-health
+    path_pattern: /health
+    method: GET
+    action: ALLOW
+    priority: 200
+    reason: "健康检查端点，放行"
+
+  # ── B 阶段 (TASK-REAL-010): json_path 条件规则 ──
+  # 条件规则: 命中路径/方法后, 还需请求体 JSON 中 json_path 提取值匹配
+  # json_pattern (re.search 语义) 才生效。path_pattern "*" = 任意内部路径。
+  # 安全语义: 非 JSON 体/无法提取 → 条件不满足 → 规则不匹配 (结构化体才承载
+  # 工具调用; 无法解析体的兜底由 fail-closed 层负责, 见 docs/可解释主控 Step1)。
+  - name: block-shell-tool
+    path_pattern: "*"
+    method: POST
+    action: DENY
+    priority: 10
+    json_path: "$..name"
+    json_pattern: "^(execute_command|system_run|shell_exec|terminal_exec|run_shell|bash|python_exec)$"
+    reason: "LLM 请求声明系统级工具 (shell/命令执行) — 拒绝 (json_path 治理)"
+
+  - name: escalate-file-write-tool
+    path_pattern: "*"
+    method: POST
+    action: ESCALATE
+    priority: 20
+    json_path: "$..name"
+    json_pattern: "^(write_file|edit_file|append_file|create_file|overwrite_file|delete_file|rm_file|set_secret|set_env)$"
+    reason: "LLM 请求声明文件写/删或敏感配置工具 — 升级人工审批 (json_path 治理)"
+    escalation_timeout: 300
+    escalation_channel: slack

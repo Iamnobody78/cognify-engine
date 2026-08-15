@@ -1,0 +1,15 @@
+schema_version: 11-col-v1
+source: notion:N1 (人機協作協議)
+protocol:
+  module: logic_chain_check
+  category: 逻辑链检查
+  level: L2
+  core_purpose: 验证推理链完整性
+  metacognitive_q: 结论的前提是否都成立？
+  collab_directive: 请逐环检查我的推理链
+  trigger: 关键决策前
+  ethics_boundary: 不攻击人格只检查逻辑
+  source: notion:N1 (人機協作協議)
+  frequency: 关键决策时
+  strategy: 前提-推理-结论三段检查
+  expected_output: 逻辑链完整性报告

@@ -1,0 +1,33 @@
+[project]
+name = "governance-gateway"
+version = "0.1.0"
+description = "Non-invasive Sidecar/Proxy for Agent governance — honest reimplementation from v1.7.0-PoC"
+requires-python = ">=3.10"
+dependencies = [
+    "aiohttp>=3.9",
+    "pyyaml>=6.0",
+    "pydantic>=2.0",
+    "aiosqlite>=0.20",
+    "cryptography>=42.0",
+    # AST 语义门真实依赖 — 之前只在 requirements.txt 声明, pyproject 缺失导致
+    # `pip install .` 后 ast_guard.py 导入即崩 (外部审查 AUDIT-0061 暴露的真实缺陷)
+    "tree-sitter>=0.21.3,<0.22.0",
+    "tree-sitter-languages>=1.5.0",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=7.0",
+    "pytest-asyncio>=0.24",
+    "pytest-timeout>=2.0",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+# Lock pytest rootdir to THIS repo. Without this, pytest climbs up to the
+# parent workspace pyproject.toml ([tool.pytest.ini_options]) and resolves
+# `src` against the wrong root → every test 500s. (health_score.py catch)
+[tool.pytest.ini_options]
+testpaths = ["tests"]

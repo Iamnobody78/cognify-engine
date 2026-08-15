@@ -1,0 +1,21 @@
+# P6 (外部评审缺口 #1): 租户配置 — API key → tenant_id 映射
+#
+# 启用方式 (与 CONTEXT_HMAC_KEY 同模式, 环境变量开关):
+#   - 环境变量 AUTH_ENABLED=1 → create_app 自动加载本文件
+#   - 或代码显式注入 create_app(auth=TenantAuth.from_yaml("config/tenants.yaml"))
+# 未启用 = 兼容模式: 行为与 v1.13.0 完全一致 (391 回归保障)。
+#
+# 安全约束 (fail-closed, 见 src/auth.py):
+#   - key 长度 < 8 拒绝加载; key 跨租户复用拒绝加载
+#   - key 仅存服务端 (sha256 摘要驻留内存), Authorization/X-API-Key 头
+#     永不转发上游 (FORWARD_HEADER_WHITELIST 不含凭证头)
+#   - 本文件内为开发/测试密钥, 生产环境必须轮换并移出仓库
+tenants:
+  - id: tenant-a
+    api_keys:
+      - "bsum-dev-key-a-0001"
+      - "test-key-a-0001"
+  - id: tenant-b
+    api_keys:
+      - "bsum-dev-key-b-0001"
+      - "test-key-b-0001"
