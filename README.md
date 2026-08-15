@@ -26,6 +26,26 @@ python cli/cognify.py plugin list
 python cli/cognify.py pluginify --all
 ```
 
+
+## 统一迭代流程 (单仓库闭环)
+
+| 分支 | 用途 | 来源 |
+|------|------|------|
+| main | 稳定发布版 | 经过认证和测试 |
+| develop | 集成开发分支 | 所有 PR 合并目标 |
+| feature/plugin-* | 插件级功能开发 | 从 develop 切出 |
+| hotfix/plugin-* | 插件级紧急修复 | 从 main 切出 |
+| release/v* | 版本发布准备 | 从 develop 切出 |
+
+工作流: 在 plugins/<plugin>/ 修改 -> \cognify test --plugin <id>\ -> 提交 ->
+合并 develop -> 发布时 \cognify plugin update <id> --version x.y.z\。
+
+双向同步 (原仓库保留外部贡献入口):
+- cognify-engine -> 原仓库: 每次发布后 subtree push (PR 通道, 分支保护)
+- 原仓库 -> cognify-engine: 有外部 PR 时 subtree pull
+
+原仓库 (agent-governance-v2 / bottlesumo-pi) 开发 CI 已关闭, 全部迁移至此。
+
 ## 插件开发
 
 见 docs/plugin_development.md (生命周期钩子/依赖声明/事件总线/红线)
