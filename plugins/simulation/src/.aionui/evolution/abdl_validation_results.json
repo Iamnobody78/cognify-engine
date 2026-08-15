@@ -1,0 +1,97 @@
+{
+  "RandomAgent": {
+    "episodes": 50,
+    "wins": 0,
+    "win_rate": 0.0,
+    "crashes": 32,
+    "crash_rate": 64.0,
+    "avg_reward": 15.826,
+    "total_steps": 772,
+    "elapsed": 0.0,
+    "fps": 23334.0,
+    "top_actions": [
+      [
+        8,
+        50
+      ],
+      [
+        4,
+        47
+      ],
+      [
+        9,
+        46
+      ],
+      [
+        5,
+        44
+      ],
+      [
+        10,
+        41
+      ]
+    ]
+  },
+  "HeuristicAgent": {
+    "episodes": 50,
+    "wins": 0,
+    "win_rate": 0.0,
+    "crashes": 22,
+    "crash_rate": 44.0,
+    "avg_reward": 310.506,
+    "total_steps": 7287,
+    "elapsed": 0.2,
+    "fps": 37762.0,
+    "top_actions": [
+      [
+        10,
+        4085
+      ],
+      [
+        7,
+        3161
+      ],
+      [
+        4,
+        21
+      ],
+      [
+        5,
+        20
+      ]
+    ]
+  },
+  "ABDLAgent": {
+    "episodes": 50,
+    "wins": 0,
+    "win_rate": 0.0,
+    "crashes": 32,
+    "crash_rate": 64.0,
+    "avg_reward": 13.258,
+    "total_steps": 674,
+    "elapsed": 0.3,
+    "fps": 2308.0,
+    "top_actions": [
+      [
+        16,
+        242
+      ],
+      [
+        13,
+        154
+      ],
+      [
+        14,
+        134
+      ],
+      [
+        17,
+        114
+      ],
+      [
+        3,
+        19
+      ]
+    ]
+  }
+}

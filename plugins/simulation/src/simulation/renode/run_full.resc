@@ -1,0 +1,8 @@
+s @/mnt/c/Users/ivy/AppData/Roaming/AionUi/aionui/conversations/2026/07/27/aionrs-temp-48324704/bottlesumo_pi/simulation/renode/bottlesumo_rev2.resc
+sleep 0.5
+echo "=== STATUS ==="
+mach set F407_MAIN
+cpu PC
+mach set F103_AUX
+cpu PC
+quit

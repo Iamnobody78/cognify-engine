@@ -1,0 +1,32 @@
+{
+  "source": "hermes",
+  "session_id": "20260812_224902_4edd1c",
+  "origin_source": "cli",
+  "title": "",
+  "model": "deepseek-v4-flash",
+  "cwd": "C:\\Users\\ivy\\AppData\\Roaming\\AionUi\\aionui\\conversations\\2026\\07\\27\\aionrs-temp-48324704",
+  "message_count": 10,
+  "input_tokens": 80525,
+  "output_tokens": 1422,
+  "cost_usd": 0.012614,
+  "started_at": "2026-08-12T22:49:06.956606",
+  "last_activity_at": null,
+  "git_branch": null,
+  "git_repo_root": null,
+  "sync_fingerprint": "0|10",
+  "sample": [
+    {
+      "role": "user",
+      "text": "读取 memories/MEMORY.md 最后 800 字符, 确认 MAINTENANCE-GATE 协议与 7 缺陷状态已记录, 只汇报确认结果"
+    },
+    {
+      "role": "assistant",
+      "text": "确认完成，两项均已记录：  1. MAINTENANCE-GATE 协议 ✅ 已记录    - 文件第 2693 行 \"MAINTENANCE-GATE v1.0 已装载\"，最后 800 字符内可见其红线条款（本分检查未完成禁止新开发 / CI 红禁止合并 / 不得连续 2 个月零维护）与落地实例（T3=D4, C5=D1）  2. 7 缺陷状态 ✅ 已记录    - 文件第 2689 行 \"7 审计缺陷全部完成 (Unified Patch Set v1.0)\"（bottlesumo-pi @ 08a815f，patch_set_v1.0.zip 已生成）  文件: C:\\Users\\ivy\\AppData\\Local\\hermes\\memories\\MEMORY.md（204,006 字节，UTF-8），尾部章节结构完整。"
+    }
+  ],
+  "roles": {
+    "assistant": 5,
+    "tool": 4,
+    "user": 1
+  }
+}

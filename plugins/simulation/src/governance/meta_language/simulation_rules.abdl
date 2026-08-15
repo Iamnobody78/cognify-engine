@@ -1,0 +1,153 @@
+# ============================================================================
+# ABDL Simulation Rules v1.0
+# Bottle-pushing tactical rules for physics simulation
+# ============================================================================
+# These rules drive agent behavior DURING simulation episodes.
+# They differ from system_rules.abdl (governance rules for agent coordination).
+#
+# World state sensor IDs used by rules:
+#   edge_proximity   — 0.0 (center) to 1.0 (on edge)
+#   opponent_dist    — distance to opponent in meters
+#   opponent_angle   — relative angle to opponent in degrees (-180 to 180)
+#   opponent_found   — boolean: is opponent detected?
+#   push_force       — current push force in Newtons
+#   agent_speed      — agent's current speed in m/s
+#   steps_remaining  — steps left in episode
+#   stuck_counter    — consecutive steps without movement
+#
+# Rule hierarchy:
+#   L0 = Immutable safety (edge avoidance, stuck recovery)
+#   L1 = Core tactics (opponent engagement, approach)
+#   L2 = Advanced (aggressive push, flanking)
+#   L3 = Heuristic (speed adaptation, exploration)
+# ============================================================================
+
+version: "1.0"
+generated: "2026-08-02"
+total_rules: 14
+context: "simulation"
+
+rules:
+  # ============================================================================
+  # LEVEL 0: IMMUTABLE SAFETY — Must never be overridden
+  # ============================================================================
+
+  - id: "SIM-SAFETY-EDGE-CRITICAL"
+    level: 0
+    condition: "sensor(edge_proximity) > 0.85"
+    action: "EXECUTE(PolicyEdgeRecovery) AND ALERT(WARNING, 'edge_critical') AND LOG('edge_recovery')"
+    priority: 1000
+    description: "When 85%+ near edge, execute emergency reverse-and-turn recovery"
+    context: "edge_safety"
+    source: "simulation_rules.abdl > L0 Safety"
+
+  - id: "SIM-SAFETY-EDGE-WARNING"
+    level: 0
+    condition: "sensor(edge_proximity) > 0.8"
+    action: "EXECUTE(PolicyEdgeRetreat) AND LOG('edge_warning')"
+    priority: 900
+    description: "When 80%+ near edge, slow down and steer away from edge (v11-aligned: only back off when really close)"
+    context: "edge_safety"
+    source: "simulation_rules.abdl > L0 Safety"
+
+  - id: "SIM-SAFETY-STUCK"
+    level: 0
+    condition: "sensor(stuck_counter) > 8"
+    action: "EXECUTE(PolicyStuckRecovery) AND LOG('stuck_recovery')"
+    priority: 800
+    description: "If stuck > 8 consecutive steps, random movement to break free"
+    context: "stuck_detection"
+    source: "simulation_rules.abdl > L0 Safety"
+
+  # ============================================================================
+  # LEVEL 1: CORE TACTICS — Fundamental engagement logic
+  # ============================================================================
+
+  - id: "SIM-TACTIC-OPPONENT-FOUND"
+    level: 1
+    condition: "EXISTS(opponent_found) AND sensor(opponent_found) == True AND sensor(edge_proximity) < 0.5 AND sensor(opponent_dist) > 0.6"
+    action: "EXECUTE(PolicyPursueOpponent, {'angle': metric(opponent_angle), 'dist': metric(opponent_dist)})"
+    priority: 700
+    description: "When opponent is detected at range (>0.6m) and we're not at edge, pursue; below 0.6m close-combat rules (CLOSE-PUSH/FLANK) take over"
+    context: "opponent_engagement"
+    source: "simulation_rules.abdl > L1 Core Tactics"
+
+  - id: "SIM-TACTIC-OPPONENT-LOST"
+    level: 1
+    condition: "EXISTS(opponent_found) AND sensor(opponent_found) == False AND sensor(edge_proximity) < 0.3"
+    action: "EXECUTE(PolicySearchSweep) AND LOG('searching')"
+    priority: 600
+    description: "When opponent is lost and safe, perform sweeping search pattern"
+    context: "search_behavior"
+    source: "simulation_rules.abdl > L1 Core Tactics"
+
+  - id: "SIM-TACTIC-OPPONENT-LOST-NEAR-EDGE"
+    level: 1
+    condition: "EXISTS(opponent_found) AND sensor(opponent_found) == False AND BETWEEN(sensor(edge_proximity), 0.3, 0.6)"
+    action: "EXECUTE(PolicyCautiousSearch) AND LOG('cautious_search')"
+    priority: 590
+    description: "When opponent lost near edge, search cautiously (slow move + edge-aware)"
+    context: "search_behavior"
+    source: "simulation_rules.abdl > L1 Core Tactics"
+
+  # ============================================================================
+  # LEVEL 2: ADVANCED TACTICS — Aggression and positioning
+  # ============================================================================
+
+  - id: "SIM-ADVANCED-CLOSE-PUSH"
+    level: 2
+    condition: "sensor(opponent_dist) < 0.6 AND BETWEEN(sensor(opponent_angle), -10, 10) AND sensor(edge_proximity) < 0.65"
+    action: "EXECUTE(PolicyRushPush, {'speed': 'max'}) AND LOG('aggressive_push')"
+    priority: 500
+    description: "When opponent is very close and strictly aligned, execute max-speed push (v11-aligned window; edge tolerance widened to allow pushing at the rim)"
+    context: "aggressive_tactics"
+    source: "simulation_rules.abdl > L2 Advanced"
+
+  - id: "SIM-ADVANCED-FLANK-RIGHT"
+    level: 2
+    condition: "sensor(opponent_angle) < -10 AND sensor(opponent_dist) < 0.6 AND sensor(edge_proximity) < 0.80"
+    action: "EXECUTE(PolicyFlankRight, {'angle': metric(opponent_angle)}) AND LOG('flank_right')"
+    priority: 480
+    description: "When opponent is on right flank (negative angle), turn right to realign for push"
+    context: "opponent_flanking"
+    source: "simulation_rules.abdl > L2 Advanced"
+
+  - id: "SIM-ADVANCED-FLANK-LEFT"
+    level: 2
+    condition: "sensor(opponent_angle) > 10 AND sensor(opponent_dist) < 0.6 AND sensor(edge_proximity) < 0.80"
+    action: "EXECUTE(PolicyFlankLeft, {'angle': metric(opponent_angle)}) AND LOG('flank_left')"
+    priority: 470
+    description: "When opponent is on left flank (positive angle), turn left to realign for push"
+    context: "opponent_flanking"
+    source: "simulation_rules.abdl > L2 Advanced"
+
+  # ============================================================================
+  # LEVEL 3: HEURISTIC — Situational adaptation
+  # ============================================================================
+
+  - id: "SIM-HEUR-SPEED-ADAPT"
+    level: 3
+    condition: "sensor(steps_remaining) < 50 AND sensor(opponent_found) == True AND sensor(edge_proximity) < 0.3"
+    action: "EXECUTE(PolicySpeedBoost) AND LOG('speed_adapt')"
+    priority: 300
+    description: "When < 50 steps remain and opponent found, increase speed (time-pressure boost)"
+    context: "time_management"
+    source: "simulation_rules.abdl > L3 Heuristic"
+
+  - id: "SIM-HEUR-EXPLORE"
+    level: 3
+    condition: "sensor(steps_remaining) > 100 AND sensor(opponent_found) == False AND sensor(stuck_counter) < 3"
+    action: "EXECUTE(PolicyExploreWide, {'pattern': 'zigzag'}) AND LOG('wide_explore')"
+    priority: 200
+    description: "When early in episode with no opponent, wide zigzag exploration"
+    context: "exploration"
+    source: "simulation_rules.abdl > L3 Heuristic"
+
+  - id: "SIM-HEUR-DEFENSIVE"
+    level: 3
+    condition: "sensor(push_force) > 10 AND sensor(edge_proximity) > 0.3"
+    action: "EXECUTE(PolicyDefensiveBrace) AND LOG('defensive_brace')"
+    priority: 150
+    description: "When receiving strong push near edge, brace and resist"
+    context: "defensive_tactics"
+    source: "simulation_rules.abdl > L3 Heuristic"

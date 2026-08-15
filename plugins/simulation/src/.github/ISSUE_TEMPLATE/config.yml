@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security Policy
+    url: https://github.com/Iamnobody78/bottlesumo-pi/blob/main/SECURITY.md
+    about: 安全漏洞 / 治理绕过 —— 请勿开公开 issue
+  - name: Governance Engine (agent-governance-v2)
+    url: https://github.com/Iamnobody78/agent-governance-v2
+    about: 治理引擎 / 协议编译器 / 验证通道问题请去引擎仓库
+  - name: Discussions
+    url: https://github.com/Iamnobody78/bottlesumo-pi/discussions
+    about: 提问与设计讨论

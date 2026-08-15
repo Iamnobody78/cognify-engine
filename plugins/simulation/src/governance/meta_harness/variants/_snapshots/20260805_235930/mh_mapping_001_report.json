@@ -1,0 +1,137 @@
+{
+ "score": 1.0,
+ "passed": true,
+ "cost": {
+  "wall_s": 1.5,
+  "total_steps": 372,
+  "episodes": 10
+ },
+ "trajectory": {
+  "per_strategy": {
+   "random": {
+    "wins": 2,
+    "total": 2,
+    "winrate": 1.0,
+    "avg_steps": 14.5
+   },
+   "aggressive": {
+    "wins": 2,
+    "total": 2,
+    "winrate": 1.0,
+    "avg_steps": 20.0
+   },
+   "defensive": {
+    "wins": 2,
+    "total": 2,
+    "winrate": 1.0,
+    "avg_steps": 78.0
+   },
+   "circler": {
+    "wins": 2,
+    "total": 2,
+    "winrate": 1.0,
+    "avg_steps": 67.5
+   },
+   "counter": {
+    "wins": 2,
+    "total": 2,
+    "winrate": 1.0,
+    "avg_steps": 6.0
+   }
+  },
+  "episode_results": [
+   {
+    "episode": 0,
+    "opponent": "random",
+    "win": true,
+    "steps": 6,
+    "reward": 255.72000122070312,
+    "mode": "real",
+    "agent_mode": "abdl"
+   },
+   {
+    "episode": 1,
+    "opponent": "random",
+    "win": true,
+    "steps": 23,
+    "reward": 311.4599914550781,
+    "mode": "real",
+    "agent_mode": "abdl"
+   },
+   {
+    "episode": 0,
+    "opponent": "aggressive",
+    "win": true,
+    "steps": 16,
+    "reward": 271.239990234375,
+    "mode": "real",
+    "agent_mode": "abdl"
+   },
+   {
+    "episode": 1,
+    "opponent": "aggressive",
+    "win": true,
+    "steps": 24,
+    "reward": 376.8599853515625,
+    "mode": "real",
+    "agent_mode": "abdl"
+   },
+   {
+    "episode": 0,
+    "opponent": "defensive",
+    "win": true,
+    "steps": 78,
+    "reward": 476.739990234375,
+    "mode": "real",
+    "agent_mode": "abdl"
+   },
+   {
+    "episode": 1,
+    "opponent": "defensive",
+    "win": true,
+    "steps": 78,
+    "reward": 489.44000244140625,
+    "mode": "real",
+    "agent_mode": "abdl"
+   },
+   {
+    "episode": 0,
+    "opponent": "circler",
+    "win": true,
+    "steps": 74,
+    "reward": 486.489990234375,
+    "mode": "real",
+    "agent_mode": "abdl"
+   },
+   {
+    "episode": 1,
+    "opponent": "circler",
+    "win": true,
+    "steps": 61,
+    "reward": 405.9100036621094,
+    "mode": "real",
+    "agent_mode": "abdl"
+   },
+   {
+    "episode": 0,
+    "opponent": "counter",
+    "win": true,
+    "steps": 5,
+    "reward": 242.3300018310547,
+    "mode": "real",
+    "agent_mode": "abdl"
+   },
+   {
+    "episode": 1,
+    "opponent": "counter",
+    "win": true,
+    "steps": 7,
+    "reward": 275.7300109863281,
+    "mode": "real",
+    "agent_mode": "abdl"
+   }
+  ]
+ },
+ "gate_exit": 0,
+ "tag": "mh_mapping_001"
+}

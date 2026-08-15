@@ -1,0 +1,62 @@
+:root {
+  --bg: #0f1420;
+  --panel: #171e2e;
+  --border: #26324a;
+  --text: #dce3f0;
+  --muted: #8a94ab;
+  --ok: #4ade80;
+  --warn: #ffb84f;
+  --bad: #ff6b6b;
+  --accent: #4f8cff;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+.app { max-width: 1100px; margin: 0 auto; padding: 24px 16px 48px; }
+
+.app-header { display: flex; align-items: baseline; gap: 16px; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 20px; }
+.app-header h1 { font-size: 22px; margin: 0; }
+.subtitle { color: var(--muted); font-size: 13px; }
+
+.section { margin-bottom: 28px; }
+.section h2 { font-size: 16px; color: var(--accent); border-left: 3px solid var(--accent); padding-left: 10px; margin-bottom: 12px; }
+
+.panel { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 12px; }
+.panel h3 { margin: 0 0 12px; font-size: 14px; }
+.panel h4 { margin: 14px 0 6px; font-size: 13px; color: var(--muted); }
+.panel.error { border-color: var(--bad); color: var(--bad); }
+
+.health-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+.health-card { border-left: 4px solid var(--muted); }
+.health-card.ok { border-left-color: var(--ok); }
+.health-card.warn { border-left-color: var(--warn); }
+.health-card.bad { border-left-color: var(--bad); }
+.health-name { font-size: 13px; color: var(--muted); margin-bottom: 6px; word-break: break-all; }
+.health-big { font-size: 30px; font-weight: 700; }
+.health-meta { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.health-last { font-size: 11px; color: var(--muted); margin-top: 8px; }
+
+.summary-strip { display: flex; gap: 14px; flex-wrap: wrap; font-size: 13px; margin-bottom: 10px; color: var(--text); }
+.summary-strip span { background: rgba(79, 140, 255, 0.12); padding: 3px 10px; border-radius: 12px; }
+
+.latency-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.latency-table th, .latency-table td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--border); }
+.latency-table th { color: var(--muted); font-weight: 600; }
+
+.outliers ul { list-style: none; padding: 0; margin: 0; }
+.outlier-row { display: flex; gap: 12px; align-items: center; padding: 6px 0; border-bottom: 1px dashed var(--border); font-size: 12px; }
+.outlier-row .bad { color: var(--bad); font-weight: 700; }
+.muted { color: var(--muted); }
+
+.variant-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 12px; }
+.variant-card { background: rgba(79, 140, 255, 0.06); border: 1px solid var(--border); border-radius: 8px; padding: 12px; }
+.variant-id { font-size: 12px; color: var(--muted); margin-bottom: 4px; word-break: break-all; }
+
+.app-footer { margin-top: 32px; padding-top: 12px; border-top: 1px solid var(--border); color: var(--muted); font-size: 12px; }

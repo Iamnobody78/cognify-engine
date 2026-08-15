@@ -1,0 +1,13 @@
+graph LR
+    PM[PM 裁决] --> SP[Sprint 计划]
+    SP --> EKF[NCLT EKF 实验 27-session]
+    EKF --> MJ[metrics JSON]
+    MJ --> PF[Pareto 前沿]
+    PF --> VG[V9 门禁]
+    VG --> MB[Meta-Bootstrap 元能力]
+    MM[meta_monitor] --> GF[gap_function]
+    GF --> MC[meta_config 自适应]
+    MC --> CL[cell_learner 规则]
+    CL --> DL[distill_loop 蒸馏]
+    CL --> R[meta_engineering_rules]
+    EKF --> HB[boundary_scan 诚实边界]

@@ -1,0 +1,68 @@
+# ===== bottlesumo-pi 一键部署 (GAP-5.1) =====
+# 用法:
+#   docker compose up --build            # backend + frontend + postgres
+#   docker compose --profile observability up --build   # + prometheus + grafana
+#
+# 端口: frontend 5173 → nginx 80 (SPA) ; backend 8000 (API/metrics) ; pg 5432
+# 可观测: prometheus 9090 ; grafana 3000 (admin/admin)
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        GOV_ENGINE_REF: main   # agent-governance-v2 锁定 ref
+    environment:
+      GOV_DASH_DB_URL: postgresql+psycopg://bottlesumo:bottlesumo@postgres:5432/bottlesumo
+      GOV_LOG_FORMAT: json
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: dashboard/frontend/Dockerfile
+    depends_on:
+      - backend
+    ports:
+      - "5173:80"
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: bottlesumo
+      POSTGRES_PASSWORD: bottlesumo
+      POSTGRES_DB: bottlesumo
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bottlesumo"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:latest
+    profiles: ["observability"]
+    volumes:
+      - ./deployment/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana:latest
+    profiles: ["observability"]
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    ports:
+      - "3000:3000"
+
+volumes:
+  pgdata:

@@ -1,0 +1,7 @@
+{
+  "name": "2026-08-11T07-18_MEF_trace.md",
+  "mtime": "2026-08-11T15:21:44.735616",
+  "size": 967,
+  "sha256": "c683e687092251d8e38dbc2c5dbfbe79e79d4f329014a08bddcac688a152be22",
+  "head": "# MEF-OS 元教育闭环 trace\n\n- tag: S59_BOTTLESUMO\n- ts: 2026-08-11T07:18:56Z\n\n## MCE 编译\n\n{\n  \"Core_Directive\": \"\",\n  \"Entities\": [],\n  \"Structural_Constraints\": [\n    \"数据边界: 链接无法程序化抓取时以用户消息为内容源\",\n    \"递归边界: L0 锚点不可触碰, 递归 <=3 层\"\n  ],\n  \"Tension_Vectors\": [],\n  \"Entropy_Score\": 0.1\n}\n\n## VCE 扫描\n\n{\n  \"Polarization_Index\": 0.0,\n  \"Value_Tensions\": [],\n  \"Asymmetric_Perspectives\": []\n}\n\n## CEE 推演\n\n{\n  \"survival\": {\n    \"action\": \"最小可行行动: 编译内容 -> 写入知识库\",\n    \"trigger\": \"内容源可用或用户已提供摘要\"\n  },\n  \"precipitation\""
+}

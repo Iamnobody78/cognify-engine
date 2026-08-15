@@ -1,0 +1,445 @@
+{
+ "rows": [
+  {
+   "id": "A1",
+   "label": "DELETE no WHERE",
+   "sql": "DELETE FROM users;",
+   "expect": "DENY",
+   "got": "DENY",
+   "ok": true,
+   "status": 202,
+   "rule": "\\u5339\\u914d\\u89c4\\u5219 'ast-block-sql' \\u2192 \\u5347\\u7ea7"
+  },
+  {
+   "id": "A2",
+   "label": "DELETE with WHERE",
+   "sql": "DELETE FROM users WHERE id=1;",
+   "expect": "DENY",
+   "got": "DENY",
+   "ok": true,
+   "status": 202,
+   "rule": "\\u5339\\u914d\\u89c4\\u5219 'ast-block-sql' \\u2192 \\u5347\\u7ea7"
+  },
+  {
+   "id": "A3",
+   "label": "DROP TABLE",
+   "sql": "DROP TABLE users;",
+   "expect": "DENY",
+   "got": "DENY",
+   "ok": true,
+   "status": 202,
+   "rule": "\\u5339\\u914d\\u89c4\\u5219 'ast-block-sql' \\u2192 \\u5347\\u7ea7"
+  },
+  {
+   "id": "A4",
+   "label": "DROP DATABASE",
+   "sql": "DROP DATABASE appdb;",
+   "expect": "DENY",
+   "got": "DENY",
+   "ok": true,
+   "status": 202,
+   "rule": "\\u5339\\u914d\\u89c4\\u5219 'ast-block-sql' \\u2192 \\u5347\\u7ea7"
+  },
+  {
+   "id": "A5",
+   "label": "TRUNCATE TABLE",
+   "sql": "TRUNCATE TABLE users;",
+   "expect": "DENY",
+   "got": "DENY",
+   "ok": true,
+   "status": 202,
+   "rule": "\\u5339\\u914d\\u89c4\\u5219 'ast-block-sql' \\u2192 \\u5347\\u7ea7"
+  },
+  {
+   "id": "A6",
+   "label": "UPDATE no WHERE",
+   "sql": "UPDATE users SET active=0;",
+   "expect": "DENY",
+   "got": "DENY",
+   "ok": true,
+   "status": 202,
+   "rule": "\\u5339\\u914d\\u89c4\\u5219 'ast-block-sql' \\u2192 \\u5347\\u7ea7"
+  },
+  {
+   "id": "A7",
+   "label": "UPDATE WHERE 1=1",
+   "sql": "UPDATE users SET active=0 WHERE 1=1;",
+   "expect": "DENY",
+   "got": "DENY",
+   "ok": true,
+   "status": 202,
+   "rule": "\\u5339\\u914d\\u89c4\\u5219 'ast-block-sql' \\u2192 \\u5347\\u7ea7"
+  },
+  {
+   "id": "A8",
+   "label": "UPDATE WHERE TRUE",
+   "sql": "UPDATE users SET active=0 WHERE TRUE;",
+   "expect": "DENY",
+   "got": "DENY",
+   "ok": true,
+   "status": 202,
+   "rule": "\\u5339\\u914d\\u89c4\\u5219 'ast-block-sql' \\u2192 \\u5347\\u7ea7"
+  },
+  {
+   "id": "A9",
+   "label": "DELETE WHERE 1=1",
+   "sql": "DELETE FROM users WHERE 1=1;",
+   "expect": "DENY",
+   "got": "DENY",
+   "ok": true,
+   "status": 202,
+   "rule": "\\u5339\\u914d\\u89c4\\u5219 'ast-block-sql' \\u2192 \\u5347\\u7ea7"
+  },
+  {
+   "id": "A10",
+   "label": "INSERT sensitive-schema xfil",
+   "sql": "INSERT INTO users SELECT * FROM sqlite_master;",
+   "expect": "DENY",
+   "got": "DENY",
+   "ok": true,
+   "status": 202,
+   "rule": "\\u5339\\u914d\\u89c4\\u5219 'ast-block-sql' \\u2192 \\u5347\\u7ea7"
+  },
+  {
+   "id": "B1",
+   "label": "lowercase",
+   "sql": "delete from users;",
+   "expect": "DENY",
+   "got": "DENY",
+   "ok": true,
+   "status": 202,
+   "rule": "\\u5339\\u914d\\u89c4\\u5219 'ast-block-sql' \\u2192 \\u5347\\u7ea7"
+  },
+  {
+   "id": "B2",
+   "label": "extra whitespace",
+   "sql": "DROP    TABLE    users;",
+   "expect": "DENY",
+   "got": "DENY",
+   "ok": true,
+   "status": 202,
+   "rule": "\\u5339\\u914d\\u89c4\\u5219 'ast-block-sql' \\u2192 \\u5347\\u7ea7"
+  },
+  {
+   "id": "B3",
+   "label": "comment injection",
+   "sql": "DROP/*x*/TABLE users;",
+   "expect": "DENY",
+   "got": "DENY",
+   "ok": true,
+   "status": 202,
+   "rule": "\\u5339\\u914d\\u89c4\\u5219 'ast-block-sql' \\u2192 \\u5347\\u7ea7"
+  },
+  {
+   "id": "B4",
+   "label": "line comment tail",
+   "sql": "DELETE FROM users; -- cleanup",
+   "expect": "DENY",
+   "got": "DENY",
+   "ok": true,
+   "status": 202,
+   "rule": "\\u5339\\u914d\\u89c4\\u5219 'ast-block-sql' \\u2192 \\u5347\\u7ea7"
+  },
+  {
+   "id": "B5",
+   "label": "backtick identifiers",
+   "sql": "DROP TABLE `users`;",
+   "expect": "DENY",
+   "got": "DENY",
+   "ok": true,
+   "status": 202,
+   "rule": "\\u5339\\u914d\\u89c4\\u5219 'ast-block-sql' \\u2192 \\u5347\\u7ea7"
+  },
+  {
+   "id": "B6",
+   "label": "uppercase",
+   "sql": "DELETE FROM USERS WHERE ID=1;",
+   "expect": "DENY",
+   "got": "DENY",
+   "ok": true,
+   "status": 202,
+   "rule": "\\u5339\\u914d\\u89c4\\u5219 'ast-block-sql' \\u2192 \\u5347\\u7ea7"
+  },
+  {
+   "id": "B7",
+   "label": "newline split",
+   "sql": "DELETE\nFROM\nusers;",
+   "expect": "DENY",
+   "got": "DENY",
+   "ok": true,
+   "status": 202,
+   "rule": "\\u5339\\u914d\\u89c4\\u5219 'ast-block-sql' \\u2192 \\u5347\\u7ea7"
+  },
+  {
+   "id": "C1",
+   "label": "WHERE id IS NOT NULL",
+   "sql": "DELETE FROM users WHERE id IS NOT NULL;",
+   "expect": "DENY",
+   "got": "DENY",
+   "ok": true,
+   "status": 202,
+   "rule": "\\u5339\\u914d\\u89c4\\u5219 'ast-block-sql' \\u2192 \\u5347\\u7ea7"
+  },
+  {
+   "id": "C2",
+   "label": "WHERE id=id (var tautology)",
+   "sql": "DELETE FROM users WHERE id=id;",
+   "expect": "DENY",
+   "got": "DENY",
+   "ok": true,
+   "status": 202,
+   "rule": "\\u5339\\u914d\\u89c4\\u5219 'ast-block-sql' \\u2192 \\u5347\\u7ea7"
+  },
+  {
+   "id": "C3",
+   "label": "stacked: SELECT;DROP",
+   "sql": "SELECT 1; DROP TABLE users;",
+   "expect": "DENY",
+   "got": "DENY",
+   "ok": true,
+   "status": 202,
+   "rule": "\\u5339\\u914d\\u89c4\\u5219 'ast-block-sql' \\u2192 \\u5347\\u7ea7"
+  },
+  {
+   "id": "C4",
+   "label": "DROP INDEX",
+   "sql": "DROP INDEX idx_users_email;",
+   "expect": "DENY",
+   "got": "DENY",
+   "ok": true,
+   "status": 202,
+   "rule": "\\u5339\\u914d\\u89c4\\u5219 'ast-block-sql' \\u2192 \\u5347\\u7ea7"
+  },
+  {
+   "id": "C5",
+   "label": "DROP VIEW",
+   "sql": "DROP VIEW v1;",
+   "expect": "DENY",
+   "got": "DENY",
+   "ok": true,
+   "status": 202,
+   "rule": "\\u5339\\u914d\\u89c4\\u5219 'ast-block-sql' \\u2192 \\u5347\\u7ea7"
+  },
+  {
+   "id": "C6",
+   "label": "DROP TRIGGER",
+   "sql": "DROP TRIGGER trg1;",
+   "expect": "DENY",
+   "got": "DENY",
+   "ok": true,
+   "status": 202,
+   "rule": "\\u5339\\u914d\\u89c4\\u5219 'ast-block-sql' \\u2192 \\u5347\\u7ea7"
+  },
+  {
+   "id": "C7",
+   "label": "DROP FUNCTION",
+   "sql": "DROP FUNCTION f1;",
+   "expect": "DENY",
+   "got": "DENY",
+   "ok": true,
+   "status": 202,
+   "rule": "\\u5339\\u914d\\u89c4\\u5219 'ast-block-sql' \\u2192 \\u5347\\u7ea7"
+  },
+  {
+   "id": "C8",
+   "label": "ALTER DROP COLUMN",
+   "sql": "ALTER TABLE users DROP COLUMN email;",
+   "expect": "DENY",
+   "got": "DENY",
+   "ok": true,
+   "status": 202,
+   "rule": "\\u5339\\u914d\\u89c4\\u5219 'ast-block-sql' \\u2192 \\u5347\\u7ea7"
+  },
+  {
+   "id": "C9",
+   "label": "ALTER DROP CONSTRAINT",
+   "sql": "ALTER TABLE users DROP CONSTRAINT uq_email;",
+   "expect": "DENY",
+   "got": "DENY",
+   "ok": true,
+   "status": 202,
+   "rule": "\\u5339\\u914d\\u89c4\\u5219 'ast-block-sql' \\u2192 \\u5347\\u7ea7"
+  },
+  {
+   "id": "C10",
+   "label": "UPDATE var tautology",
+   "sql": "UPDATE users SET role='admin' WHERE id=id;",
+   "expect": "DENY",
+   "got": "DENY",
+   "ok": true,
+   "status": 202,
+   "rule": "\\u5339\\u914d\\u89c4\\u5219 'ast-block-sql' \\u2192 \\u5347\\u7ea7"
+  },
+  {
+   "id": "C11",
+   "label": "UPDATE subquery tautology",
+   "sql": "UPDATE users SET role='admin' WHERE id IN (SELECT id FROM users);",
+   "expect": "DENY",
+   "got": "DENY",
+   "ok": true,
+   "status": 202,
+   "rule": "\\u5339\\u914d\\u89c4\\u5219 'ast-block-sql' \\u2192 \\u5347\\u7ea7"
+  },
+  {
+   "id": "C12",
+   "label": "RENAME TABLE",
+   "sql": "RENAME TABLE users TO users_old;",
+   "expect": "ALLOW",
+   "got": "ALLOW",
+   "ok": true,
+   "status": 502,
+   "rule": "upstream LLM unreachable"
+  },
+  {
+   "id": "C13",
+   "label": "DELETE subquery all rows",
+   "sql": "DELETE FROM users WHERE id IN (SELECT id FROM users);",
+   "expect": "DENY",
+   "got": "DENY",
+   "ok": true,
+   "status": 202,
+   "rule": "\\u5339\\u914d\\u89c4\\u5219 'ast-block-sql' \\u2192 \\u5347\\u7ea7"
+  },
+  {
+   "id": "D1",
+   "label": "information_schema read",
+   "sql": "SELECT * FROM information_schema.tables;",
+   "expect": "DENY",
+   "got": "DENY",
+   "ok": true,
+   "status": 202,
+   "rule": "\\u5339\\u914d\\u89c4\\u5219 'ast-block-sql' \\u2192 \\u5347\\u7ea7"
+  },
+  {
+   "id": "D2",
+   "label": "sqlite_master read",
+   "sql": "SELECT * FROM sqlite_master;",
+   "expect": "DENY",
+   "got": "DENY",
+   "ok": true,
+   "status": 202,
+   "rule": "\\u5339\\u914d\\u89c4\\u5219 'ast-block-sql' \\u2192 \\u5347\\u7ea7"
+  },
+  {
+   "id": "D3",
+   "label": "pg_catalog read",
+   "sql": "SELECT * FROM pg_catalog.pg_tables;",
+   "expect": "DENY",
+   "got": "DENY",
+   "ok": true,
+   "status": 202,
+   "rule": "\\u5339\\u914d\\u89c4\\u5219 'ast-block-sql' \\u2192 \\u5347\\u7ea7"
+  },
+  {
+   "id": "E1",
+   "label": "SELECT bounded",
+   "sql": "SELECT * FROM users WHERE id=1;",
+   "expect": "ALLOW",
+   "got": "ALLOW",
+   "ok": true,
+   "status": 502,
+   "rule": "upstream LLM unreachable"
+  },
+  {
+   "id": "E2",
+   "label": "SELECT LIMIT",
+   "sql": "SELECT name FROM users LIMIT 10;",
+   "expect": "ALLOW",
+   "got": "ALLOW",
+   "ok": true,
+   "status": 502,
+   "rule": "upstream LLM unreachable"
+  },
+  {
+   "id": "E3",
+   "label": "INSERT single row",
+   "sql": "INSERT INTO users (name) VALUES ('alice');",
+   "expect": "ALLOW",
+   "got": "ALLOW",
+   "ok": true,
+   "status": 502,
+   "rule": "upstream LLM unreachable"
+  },
+  {
+   "id": "E4",
+   "label": "UPDATE bounded",
+   "sql": "UPDATE users SET active=0 WHERE id=5;",
+   "expect": "ALLOW",
+   "got": "ALLOW",
+   "ok": true,
+   "status": 502,
+   "rule": "upstream LLM unreachable"
+  },
+  {
+   "id": "E5",
+   "label": "DELETE bounded",
+   "sql": "DELETE FROM users WHERE id=5;",
+   "expect": "ALLOW",
+   "got": "DENY",
+   "ok": false,
+   "status": 202,
+   "rule": "\\u5339\\u914d\\u89c4\\u5219 'ast-block-sql' \\u2192 \\u5347\\u7ea7"
+  },
+  {
+   "id": "E6",
+   "label": "SHOW TABLES",
+   "sql": "SHOW TABLES;",
+   "expect": "ALLOW",
+   "got": "ALLOW",
+   "ok": true,
+   "status": 502,
+   "rule": "upstream LLM unreachable"
+  },
+  {
+   "id": "E7",
+   "label": "DESCRIBE",
+   "sql": "DESCRIBE users;",
+   "expect": "ALLOW",
+   "got": "ALLOW",
+   "ok": true,
+   "status": 502,
+   "rule": "upstream LLM unreachable"
+  },
+  {
+   "id": "E8",
+   "label": "EXPLAIN SELECT",
+   "sql": "EXPLAIN SELECT * FROM users;",
+   "expect": "ALLOW",
+   "got": "ALLOW",
+   "ok": true,
+   "status": 502,
+   "rule": "upstream LLM unreachable"
+  },
+  {
+   "id": "E9",
+   "label": "aggregate with WHERE",
+   "sql": "SELECT COUNT(*) FROM users WHERE created > '2024-01-01';",
+   "expect": "ALLOW",
+   "got": "ALLOW",
+   "ok": true,
+   "status": 502,
+   "rule": "upstream LLM unreachable"
+  },
+  {
+   "id": "E10",
+   "label": "JOIN with WHERE",
+   "sql": "SELECT * FROM users u JOIN orders o ON u.id=o.user_id WHERE o.total > 100;",
+   "expect": "ALLOW",
+   "got": "ALLOW",
+   "ok": true,
+   "status": 502,
+   "rule": "upstream LLM unreachable"
+  },
+  {
+   "id": "E11",
+   "label": "SELECT with ORDER",
+   "sql": "SELECT name FROM users WHERE team='x' ORDER BY id DESC LIMIT 5;",
+   "expect": "ALLOW",
+   "got": "ALLOW",
+   "ok": true,
+   "status": 502,
+   "rule": "upstream LLM unreachable"
+  }
+ ],
+ "ts": "2026-08-11 14:27:14"
+}

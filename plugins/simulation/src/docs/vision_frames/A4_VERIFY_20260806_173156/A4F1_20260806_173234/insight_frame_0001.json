@@ -1,0 +1,39 @@
+{
+  "objects": [
+    {
+      "class": "robot|opponent|dohyo|edge_zone",
+      "position_px": [
+        0.1,
+        0.1
+      ],
+      "confidence": 0.925
+    },
+    {
+      "class": "robot|opponent|dohyo|edge_zone",
+      "position_px": [
+        -0.3,
+        -0.3
+      ],
+      "confidence": 0.15
+    }
+  ],
+  "robot": {
+    "x": 0,
+    "y": 0,
+    "heading_deg": 0
+  },
+  "opponent": {
+    "x": 0,
+    "y": 0,
+    "heading_deg": 0
+  },
+  "edge_min": 0.32,
+  "zone": "danger",
+  "anomaly": null,
+  "confidence": 0.35,
+  "_meta": {
+    "model": "qwen2.5vl:3b",
+    "latency_s": 34.92,
+    "mode": "on_demand"
+  }
+}

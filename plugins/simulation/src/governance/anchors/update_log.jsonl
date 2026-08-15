@@ -1,0 +1,4 @@
+{"ts": "2026-08-14T13:42:53.389081", "reason": "V9裁决门数据修正: 10%→100% (2026-08-14 实测 40/40), 修正 ANCHORS.md/BOUNDARY.md 陈旧声明", "files": {"ANCHORS.md": "dcaa4f3638482e14...", "BOUNDARY.md": "ed202485d7b37df0...", "REDLINES.md": "a29f57c5ee0617bb..."}}
+{"ts": "2026-08-14T13:46:55.480323", "reason": "锚点描述同步至 v1.1: ANCHORS.sig→anchor_manifest.json 信任根机制, 引擎鲁棒化完成", "files": {"ANCHORS.md": "9c8ee6b5b4cdf9d8...", "BOUNDARY.md": "615c3d0bc96e0db0...", "REDLINES.md": "a29f57c5ee0617bb..."}}
+{"ts": "2026-08-14T13:48:04.050020", "reason": "v1.1 鲁棒化: 锚点强制LF规范化 + 描述同步 + 信任根刷新", "files": {"ANCHORS.md": "9c8ee6b5b4cdf9d8...", "BOUNDARY.md": "615c3d0bc96e0db0...", "REDLINES.md": "a29f57c5ee0617bb..."}}
+{"ts": "2026-08-14T13:49:17.941850", "reason": "引擎写文件强制LF: 修复本地CRLF vs 仓库LF字节不一致(跨会话一致性)", "files": {"ANCHORS.md": "9c8ee6b5b4cdf9d8...", "BOUNDARY.md": "615c3d0bc96e0db0...", "REDLINES.md": "a29f57c5ee0617bb..."}}

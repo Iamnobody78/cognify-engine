@@ -1,0 +1,28 @@
+version: 2
+updates:
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "Iamnobody78"
+    labels:
+      - "dependencies"
+    commit-message:
+      prefix: "deps"
+      include: "scope"
+    ignore:
+      # tree-sitter >= 0.22 removed Query captures/matches API used by src/ast_guard.py;
+      # 0.21.3 is the verified pin (AUDIT-0046, 574 tests).
+      - dependency-name: "tree-sitter"
+        versions: [">=0.22.0"]
+      # tree-sitter-languages >= 1.6 incompatible with tree-sitter==0.21.3
+      # (two-argument Language constructor); 1.5.0 is the verified pin.
+      - dependency-name: "tree-sitter-languages"
+        versions: [">=1.6.0"]
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"

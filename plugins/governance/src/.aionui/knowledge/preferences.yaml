@@ -1,0 +1,13 @@
+# 行为偏好统计 (启发式)
+preferences:
+  dominant_type: project
+  type_distribution:
+    project: 72
+    reference: 1
+    session: 1
+  top_tags:
+    - governance (8)
+    - triple-loop (5)
+    - bottlesumo (3)
+    - scheduler (3)
+    - sidecar (3)

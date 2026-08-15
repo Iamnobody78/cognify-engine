@@ -1,0 +1,15 @@
+{
+  "independent": "input type: Notion protocol documents (vs arxiv papers in R0)",
+  "dependent": [
+    "asset compile success",
+    "YAML schema validity",
+    "scaffold integrity"
+  ],
+  "control": "R0 (arxiv) pipeline — same S.A.M.U.E.L. gates",
+  "predictions": [
+    "P1: A1 protocol compiler produces parseable YAML with all 11 fields",
+    "P2: A2 memory scaffold generates complete 5-dir structure + valid manifest",
+    "P3: S.A.M.U.E.L. pipeline runs on notion input with all gates PASS",
+    "P4: unit tests cover both assets"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "roles": [
+    {"id": "PM",  "name": "项目经理",     "source": "multi_role_framework.md v1.0", "active": true},
+    {"id": "ME",  "name": "机械工程师",   "source": "multi_role_framework.md v1.0", "active": true},
+    {"id": "EE",  "name": "电气工程师",   "source": "multi_role_framework.md v1.0", "active": true},
+    {"id": "SW",  "name": "软件工程师",   "source": "multi_role_framework.md v1.0", "active": true},
+    {"id": "AI",  "name": "AI 工程师",    "source": "multi_role_framework.md v1.0", "active": true},
+    {"id": "SIM", "name": "仿真工程师",   "source": "multi_role_framework.md v1.0", "active": true},
+    {"id": "SYS", "name": "系统架构师",   "source": "multi_role_framework.md v1.0", "active": true},
+    {"id": "QA",  "name": "质检员",       "source": "meta_prompts/loaded/quality_inspector_v1.0.md", "active": true}
+  ],
+  "fusion_note": "质检员 (QA) 由本能接收验证测试装载, 与 multi_role_framework 7 角色无冲突, 叠加为第 8 角色",
+  "updated": "2026-08-05"
+}

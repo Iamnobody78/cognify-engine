@@ -1,0 +1,92 @@
+{
+ "score": 1.0,
+ "passed": true,
+ "cost": {
+  "wall_s": 14.8,
+  "total_steps": 72,
+  "episodes": 5
+ },
+ "trajectory": {
+  "per_strategy": {
+   "random": {
+    "wins": 1,
+    "total": 1,
+    "winrate": 1.0,
+    "avg_steps": 6.0
+   },
+   "aggressive": {
+    "wins": 1,
+    "total": 1,
+    "winrate": 1.0,
+    "avg_steps": 7.0
+   },
+   "defensive": {
+    "wins": 1,
+    "total": 1,
+    "winrate": 1.0,
+    "avg_steps": 42.0
+   },
+   "circler": {
+    "wins": 1,
+    "total": 1,
+    "winrate": 1.0,
+    "avg_steps": 12.0
+   },
+   "counter": {
+    "wins": 1,
+    "total": 1,
+    "winrate": 1.0,
+    "avg_steps": 5.0
+   }
+  },
+  "episode_results": [
+   {
+    "episode": 0,
+    "opponent": "random",
+    "win": true,
+    "steps": 6,
+    "reward": 256.010009765625,
+    "mode": "real",
+    "agent_mode": "abdl"
+   },
+   {
+    "episode": 0,
+    "opponent": "aggressive",
+    "win": true,
+    "steps": 7,
+    "reward": 251.55999755859375,
+    "mode": "real",
+    "agent_mode": "abdl"
+   },
+   {
+    "episode": 0,
+    "opponent": "defensive",
+    "win": true,
+    "steps": 42,
+    "reward": 347.4800109863281,
+    "mode": "real",
+    "agent_mode": "abdl"
+   },
+   {
+    "episode": 0,
+    "opponent": "circler",
+    "win": true,
+    "steps": 12,
+    "reward": 281.7900085449219,
+    "mode": "real",
+    "agent_mode": "abdl"
+   },
+   {
+    "episode": 0,
+    "opponent": "counter",
+    "win": true,
+    "steps": 5,
+    "reward": 242.49000549316406,
+    "mode": "real",
+    "agent_mode": "abdl"
+   }
+  ]
+ },
+ "gate_exit": 0,
+ "tag": "A4_7B_COMPARE_gate"
+}

@@ -1,0 +1,8 @@
+(kicad_project
+  (version 1)
+  (title "BottleSumo Rev1 Unified Control Board")
+  (date "2026-07-26")
+  (schematic_files
+    (file "bottlesumo_rev1_v3_fmt.kicad_sch")
+  )
+)

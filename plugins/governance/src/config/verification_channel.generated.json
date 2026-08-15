@@ -1,0 +1,84 @@
+{
+  "channel": {
+    "type": "pluggable-validator",
+    "validator": "baseline",
+    "interface": "DeclarationValidator.validate(rule, path, method, body)",
+    "design_doc": "docs/s66_verification_channel.md"
+  },
+  "mitigated_blindspot": "declaration_only (satisfied 谎报绕过 enforce)",
+  "baseline_checks": [
+    "violation+satisfied 矛盾 → verified=False (c=0.95)",
+    "satisfied+证据锚点 → verified=True (c=0.8)",
+    "satisfied 无锚点 → verified=False (c=0.6) [盲点缓解主路径]",
+    "协议状态缺失/非 dict → verified=False (c=0.9)",
+    "非声明依赖规则 → 平凡通过 (c=1.0)"
+  ],
+  "honest_boundary": "基线只做一致性检查, 不证明 agent 真的执行了协议; 深层语义验证留给 LLM 层插槽",
+  "sample_verdicts": [
+    {
+      "label": "legitimate_with_anchor (合法声明+证据锚点)",
+      "body": {
+        "governance": {
+          "protocols": {
+            "feynman_test": {
+              "satisfied": true,
+              "evidence": "feynman_self_check_passed_v2"
+            }
+          }
+        }
+      },
+      "matched_rule": "protocol-feynman_test-ok",
+      "final_action": "ALLOW_WITH_WARNING",
+      "verification": {
+        "claim": "feynman_test.satisfied=true",
+        "verified": true,
+        "confidence": 0.8,
+        "reason": "声明有上下文锚定: 证据字段 ['evidence'] 非空 — satisfied 声明与请求体上下文一致",
+        "validator": "baseline"
+      }
+    },
+    {
+      "label": "zero_cost_bypass_attempt (零成本谎报: 无锚点)",
+      "body": {
+        "governance": {
+          "protocols": {
+            "feynman_test": {
+              "satisfied": true
+            }
+          }
+        }
+      },
+      "matched_rule": "protocol-feynman_test-ok",
+      "final_action": "ESCALATE",
+      "verification": {
+        "claim": "feynman_test.satisfied=true",
+        "verified": false,
+        "confidence": 0.6,
+        "reason": "声明无上下文锚点: satisfied=true 但协议状态 (feynman_test) 不含任何非空证据字段 ['evidence', 'output', 'result', 'proof'] — 零成本谎报风险 (declaration_only 缓解主路径)",
+        "validator": "baseline"
+      }
+    },
+    {
+      "label": "contradictory_declaration (violation+satisfied 矛盾)",
+      "body": {
+        "governance": {
+          "protocols": {
+            "entropy_denoise": {
+              "satisfied": true,
+              "violation": "e7d9"
+            }
+          }
+        }
+      },
+      "matched_rule": "protocol-entropy_denoise-ethics",
+      "final_action": "DENY",
+      "verification": {
+        "claim": "(n/a)",
+        "verified": true,
+        "confidence": 1.0,
+        "reason": "规则 protocol-entropy_denoise-ethics 不依赖 satisfied 声明 (action=DENY) — 无可验证的放行声明",
+        "validator": "baseline"
+      }
+    }
+  ]
+}

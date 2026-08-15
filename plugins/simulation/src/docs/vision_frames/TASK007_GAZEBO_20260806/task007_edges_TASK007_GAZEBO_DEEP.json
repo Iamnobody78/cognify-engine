@@ -1,0 +1,389 @@
+{
+  "tag": "TASK007_GAZEBO_DEEP",
+  "target_events": 20,
+  "dohyo_r": 0.385,
+  "trigger": 0.2,
+  "total_events": 20,
+  "events": [
+    {
+      "episode": 1,
+      "t_sec": 5.9,
+      "edge_min": 0.054,
+      "zone": "near",
+      "decay_injected": 0.0746,
+      "sensors": {
+        "front": 0.01,
+        "back": 999.0,
+        "left": 999.0,
+        "right": 999.0
+      },
+      "pose": [
+        0.1636,
+        0.2878
+      ],
+      "yaw": 2.899,
+      "heading": "circle"
+    },
+    {
+      "episode": 2,
+      "t_sec": 12.87,
+      "edge_min": 0.0477,
+      "zone": "danger",
+      "decay_injected": 0.1,
+      "sensors": {
+        "front": 0.01,
+        "back": 999.0,
+        "left": 999.0,
+        "right": 999.0
+      },
+      "pose": [
+        0.212,
+        0.2624
+      ],
+      "yaw": 2.639,
+      "heading": "circle"
+    },
+    {
+      "episode": 3,
+      "t_sec": 19.95,
+      "edge_min": 0.0384,
+      "zone": "danger",
+      "decay_injected": 0.1,
+      "sensors": {
+        "front": 0.01,
+        "back": 999.0,
+        "left": 999.0,
+        "right": 999.0
+      },
+      "pose": [
+        0.2112,
+        0.2748
+      ],
+      "yaw": 2.679,
+      "heading": "circle"
+    },
+    {
+      "episode": 4,
+      "t_sec": 27.18,
+      "edge_min": 0.0535,
+      "zone": "near",
+      "decay_injected": 0.0747,
+      "sensors": {
+        "front": 0.01,
+        "back": 999.0,
+        "left": 999.0,
+        "right": 999.0
+      },
+      "pose": [
+        0.1352,
+        0.3027
+      ],
+      "yaw": 3.068,
+      "heading": "circle"
+    },
+    {
+      "episode": 5,
+      "t_sec": 34.07,
+      "edge_min": 0.0545,
+      "zone": "near",
+      "decay_injected": 0.0745,
+      "sensors": {
+        "front": 0.0115,
+        "back": 999.0,
+        "left": 999.0,
+        "right": 999.0
+      },
+      "pose": [
+        0.1339,
+        0.3022
+      ],
+      "yaw": 3.033,
+      "heading": "circle"
+    },
+    {
+      "episode": 6,
+      "t_sec": 41.03,
+      "edge_min": 0.0503,
+      "zone": "near",
+      "decay_injected": 0.075,
+      "sensors": {
+        "front": 0.01,
+        "back": 999.0,
+        "left": 999.0,
+        "right": 999.0
+      },
+      "pose": [
+        0.1995,
+        0.2687
+      ],
+      "yaw": 2.664,
+      "heading": "circle"
+    },
+    {
+      "episode": 7,
+      "t_sec": 48.09,
+      "edge_min": 0.052,
+      "zone": "near",
+      "decay_injected": 0.0748,
+      "sensors": {
+        "front": 0.01,
+        "back": 999.0,
+        "left": 999.0,
+        "right": 999.0
+      },
+      "pose": [
+        0.1502,
+        0.2972
+      ],
+      "yaw": 2.924,
+      "heading": "circle"
+    },
+    {
+      "episode": 8,
+      "t_sec": 54.8,
+      "edge_min": 0.0535,
+      "zone": "near",
+      "decay_injected": 0.0747,
+      "sensors": {
+        "front": 0.0114,
+        "back": 999.0,
+        "left": 999.0,
+        "right": 999.0
+      },
+      "pose": [
+        0.1505,
+        0.2954
+      ],
+      "yaw": 2.944,
+      "heading": "circle"
+    },
+    {
+      "episode": 9,
+      "t_sec": 62.05,
+      "edge_min": 0.0536,
+      "zone": "near",
+      "decay_injected": 0.0746,
+      "sensors": {
+        "front": 0.01,
+        "back": 999.0,
+        "left": 999.0,
+        "right": 999.0
+      },
+      "pose": [
+        0.1515,
+        0.2948
+      ],
+      "yaw": 2.969,
+      "heading": "circle"
+    },
+    {
+      "episode": 10,
+      "t_sec": 68.82,
+      "edge_min": 0.0628,
+      "zone": "near",
+      "decay_injected": 0.0737,
+      "sensors": {
+        "front": 0.0115,
+        "back": 999.0,
+        "left": 999.0,
+        "right": 999.0
+      },
+      "pose": [
+        0.1661,
+        0.2761
+      ],
+      "yaw": 2.836,
+      "heading": "circle"
+    },
+    {
+      "episode": 11,
+      "t_sec": 75.69,
+      "edge_min": 0.0692,
+      "zone": "near",
+      "decay_injected": 0.0731,
+      "sensors": {
+        "front": 0.01,
+        "back": 999.0,
+        "left": 999.0,
+        "right": 999.0
+      },
+      "pose": [
+        0.1629,
+        0.2705
+      ],
+      "yaw": 2.829,
+      "heading": "circle"
+    },
+    {
+      "episode": 12,
+      "t_sec": 82.97,
+      "edge_min": 0.0555,
+      "zone": "near",
+      "decay_injected": 0.0744,
+      "sensors": {
+        "front": 0.0115,
+        "back": 999.0,
+        "left": 999.0,
+        "right": 999.0
+      },
+      "pose": [
+        0.1327,
+        0.3016
+      ],
+      "yaw": 3.003,
+      "heading": "circle"
+    },
+    {
+      "episode": 13,
+      "t_sec": 89.83,
+      "edge_min": 0.0623,
+      "zone": "near",
+      "decay_injected": 0.0738,
+      "sensors": {
+        "front": 0.01,
+        "back": 999.0,
+        "left": 999.0,
+        "right": 999.0
+      },
+      "pose": [
+        0.1608,
+        0.2798
+      ],
+      "yaw": 2.808,
+      "heading": "circle"
+    },
+    {
+      "episode": 14,
+      "t_sec": 97.23,
+      "edge_min": 0.0643,
+      "zone": "near",
+      "decay_injected": 0.0736,
+      "sensors": {
+        "front": 0.01,
+        "back": 999.0,
+        "left": 999.0,
+        "right": 999.0
+      },
+      "pose": [
+        0.1508,
+        0.2831
+      ],
+      "yaw": 2.886,
+      "heading": "circle"
+    },
+    {
+      "episode": 15,
+      "t_sec": 104.11,
+      "edge_min": 0.0762,
+      "zone": "near",
+      "decay_injected": 0.0724,
+      "sensors": {
+        "front": 0.0115,
+        "back": 999.0,
+        "left": 999.0,
+        "right": 999.0
+      },
+      "pose": [
+        0.1778,
+        0.2525
+      ],
+      "yaw": 2.682,
+      "heading": "circle"
+    },
+    {
+      "episode": 16,
+      "t_sec": 111.08,
+      "edge_min": 0.0735,
+      "zone": "near",
+      "decay_injected": 0.0727,
+      "sensors": {
+        "front": 0.01,
+        "back": 999.0,
+        "left": 999.0,
+        "right": 999.0
+      },
+      "pose": [
+        0.1457,
+        0.2753
+      ],
+      "yaw": 2.894,
+      "heading": "circle"
+    },
+    {
+      "episode": 17,
+      "t_sec": 117.83,
+      "edge_min": 0.0719,
+      "zone": "near",
+      "decay_injected": 0.0728,
+      "sensors": {
+        "front": 0.01,
+        "back": 999.0,
+        "left": 999.0,
+        "right": 999.0
+      },
+      "pose": [
+        0.1771,
+        0.2582
+      ],
+      "yaw": 2.712,
+      "heading": "circle"
+    },
+    {
+      "episode": 18,
+      "t_sec": 124.82,
+      "edge_min": 0.0745,
+      "zone": "near",
+      "decay_injected": 0.0726,
+      "sensors": {
+        "front": 0.01,
+        "back": 999.0,
+        "left": 999.0,
+        "right": 999.0
+      },
+      "pose": [
+        0.1484,
+        0.2728
+      ],
+      "yaw": 2.91,
+      "heading": "circle"
+    },
+    {
+      "episode": 19,
+      "t_sec": 131.92,
+      "edge_min": 0.0809,
+      "zone": "near",
+      "decay_injected": 0.0719,
+      "sensors": {
+        "front": 0.01,
+        "back": 999.0,
+        "left": 999.0,
+        "right": 999.0
+      },
+      "pose": [
+        0.1695,
+        0.2524
+      ],
+      "yaw": 2.723,
+      "heading": "circle"
+    },
+    {
+      "episode": 20,
+      "t_sec": 138.97,
+      "edge_min": 0.0784,
+      "zone": "near",
+      "decay_injected": 0.0722,
+      "sensors": {
+        "front": 0.01,
+        "back": 999.0,
+        "left": 999.0,
+        "right": 999.0
+      },
+      "pose": [
+        0.1649,
+        0.2585
+      ],
+      "yaw": 2.817,
+      "heading": "circle"
+    }
+  ]
+}

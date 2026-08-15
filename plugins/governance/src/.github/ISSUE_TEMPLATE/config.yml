@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security Policy
+    url: https://github.com/Iamnobody78/agent-governance-v2/blob/main/SECURITY.md
+    about: 安全漏洞 / 治理绕过问题 —— 请勿开公开 issue，按 SECURITY.md 报告
+  - name: Governance Center Dashboard
+    url: https://github.com/Iamnobody78/bottlesumo-pi
+    about: Dashboard / 策略编辑器相关问题可在主仓库提出
+  - name: Discussions
+    url: https://github.com/Iamnobody78/agent-governance-v2/discussions
+    about: 提问、设计讨论、治理哲学交流

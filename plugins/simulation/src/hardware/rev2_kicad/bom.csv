@@ -1,0 +1,26 @@
+Reference,Value,Footprint,Quantity,Mass(g),Description
+U1,TB6612,,1,0.00,
+U2,AMS1117-5.0,Package_TO_SOT_SMD:SOT-223-3_TabPin2,1,0.30,5V LDO Regulator
+"U3,U4",PC817,Package_DIP:DIP-4_W7.62mm,2,0.80,Optocoupler
+"C1,C2",100uF/25V,Capacitor_THT:CP_Radial_D8.0mm_P3.50mm,2,4.00,Electrolytic Capacitor
+"C3,C4,C5,C6",100nF,Capacitor_SMD:C_0603_1608Metric,4,0.08,MLCC Bypass Capacitor
+C7,10uF,Capacitor_SMD:C_0805_2012Metric,1,0.05,MLCC Capacitor
+"R1,R2,R3,R4",10k,Resistor_SMD:R_0603_1608Metric,4,0.08,Pull-up/down Resistor
+"R5,R6",100,Resistor_SMD:R_0603_1608Metric,2,0.04,Series Resistor
+D1,SS14,Diode_SMD:D_SOD-123,1,0.05,Schottky Diode (Reverse Protection)
+F1,PTC-2A,Fuse:Fuse_1206_3216Metric,1,0.05,PTC Resettable Fuse 2A
+D2,LED-Green,LED_SMD:LED_0603_1608Metric,1,0.01,Power Indicator LED
+J1,Battery-In,TerminalBlock:TerminalBlock_bornier-2_P5.08mm,1,2.00,2S LiPo Power Input
+"J2,J3",JST-PH-2P,Connector_JST:JST_PH_B2B-PH-K_1x02_P2.00mm,2,1.00,Motor Connector
+J4,RPi-GPIO-40,Connector_PinHeader_2.54mm:PinHeader_2x20_P2.54mm,1,3.00,Raspberry Pi GPIO Header
+U1,TCA9548APWR,Package_SO:TSSOP-24_4.4x7.8mm_P0.65mm,1,0.50,I2C 1-to-8 Multiplexer
+U2,TXS0108EPWR,Package_SO:TSSOP-20_4.4x6.5mm_P0.65mm,1,0.30,8-bit Bidirectional Level Shifter
+"C1,C2",100nF,Capacitor_SMD:C_0603_1608Metric,2,0.04,MLCC Bypass Capacitor
+"R1,R2",10k,Resistor_SMD:R_0603_1608Metric,2,0.04,Pull-up/down Resistor
+"R3,R4,R5,R6,R7",10k,Resistor_SMD:R_0603_1608Metric,5,0.10,Pull-up/down Resistor
+J1,Qwiic/Stemma QT,Connector_JST:JST_SH_SM04B-SRSS-TB_1x04_1MP_P1.00mm,1,0.30,I2C Sensor Connector (VCC/GND/SDA/SCL)
+J2,Qwiic/Stemma QT,Connector_JST:JST_SH_SM04B-SRSS-TB_1x04_1MP_P1.00mm,1,0.30,I2C Sensor Connector (VCC/GND/SDA/SCL)
+J3,Qwiic/Stemma QT,Connector_JST:JST_SH_SM04B-SRSS-TB_1x04_1MP_P1.00mm,1,0.30,I2C Sensor Connector (VCC/GND/SDA/SCL)
+J4,Qwiic/Stemma QT,Connector_JST:JST_SH_SM04B-SRSS-TB_1x04_1MP_P1.00mm,1,0.30,I2C Sensor Connector (VCC/GND/SDA/SCL)
+J5,Qwiic/Stemma QT,Connector_JST:JST_SH_SM04B-SRSS-TB_1x04_1MP_P1.00mm,1,0.30,I2C Sensor Connector (VCC/GND/SDA/SCL)
+J6,RPi-GPIO-40,Connector_PinHeader_2.54mm:PinHeader_2x20_P2.54mm,1,3.00,Raspberry Pi GPIO Header

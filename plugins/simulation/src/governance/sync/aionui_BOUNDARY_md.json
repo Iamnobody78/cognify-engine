@@ -1,0 +1,7 @@
+{
+  "name": "BOUNDARY.md",
+  "mtime": "2026-08-14T13:46:46.674738",
+  "size": 2096,
+  "sha256": "615c3d0bc96e0db0c48399f6923cbb39dd5d062cfc4de505619eaad37a1facf5",
+  "head": "# BOUNDARY.md —— 永久边界声明（真实项目状态）\n\n> 生成：PERMANENT-ANCHOR v1.1 Phase A ｜ 日期：2026-08-13\n> ⚠️ 本文件为**本项目真实边界**，非模板示例（模板\"无法操作真实硬件\"对本项目不成立）。\n\n## 硬件边界（真机）\n\n- **在手真机仅**：V42 board（ACE Electronics「Bottle Sumo Robot Pro-Act v42」）+ Raspberry Pi Pico W (RP2040)。\n- **引脚实测映射**：左电机 GP28 / 右电机 GP17 / 状态 LED GP22 / 按钮A GP16(前方) / 按钮B GP21(边缘) / 舵机 GP18-20 / I2C ADS1115。\n- **非在手**（历史对话或规划，无实物）：RPi4B / Arduino / ESP32-S3 / 电机(24GP-2430类) / 电机驱动板 / 电池电源 / 传感器(LiDAR/IMU/摄像头)。\n- **能力边界**：我有 `hardware` 工具（读/控 Sipeed 板 I2"
+}

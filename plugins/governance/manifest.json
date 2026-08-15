@@ -1,0 +1,16 @@
+{
+  "id": "cognify.governance",
+  "name": "Governance Engine",
+  "version": "0.1.0",
+  "description": "AI agent governance: protocol gateway, VCE scanning, declaration verification (agent-governance-v2)",
+  "author": "Iamnobody78",
+  "license": "MIT",
+  "main": "plugin.py",
+  "dependencies": {
+    "cognify.core": ">=1.0.0 <3.0.0"
+  },
+  "capabilities": ["governance", "vce", "verification", "audit"],
+  "hooks": ["on_load", "on_enable", "on_disable", "on_unload"],
+  "verified": true,
+  "source": "https://github.com/Iamnobody78/agent-governance-v2"
+}

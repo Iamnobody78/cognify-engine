@@ -1,0 +1,96 @@
+{
+  "task": "TASK-005a step_response calibration",
+  "model": "N20 6V 300rpm / 34mm sim wheel / damping=0.001 friction=0.02",
+  "command": {
+    "linear_x_m_s": 0.53
+  },
+  "n_runs": 10,
+  "rise_time_90_mean_s": 0.1601,
+  "settling_time_mean_s": 3.5817,
+  "overshoot_mean_pct": 0.0,
+  "steady_v_mean_m_s": 0.5279,
+  "runs": [
+    {
+      "run": 1,
+      "target_m_s": 0.53,
+      "rise_time_90_s": 1.6011,
+      "settling_time_s": 1.8011,
+      "overshoot_pct": 0.0,
+      "steady_v_m_s": 0.5317
+    },
+    {
+      "run": 2,
+      "target_m_s": 0.53,
+      "rise_time_90_s": 0.0,
+      "settling_time_s": 3.7675,
+      "overshoot_pct": 0.0,
+      "steady_v_m_s": 0.524
+    },
+    {
+      "run": 3,
+      "target_m_s": 0.53,
+      "rise_time_90_s": 0.0,
+      "settling_time_s": 3.9867,
+      "overshoot_pct": 0.0,
+      "steady_v_m_s": 0.5317
+    },
+    {
+      "run": 4,
+      "target_m_s": 0.53,
+      "rise_time_90_s": 0.0,
+      "settling_time_s": 4.001,
+      "overshoot_pct": 0.0,
+      "steady_v_m_s": 0.5253
+    },
+    {
+      "run": 5,
+      "target_m_s": 0.53,
+      "rise_time_90_s": 0.0,
+      "settling_time_s": 4.0019,
+      "overshoot_pct": 0.0,
+      "steady_v_m_s": 0.5318
+    },
+    {
+      "run": 6,
+      "target_m_s": 0.53,
+      "rise_time_90_s": 0.0,
+      "settling_time_s": 3.4463,
+      "overshoot_pct": 0.0,
+      "steady_v_m_s": 0.5252
+    },
+    {
+      "run": 7,
+      "target_m_s": 0.53,
+      "rise_time_90_s": 0.0,
+      "settling_time_s": 3.7939,
+      "overshoot_pct": 0.0,
+      "steady_v_m_s": 0.5295
+    },
+    {
+      "run": 8,
+      "target_m_s": 0.53,
+      "rise_time_90_s": 0.0,
+      "settling_time_s": 4.0052,
+      "overshoot_pct": 0.0,
+      "steady_v_m_s": 0.5286
+    },
+    {
+      "run": 9,
+      "target_m_s": 0.53,
+      "rise_time_90_s": 0.0,
+      "settling_time_s": 3.8022,
+      "overshoot_pct": 0.0,
+      "steady_v_m_s": 0.5259
+    },
+    {
+      "run": 10,
+      "target_m_s": 0.53,
+      "rise_time_90_s": 0.0,
+      "settling_time_s": 3.2109,
+      "overshoot_pct": 0.0,
+      "steady_v_m_s": 0.5253
+    }
+  ],
+  "tuning_basis": "TASK-005d MUST be derived from this file (PM constraint)",
+  "generated": "2026-08-05T14:09:16.507339Z"
+}

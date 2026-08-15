@@ -1,0 +1,41 @@
+# =============================================================================
+# BottleSumo rev2 — Renode Full Simulation (dual-MCU SPI bridge)
+# =============================================================================
+using sysbus
+
+# ── Paths ───────────────────────────────────────────────────────────────────
+$firmware_main = @/mnt/c/Users/ivy/AppData/Roaming/AionUi/aionui/conversations/2026/07/27/aionrs-temp-48324704/bottlesumo_pi/firmware/stm32_mcu/build/bottlesumo_main.elf
+$firmware_aux  = @/mnt/c/Users/ivy/AppData/Roaming/AionUi/aionui/conversations/2026/07/27/aionrs-temp-48324704/bottlesumo_pi/firmware/stm32_mcu/build/bottlesumo_aux.elf
+
+# ── F407 MAIN (Cortex-M4, 168MHz) ──────────────────────────────────────────
+mach create "F407_MAIN"
+mach set "F407_MAIN"
+machine LoadPlatformDescription @platforms/cpus/stm32f4.repl
+sysbus LoadELF $firmware_main
+
+# ── F103 AUX (Cortex-M3, 72MHz) ───────────────────────────────────────────
+mach create "F103_AUX"
+mach set "F103_AUX"
+machine LoadPlatformDescription @platforms/cpus/stm32f103.repl
+sysbus LoadELF $firmware_aux
+
+# ── SPI Interconnect: F407_SPI2 (master) ↔ F103_SPI1 (slave) ───────────────
+connector Connect sysbus.spi2 F103_AUX.sysbus.spi1
+
+# ── Logging ─────────────────────────────────────────────────────────────────
+logLevel -1 error
+logLevel 0 warning
+
+# Enable SPI transaction logging (info level = 2)
+showAnalyzer sysbus.spi2
+
+# ── Run both machines ──────────────────────────────────────────────────────
+echo "═══ BottleSumo Rev2: Dual-MCU SPI Simulation ═══"
+
+mach set "F407_MAIN"
+start
+
+mach set "F103_AUX"
+start
+
+echo "═══ Both MCUs running — SPI bridge active ═══"

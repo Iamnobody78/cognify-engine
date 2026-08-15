@@ -1,0 +1,4 @@
+# Deterministic codegen artifact: byte-level lock (no EOL conversion).
+# The generator compares bytes; autocrlf would cause spurious drift
+# reports between Windows worktrees and CI (Linux).
+src/codegen/_generated_matches.py -text
