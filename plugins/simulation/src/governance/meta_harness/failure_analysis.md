@@ -1811,3 +1811,22 @@ S16 目标：将元认知闭环从已饱和 physics 层迁移至未饱和 reward
 **分类统计（Sprint 23 修正）**: FP-MC-006 为「容错缺失」、FP-MC-007/009/010/011 为「上下文/提示工程」、FP-MC-008 为「作用域缺陷」、FP-MC-012 为「假设过强」、**FP-MC-013 为「修复不完整/分支不对称」**、**FP-MC-014 为「评估盲区/虚假正信号」**、**FP-MC-015 为「评估失敏/逻辑损坏漏检」**、**FP-MC-016 为「测试隔离缺陷/审计日志污染」**、**FP-MC-017 为「生成层与工作树脱节/静态锚点失效」**、**FP-MC-018 为「语义检查缺失/恒 False 候选后置拦截」**、**FP-MC-019 为「蒸馏闭环断点/生成双路径注入不对称」**、**FP-MC-020 为「参数语义混用/abs 阈值误用于 0-1 参数（符号破坏）」（Sprint 23 根因修正：非阈值回标缺失，而是扰动配置缺参数级语义——修复为参数级 perturb + 符号安全网）**。S17 差分测试框架已验证三态判定（INCONCLUSIVE/SUSPICIOUS/PASSED-REGRESSION）；S18 差分门禁已集成 outer_loop（Pareto 保留前强制质量门）：候选 diff 应用后自动 baseline→diff→verdict，REGRESSION 拒收 / SUSPICIOUS 转人工（meta_decisions.jsonl）/ INCONCLUSIVE 不入 Pareto，仅 PASSED 进入保留流程——FP-MC-014/015 的「无操作满分」「逻辑损坏满分」漏洞已在保留链路上封死；S19 候选生成动态适配工作树（apply 成功率 0%→100%），FP-MC-017 的「静态锚点失效」在生成源头消除，配合 `apply_precheck` dry-run 预检（`apply_precheck_failed` 可追溯）形成生成侧第二道防线；S20 P1 恒 False 检测（自引用比较/空条件/恒 False 字面量）形成第三道防线——生成层 `resolve_diff` 三形态拦截 + 运行时 `apply_precheck` 先于锚点计数拦截，FP-MC-018 的「恒 False 候选后置拦截」前移至 apply 前（评估预算零浪费），P2 蒸馏数据收集（S20_P2DATA）9/9 全拦截无 PASSED 触发自蒸馏设计；S21 P2 M1+M3（distill_loop 数据管道 + 扰动先验）已实现，M1 蒸馏实证层×判定强相关（rules→INCONCLUSIVE 10/10 扰动不足、mapping/physics→SUSPICIOUS 18/18 全饱和失敏）；S22 M3 扩展（`_seed_variants` 扰动幅度校验：SEED_PERTURBATION_THRESHOLDS + perturbation_magnitude + bump_magnitude，与 D2_PRIOR 同源）——FP-MC-019 闭环断点修复：S22_SEED 判定分布打破同构（rules 层 INCONCLUSIVE 10/10→0，REGRESSION 首现 winrate 1.00→0.50 被门禁正确拒收）；S23 D2 校准（FP-MC-020 根因修正）：参数级扰动配置（abs/rel 按参数语义声明）+ 符号安全网（0-1 参数不落负值）+ bump cfg 传参修复 + BETWEEN 对称双侧——S23_RECAL2 REGRESSION 严重度 0.50→0.90（winrate 1.00→0.90，edge_proximity 域内 0.64），meta_harness 101/101，rules 层阈值重标定至 8-12° 安全区间；mapping/physics 饱和失敏（累计 24 条 SUSPICIOUS）为 M2 评估层重构的决策依据（Sprint 24 候选，待 PM 裁决）。
 
 **运维规则沉淀**: 修改 proposer 代码后必须确认无旧进程存活再重启——第 6 次运行进程在 FP-MC-012 落盘前（00:16）启动，ROUND 3 仍在用旧唯一性逻辑（期望 1），修复未生效即失败。代码修复与进程生命周期必须同步。
+## GH006 真实排查记录（2026-08-13，v0-v5 迭代实证）
+
+**现象**：`git push` 持续超时，远端未收到 commit 493274c
+
+**迭代链**：
+- v0 初步假设网络问题 → 3 次超时
+- v1 `curl -sI https://github.com` → 200，网络通 → 归因矛盾（网络通但 push 卡）
+- v2 `GIT_TERMINAL_PROMPT=0` → `could not read Username` → 确认认证层问题
+- v3 Windows gh token 配置 credential.helper store → 仍失败 → 深挖发现**凭据文件格式损坏**：内联 printf 的 `\n` 变字面 `n`，主机名成 `github.comn`，store 匹配失败（HTTP 401）
+- v4 `ls-remote` 成功被误判为认证 OK → 实为公开仓库匿名可读
+- v5 脚本文件重写凭据 + `credential-store get` 验证 → 认证通过 → main 受保护（GH006）→ feature 分支推送成功 → PR #30
+
+**关键教训**：
+1. ls-remote 成功不能证明认证 OK（公开仓库匿名可读）
+2. HOME 污染（HOME=C:Usersivy）是副发现，不是 push 根因
+3. PowerShell→WSL 内联转义是事故高发区 → 一律用脚本文件
+4. WSL 无需安装 gh CLI（Windows 侧 token 经 WSLENV 传入）
+
+**元幻觉延伸（v6）**：网页版 DeepSeek 自动报告将计划叙述为已完成（8 项声称全部证伪）→ 跨 AI 转述必须经 L1 核查。

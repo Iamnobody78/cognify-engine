@@ -1,0 +1,72 @@
+{
+  "task": "WSL git push 卡死排查（HONESTY-PERMANENT 493274c 上推）",
+  "date": "2026-08-13",
+  "engine": "meta-harness v1 (metaharness skill) + bottlesumo-governance 外环",
+  "candidates": [
+    {
+      "id": "v0",
+      "generation": 0,
+      "approach": "WSL 直接 git push origin main",
+      "status": "failed",
+      "cause": "git push 持续超时（误判为网络 443 问题）",
+      "fix_hint": "需测连通性区分网络/认证",
+      "evidence": "timeout ×3"
+    },
+    {
+      "id": "v1",
+      "generation": 0,
+      "approach": "curl -sI https://github.com 测通后重推",
+      "status": "failed",
+      "cause": "curl 返回 200 但 push 仍超时——归因矛盾（网络通但 push 卡）",
+      "fix_hint": "push 卡点可能在认证而非网络",
+      "evidence": "curl 200, push timeout"
+    },
+    {
+      "id": "v2",
+      "generation": 0,
+      "approach": "GIT_TERMINAL_PROMPT=0 push（禁止交互提示）",
+      "status": "failed",
+      "cause": "确认卡在认证：could not read Username for 'https://github.com'",
+      "fix_hint": "WSL git 无凭据，需配置 credential",
+      "evidence": "could not read Username"
+    },
+    {
+      "id": "v3",
+      "generation": 0,
+      "approach": "Windows 侧 gh token → credential.helper store 配置",
+      "status": "failed",
+      "cause": "凭据文件格式损坏：@github.comn（printf 的 \\n 在 PowerShell→WSL 传递中变成字面 n），credential-store 主机名匹配失败",
+      "fix_hint": "用脚本文件写凭据，避免内联转义；验证 credential-store get",
+      "evidence": "HTTP/2 401 + 凭据文件尾字符 n",
+      "note": "HOME 环境变量污染（HOME=C:Usersivy）是同时发现的副问题，非 push 失败根因"
+    },
+    {
+      "id": "v4",
+      "generation": 0,
+      "approach": "git ls-remote origin HEAD 验证认证",
+      "status": "failed",
+      "cause": "ls-remote 成功被误判为认证 OK——实际公开仓库匿名可读，不能证明认证",
+      "fix_hint": "认证验证必须用需写权限的操作（push）",
+      "evidence": "ls-remote 返回 HEAD 7571c5f"
+    },
+    {
+      "id": "v5",
+      "generation": 0,
+      "approach": "脚本文件 _fix_cred.sh 重写 .git-credentials（printf 正确换行）+ credential-store get 验证",
+      "status": "success",
+      "cause": "凭据格式修复后认证通过；但 main 分支受保护（GH006），转 feature 分支推送成功",
+      "fix_hint": "受保护分支走 PR 流程",
+      "evidence": "feature/honesty-permanent-v1 push 成功"
+    },
+    {
+      "id": "v6",
+      "generation": 1,
+      "approach": "元幻觉检测：接收方（Hermes）对转述声称（网页版 DeepSeek 自动报告）执行 L1 核查",
+      "status": "success",
+      "cause": "转述报告中 8 项声称全部证伪（gh auth/文件/commit 均未发生）；计划被叙述为已完成",
+      "fix_hint": "协议强制：任何声称必须实测验证后才能写入记忆/仓库",
+      "evidence": "核查脚本逐项 ❌"
+    }
+  ],
+  "pareto_frontier": ["v5", "v6"]
+}
