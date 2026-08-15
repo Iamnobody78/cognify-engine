@@ -29,3 +29,10 @@
 - 七资产统一入口 (status/heartbeat/cert/package/observe/demo/docs)
 - subtree 历史合入 (governance/simulation)
 - 认证 CERTIFIED 4/4
+
+## v2.1.0 (2026-08-15) — 三方 MCP 统一接入
+
+- UNIFIED MCP REGISTRY: config/mcp_registry.yaml (52 项, ready/pending-* 分类)
+- daemon/mcp_sync.py: 一处配置三处同步 (Hermes config.yaml +8 / AionUi mcp_servers 表 +9 / DSH 参考)
+- 接入: filesystem/git/github/fetch/memory/sequential-thinking/sqlite/playwright/chrome-devtools/cognify
+- AionUi DeepSeek Harness (DSH ACP) 修复: 桥接文件恢复 + Python312 稳定运行时
