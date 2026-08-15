@@ -220,13 +220,13 @@ def gov():
     n = len(list((PROD / "src/governance/src").glob("*.py")))
     print(f"[gov] 治理引擎: {'✅ 在位' if ok else '❌ 缺失'} | src 模块 {n} 个")
     if ok:
-        rc, out = _run(PROD / "src/governance/tests/test_revoke.py" if False else
-                       PY, "-c",
-                       "import sys; sys.path.insert(0, r'%s'); "
-                       "from src.protocol_gateway import ProtocolGateway; "
-                       "g=ProtocolGateway(); print('modules:', g.modules)" %
-                       str(PROD / "src/governance"))
-        print(f"  网关冒烟: {out.strip()[:80]}")
+        code = ("import sys; sys.path.insert(0, r'%s'); "
+                "from src.protocol_gateway import ProtocolGateway; "
+                "g=ProtocolGateway(); print('modules:', g.modules)" %
+                str(PROD / "src/governance"))
+        r = subprocess.run([PY, "-c", code], capture_output=True, text=True,
+                           encoding="utf-8", errors="replace", timeout=60)
+        print(f"  网关冒烟: {(r.stdout or r.stderr or '').strip()[:80]}")
     return 0
 
 
