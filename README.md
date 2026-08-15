@@ -1,7 +1,3 @@
-## 🏛️ 统一开发入口
-
-> ⚠️ **开发迁移公告**: 本仓库已并入 [`cognify-engine`](https://github.com/Iamnobody78/cognify-engine) (插件平台 PLUGINIFY v1.0)。所有新开发/迭代/CI 均迁移至该仓库, 本仓库仅保留历史与外部贡献入口。
-
 # Cognify Engine
 
 **认知操作产品 (插件平台 v2.0)**: 融合元模型控制工程 (MMCE)、价值控制工程 (VCE)、
@@ -24,27 +20,14 @@ python cli/cognify.py status
 python cli/cognify.py cert
 python cli/cognify.py plugin list
 python cli/cognify.py pluginify --all
+python cli/cognify.py serve --port 8080   # 认知服务 API (P0)
 ```
 
+## 产品化 (PRODUCT-ROADMAP v2.1.0)
 
-## 统一迭代流程 (单仓库闭环)
-
-| 分支 | 用途 | 来源 |
-|------|------|------|
-| main | 稳定发布版 | 经过认证和测试 |
-| develop | 集成开发分支 | 所有 PR 合并目标 |
-| feature/plugin-* | 插件级功能开发 | 从 develop 切出 |
-| hotfix/plugin-* | 插件级紧急修复 | 从 main 切出 |
-| release/v* | 版本发布准备 | 从 develop 切出 |
-
-工作流: 在 plugins/<plugin>/ 修改 -> \cognify test --plugin <id>\ -> 提交 ->
-合并 develop -> 发布时 \cognify plugin update <id> --version x.y.z\。
-
-双向同步 (原仓库保留外部贡献入口):
-- cognify-engine -> 原仓库: 每次发布后 subtree push (PR 通道, 分支保护)
-- 原仓库 -> cognify-engine: 有外部 PR 时 subtree pull
-
-原仓库 (agent-governance-v2 / bottlesumo-pi) 开发 CI 已关闭, 全部迁移至此。
+- P0 认知服务 API: /mce /vce /cee /governance/evaluate (`cognify serve`)
+- P1 文档站: https://iamnobody78.github.io/cognify-engine (gh-pages)
+- P2 PyPI: pyproject 就绪, 上传待 token | P3 注册表: plugin search/install
 
 ## 插件开发
 

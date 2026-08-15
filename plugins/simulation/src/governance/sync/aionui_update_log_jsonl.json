@@ -1,7 +1,0 @@
-{
-  "name": "update_log.jsonl",
-  "mtime": "2026-08-14T13:49:17.942838",
-  "size": 1069,
-  "sha256": "da7caa3d6e34d3faa63acd8cd38477609e25afa243e01f38ea2e757e2840f619",
-  "head": "{\"ts\": \"2026-08-14T13:42:53.389081\", \"reason\": \"V9裁决门数据修正: 10%→100% (2026-08-14 实测 40/40), 修正 ANCHORS.md/BOUNDARY.md 陈旧声明\", \"files\": {\"ANCHORS.md\": \"dcaa4f3638482e14...\", \"BOUNDARY.md\": \"ed202485d7b37df0...\", \"REDLINES.md\": \"a29f57c5ee0617bb...\"}}\r\n{\"ts\": \"2026-08-14T13:46:55.480323\", \"reason\": \"锚点描述同步至 v1.1: ANCHORS.sig→anchor_manifest.json 信任根机制, 引擎鲁棒化完成\", \"files\": {\"ANCHORS.md\": \"9c8ee6b5b4cdf9d8...\", \"BOUNDARY.md\": \"615c3d0bc96e0db0...\", \"REDLINES.md\": \"a29f57c5ee0617bb...\"}}\r\n{\"ts\": \"2026-0"
-}

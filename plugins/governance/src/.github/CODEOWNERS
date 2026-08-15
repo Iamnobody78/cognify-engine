@@ -1,8 +1,0 @@
-# CODEOWNERS — agent-governance-v2 治理维护者
-# 所有路径变更默认由 @Iamnobody78 审批（DUAL-ECO GAP-6.10）
-
-* @Iamnobody78
-
-# 治理引擎核心路径
-/governance/ @Iamnobody78
-/.aionui/ @Iamnobody78

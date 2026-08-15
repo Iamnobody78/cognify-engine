@@ -1,7 +1,0 @@
-# 信任库 — trusted keys registry (Meta-Binding)
-# 格式: <key_name>: <PEM 单行>（PEM 内换行替换为 \n）
-# 用途: 验证代理身份签名（src.certification.verify 使用 .keys/ 本地密钥；
-#       本文件为公开登记，供人工/CI 交叉核对）
-
-# --- Meta-Binding: agent-governance (AGENT-001, 2026-08-03) ---
-agent_governance_ed25519_pub: "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAYDybWuHayj/7h5jWhYOqlWOpbidpoJaszyS/scRFCcI=\n-----END PUBLIC KEY-----\n"

@@ -1,7 +1,0 @@
-{
-  "name": "recovery_log.jsonl",
-  "mtime": "2026-08-14T13:46:17.127724",
-  "size": 83,
-  "sha256": "d68e36dd6a2895170ca88d972cdcbba33e220c48ec04fb5641a7b6a2608fbdbd",
-  "head": "{\"ts\": \"2026-08-13T16:19:54.135132\", \"recovered\": [\"ANCHORS.md\"], \"status\": \"OK\"}\r\n"
-}

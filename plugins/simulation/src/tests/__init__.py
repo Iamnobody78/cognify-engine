@@ -1,1 +1,0 @@
-# BottleSumo PI test suite
