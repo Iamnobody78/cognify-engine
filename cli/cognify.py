@@ -491,6 +491,161 @@ def pluginify(argv):
     return 1
 
 
+def verify_unified(argv):
+    """verify --unified: 三仓库融合状态验证 (subtree 历史 + 插件 + 证据)"""
+    checks = []
+    # 1. subtree 源提交可达 (DAG 历史完整)
+    import subprocess as sp
+    anc_ok = True
+    for label, sha in (("governance 源 db947bd", "db947bdee06af7fa34e83551f10b88a8542d14f5"),
+                       ("simulation 源 b5023f3", "b5023f3a257ea3c66da6006248c111c5fc469008")):
+        r = sp.run(["git", "-C", str(PROD), "merge-base", "--is-ancestor", sha, "HEAD"],
+                   capture_output=True)
+        anc_ok = anc_ok and r.returncode == 0
+        checks.append((f"subtree 历史可达 ({label})", r.returncode == 0, sha[:8]))
+    # 2. 双插件探针在位
+    probes = {
+        "governance 探针": PROD / "plugins/governance/src/src/protocol_gateway.py",
+        "simulation 探针": PROD / "plugins/simulation/src/simulation/abdl_runner.py",
+    }
+    for label, p in probes.items():
+        checks.append((f"{label}", p.exists(), ""))
+    # 3. 7 插件
+    from core.plugin_manager import PluginManager
+    pm = PluginManager(PROD)
+    nplug = len(pm.discover())
+    checks.append(("插件 7/7", nplug == 7, f"{nplug}"))
+    # 4. 治理回归证据 (0 failed)
+    ev = TRI / "debt/pytest_full_20260815.txt"
+    detail = ""
+    reg_ok = ev.exists()
+    if reg_ok:
+        import re as _re
+        m = _re.search(r"(\d+) passed.*?(\d+) failed", ev.read_text(encoding="utf-8", errors="replace"))
+        if m:
+            reg_ok = int(m.group(2)) == 0
+            detail = f"{m.group(1)} passed / {m.group(2)} failed"
+    checks.append(("治理回归 (0 failed)", reg_ok, detail))
+    # 5. 远端配置
+    r = sp.run(["git", "-C", str(PROD), "remote", "-v"], capture_output=True,
+               text=True, encoding="utf-8", errors="replace")
+    remotes = r.stdout
+    for label, needle in (("origin (GitHub)", "cognify-engine.git"),
+                          ("gov (upstream)", "agent-governance-v2"),
+                          ("sim (upstream)", "bottlesumo_pi")):
+        checks.append((f"远端 {label}", needle in remotes, ""))
+    # 6. 同步守护
+    checks.append(("同步守护", (TRI / "state/daemon.lock").exists(), ""))
+    ok = all(o for _, o, _ in checks)
+    report = {"verify": "unified", "generated": NOW.isoformat(timespec="seconds"),
+              "ok": ok, "checks": [{"item": n, "pass": o, "detail": d} for n, o, d in checks]}
+    (PROD / "unified_report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2),
+                                              encoding="utf-8")
+    for n, o, d in checks:
+        print(f"  {'✅' if o else '❌'} {n} {d}")
+    print(f"[verify] 总体: {'✅ UNIFIED' if ok else '❌ INCOMPLETE'} → unified_report.json")
+    return 0 if ok else 1
+
+
+def sync_upstream(argv):
+    """sync --upstream: 双向 subtree 同步 (pull 原仓库 → push 回原仓库)"""
+    repos = []
+    for a in argv:
+        if a.startswith("--repos"):
+            repos = a.split("=")[1].split(",") if "=" in a else []
+    if not repos:
+        repos = ["governance", "simulation"]
+    import subprocess as sp
+    upstream = {
+        "governance": ("plugins/governance/src", "origin-gov",
+                       "https://github.com/Iamnobody78/agent-governance-v2.git"),
+        "simulation": ("plugins/simulation/src", "origin-sim",
+                       "https://github.com/Iamnobody78/bottlesumo-pi.git"),
+    }
+    for repo in repos:
+        if repo not in upstream:
+            print(f"[sync] 未知仓库: {repo}")
+            return 1
+        prefix, remote, url = upstream[repo]
+        sp.run(["git", "-C", str(PROD), "remote", "set-url", remote, url]
+               if _has_remote(remote) else
+               ["git", "-C", str(PROD), "remote", "add", remote, url],
+               capture_output=True)
+        print(f"[sync] [{repo}] pull ← {remote}")
+        r1 = sp.run(["git", "-C", str(PROD), "subtree", "pull", "--prefix", prefix,
+                     remote, "main"], capture_output=True, text=True,
+                    encoding="utf-8", errors="replace", timeout=600)
+        print(f"   pull: exit={r1.returncode} {(r1.stdout or r1.stderr or '')[-200:].strip()}")
+        print(f"[sync] [{repo}] push → {remote}")
+        r2 = sp.run(["git", "-C", str(PROD), "subtree", "push", "--prefix", prefix,
+                     remote, "main"], capture_output=True, text=True,
+                    encoding="utf-8", errors="replace", timeout=600)
+        print(f"   push: exit={r2.returncode} {(r2.stdout or r2.stderr or '')[-200:].strip()}")
+    return 0
+
+
+def _has_remote(name):
+    import subprocess as sp
+    r = sp.run(["git", "-C", str(PROD), "remote"], capture_output=True, text=True)
+    return name in r.stdout.split()
+
+
+def redirect_cmd(argv):
+    """redirect --write: README 开发迁移重定向说明 (cognify-engine + 两个原仓库)"""
+    msg = "所有开发已迁移到 cognify-engine (https://github.com/Iamnobody78/cognify-engine)"
+    for a in argv:
+        if a.startswith("--message"):
+            msg = a.split("=", 1)[1] if "=" in a else msg
+    banner = ("> ⚠️ **开发迁移公告**: 本仓库已并入 "
+              "[`cognify-engine`](https://github.com/Iamnobody78/cognify-engine) "
+              "(插件平台 PLUGINIFY v1.0)。所有新开发/迭代/CI 均迁移至该仓库, "
+              "本仓库仅保留历史与外部贡献入口。\n")
+    # 1. cognify-engine README
+    readme = PROD / "README.md"
+    if readme.exists():
+        txt = readme.read_text(encoding="utf-8")
+        if "开发迁移公告" not in txt:
+            readme.write_text(
+                "## 🏛️ 统一开发入口\n\n" + banner + "\n" + txt, encoding="utf-8")
+        print("[redirect] cognify-engine/README.md 已标注统一入口")
+    # 2. 原仓库 README (本地)
+    for label, repo, rel in (("agent-governance-v2", WS / "agent-governance-v2", "README.md"),
+                             ("bottlesumo_pi", WS / "bottlesumo_pi", "README.md")):
+        rp = repo / rel
+        if rp.exists():
+            txt = rp.read_text(encoding="utf-8", errors="replace")
+            if "开发迁移公告" not in txt:
+                rp.write_text(banner + "\n" + txt, encoding="utf-8")
+            print(f"[redirect] {label}/README.md 已加迁移横幅")
+    return 0
+
+
+def test_cmd(argv):
+    """test --plugin <id>: 插件级测试 (governance=全量回归, core=核心单测)"""
+    plugin = ""
+    for a in argv:
+        if a.startswith("--plugin"):
+            plugin = a.split("=")[1] if "=" in a else ""
+    if plugin in ("governance", "gov"):
+        g = PROD / "plugins/governance/src/run_pytest_capture.py"
+        if not g.exists():
+            print("[test] governance 回归器缺失")
+            return 1
+        r = subprocess.run([r"C:\Users\ivy\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe",
+                            str(g)], capture_output=True, text=True,
+                           encoding="utf-8", errors="replace", timeout=1800)
+        print((r.stdout or r.stderr or "")[-300:])
+        return r.returncode
+    if plugin in ("core", ""):
+        r = subprocess.run([PY, "-m", "pytest", str(PROD / "tests/test_plugin_core.py"),
+                            "-q", "--no-header"], capture_output=True, text=True,
+                           encoding="utf-8", errors="replace", timeout=300)
+        print((r.stdout or r.stderr or "")[-200:])
+        return r.returncode
+    print(f"[test] 未知插件: {plugin} (支持: governance | core)")
+    return 1
+
+
 def main():
     cmd = sys.argv[1] if len(sys.argv) > 1 else "status"
     if cmd == "package":
@@ -514,7 +669,15 @@ def main():
     if cmd == "sim":
         return sim()
     if cmd == "sync":
+        if len(sys.argv) > 2:
+            return sync_upstream(sys.argv[2:])
         return sync()
+    if cmd == "verify":
+        return verify_unified(sys.argv[2:])
+    if cmd == "redirect":
+        return redirect_cmd(sys.argv[2:])
+    if cmd == "test":
+        return test_cmd(sys.argv[2:])
     if cmd == "unify":
         return unify()
     if cmd == "plugin":

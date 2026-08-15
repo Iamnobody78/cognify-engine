@@ -1,0 +1,57 @@
+{
+  "verify": "unified",
+  "generated": "2026-08-15T16:19:52",
+  "ok": true,
+  "checks": [
+    {
+      "item": "subtree 历史可达 (governance 源 db947bd)",
+      "pass": true,
+      "detail": "db947bde"
+    },
+    {
+      "item": "subtree 历史可达 (simulation 源 b5023f3)",
+      "pass": true,
+      "detail": "b5023f3a"
+    },
+    {
+      "item": "governance 探针",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "item": "simulation 探针",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "item": "插件 7/7",
+      "pass": true,
+      "detail": "7"
+    },
+    {
+      "item": "治理回归 (0 failed)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "item": "远端 origin (GitHub)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "item": "远端 gov (upstream)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "item": "远端 sim (upstream)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "item": "同步守护",
+      "pass": true,
+      "detail": ""
+    }
+  ]
+}
