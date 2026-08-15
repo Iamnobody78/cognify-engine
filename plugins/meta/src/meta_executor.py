@@ -217,7 +217,7 @@ def run(task: str) -> int:
 
 
 def main():
-    cmd = sys.argv[1] if len(sys.argv) > 1 else "status"
+    cmd = (sys.argv[1] if len(sys.argv) > 1 else "status").lstrip("-")
     if cmd == "status":
         b = bootstrap()
         print(f"[meta-exec] 监督状态: {'✅ 健康' if b['healthy'] else '⚠️ 需干预'}")
