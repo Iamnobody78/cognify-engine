@@ -1,0 +1,306 @@
+# 统一 MCP 注册表 (UNIFIED MCP REGISTRY) — 书同文车同轨
+# 一处配置, 三处使用: Hermes (config.yaml mcp_servers) / AionUi (mcp_servers 表) / DSH (注册表参考)
+# status:
+#   ready          现网可直接注册 (npx 免安装 / 本地脚本 / 已有凭据)
+#   pending-key    需 API 凭据 (请示队列)
+#   pending-app    需安装专业软件 (Inventor/ANSYS/LTspice/EPLAN/Blender/Unreal...)
+#   pending-hardware 需物理硬件 (摄像头/机器人/机械臂)
+#   registry-only  生态候选 (待评估安装路径)
+version: "2.1.0"
+
+servers:
+  # ---- 基础工具 (官方/参考实现, ready) ----
+  - id: filesystem
+    name: Filesystem
+    domain: 基础
+    status: ready
+    transport: stdio
+    command: npx
+    args: ["-y", "@modelcontextprotocol/server-filesystem", "C:/Users/ivy/AppData/Roaming/AionUi/aionui/conversations/2026/07/27/aionrs-temp-48324704"]
+    systems: [hermes, aionui]
+  - id: git
+    name: Git
+    domain: 开发
+    status: ready
+    transport: stdio
+    command: npx
+    args: ["-y", "@modelcontextprotocol/server-git"]
+    systems: [hermes, aionui]
+  - id: github
+    name: GitHub
+    domain: 开发
+    status: ready
+    transport: stdio
+    command: npx
+    args: ["-y", "@modelcontextprotocol/server-github"]
+    env: {GITHUB_PERSONAL_ACCESS_TOKEN: "<gh-auth-token>"}
+    systems: [hermes, aionui]
+  - id: fetch
+    name: Fetch
+    domain: 信息检索
+    status: ready
+    transport: stdio
+    command: npx
+    args: ["-y", "@modelcontextprotocol/server-fetch"]
+    systems: [hermes, aionui]
+  - id: memory
+    name: Memory (KVS)
+    domain: 记忆
+    status: ready
+    transport: stdio
+    command: npx
+    args: ["-y", "@modelcontextprotocol/server-memory"]
+    systems: [hermes, aionui]
+  - id: sequential-thinking
+    name: Sequential Thinking
+    domain: 推理
+    status: ready
+    transport: stdio
+    command: npx
+    args: ["-y", "@modelcontextprotocol/server-sequential-thinking"]
+    systems: [hermes, aionui]
+  - id: sqlite
+    name: SQLite
+    domain: 数据库
+    status: ready
+    transport: stdio
+    command: npx
+    args: ["-y", "@modelcontextprotocol/server-sqlite", "C:/Users/ivy/.aionui-tri-sync/state/unified.db"]
+    systems: [hermes, aionui]
+  - id: playwright
+    name: Playwright
+    domain: 浏览器自动化
+    status: ready
+    transport: stdio
+    command: npx
+    args: ["-y", "@playwright/mcp@latest"]
+    systems: [hermes, aionui]
+  - id: chrome-devtools
+    name: Chrome DevTools
+    domain: 浏览器自动化
+    status: ready
+    transport: stdio
+    command: npx
+    args: ["-y", "chrome-devtools-mcp@latest"]
+    systems: [hermes, aionui]
+  - id: cognify
+    name: Cognify Engine
+    domain: 认知操作
+    status: ready
+    transport: stdio
+    command: "C:/Users/ivy/AppData/Local/Programs/Python/Python312/python.exe"
+    args: ["C:/Users/ivy/AppData/Roaming/AionUi/aionui/conversations/2026/07/27/aionrs-temp-48324704/cognify-engine/mcp/cognify_mcp_server.py"]
+    systems: [hermes, aionui, dsh]
+
+  # ---- 信息检索 / 通信 (pending-key) ----
+  - id: multi-search
+    name: Multi-Search
+    domain: 搜索
+    status: pending-key
+    note: "Serper/Brave/DDG API 凭据"
+  - id: serper
+    name: Serper
+    domain: 搜索
+    status: pending-key
+    note: "SERPER_API_KEY"
+  - id: brave-search
+    name: Brave Search
+    domain: 搜索
+    status: pending-key
+    note: "BRAVE_API_KEY"
+  - id: notion
+    name: Notion
+    domain: SaaS
+    status: pending-key
+    note: "Notion OAuth/内部集成 token (此前 11 链接登录墙同源)"
+  - id: slack
+    name: Slack
+    domain: 通信
+    status: pending-key
+    note: "SLACK_BOT_TOKEN"
+  - id: stripe
+    name: Stripe
+    domain: SaaS
+    status: pending-key
+    note: "STRIPE_API_KEY"
+  - id: apify
+    name: Apify
+    domain: SaaS
+    status: pending-key
+    note: "APIFY_API_TOKEN"
+  - id: sentry
+    name: Sentry
+    domain: 可观测性
+    status: pending-key
+    note: "SENTRY_AUTH_TOKEN + org"
+  - id: google-cloud
+    name: Google Cloud Toolbox
+    domain: 云
+    status: pending-key
+    note: "GCP 凭据"
+
+  # ---- 专业软件 (pending-app) ----
+  - id: ltspice-mcp
+    name: LTspice MCP
+    domain: EE
+    status: pending-app
+    note: "需安装 LTspice/ngspice"
+  - id: inventor-mcp
+    name: Inventor MCP
+    domain: ME
+    status: pending-app
+    note: "需 Autodesk Inventor (34 工具)"
+  - id: mechanical-mcp
+    name: ANSYS Mechanical MCP
+    domain: ME
+    status: pending-app
+    note: "需 ANSYS Mechanical"
+  - id: pymapdl-mcp
+    name: PyMAPDL MCP
+    domain: ME
+    status: pending-app
+    note: "需 Ansys MAPDL"
+  - id: cad-cae-copilot
+    name: CAD/CAE Copilot
+    domain: ME
+    status: pending-app
+    note: "需 CAD/CAE 内核"
+  - id: eplan-rag-mcp
+    name: EPLAN RAG MCP
+    domain: EE
+    status: pending-app
+    note: "需 EPLAN Electric P8"
+  - id: blender-mcp
+    name: Blender MCP
+    domain: 3D
+    status: pending-app
+    note: "需 Blender"
+  - id: unreal-mcp
+    name: Unreal MCP
+    domain: 3D
+    status: pending-app
+    note: "需 Unreal Engine (Rerun :9090 在运行, 引擎本体待确认)"
+  - id: grafana-mcp
+    name: Grafana MCP
+    domain: 可观测性
+    status: pending-app
+    note: "需 Grafana 实例"
+  - id: kubernetes-mcp
+    name: Kubernetes MCP
+    domain: DevOps
+    status: pending-app
+    note: "需集群 kubeconfig"
+  - id: terraform-mcp
+    name: Terraform MCP
+    domain: DevOps
+    status: pending-app
+    note: "需 Terraform/云凭据"
+  - id: argo-cd-mcp
+    name: Argo CD MCP
+    domain: DevOps
+    status: pending-app
+    note: "需 Argo CD 实例"
+  - id: memorious
+    name: Memorious
+    domain: 记忆
+    status: pending-app
+    note: "pip 安装 (外部安装=请示区)"
+  - id: memory-qdrant
+    name: Memory Qdrant
+    domain: 记忆
+    status: pending-app
+    note: "需 Qdrant 实例 + pip 包"
+
+  # ---- 具身智能 (pending-hardware) ----
+  - id: embodied-claude
+    name: Embodied Claude
+    domain: 具身
+    status: pending-hardware
+    note: "需 USB 摄像头/Wi-Fi 云台"
+  - id: vectorclaw
+    name: VectorClaw
+    domain: 具身
+    status: pending-hardware
+    note: "需 Anki Vector 机器人"
+  - id: embodied-arm-mcp
+    name: Embodied Arm MCP
+    domain: 具身
+    status: pending-hardware
+    note: "需 ROS2 机械臂"
+
+  # ---- 生态候选 (registry-only) ----
+  - id: vision-primitives
+    name: Vision Primitives MCP
+    domain: CV
+    status: registry-only
+    note: "30 工具, 免视觉模型像素级定位; 安装路径待评估"
+  - id: image-recognition-mcp
+    name: Image Recognition MCP
+    domain: CV
+    status: registry-only
+    note: "OpenAI 兼容视觉模型桥"
+  - id: visionsearch-mcp
+    name: VisionSearch MCP
+    domain: CV
+    status: registry-only
+    note: "本地视觉模型网页/PDF 检索"
+  - id: visionpower
+    name: VisionPower
+    domain: CV
+    status: registry-only
+  - id: neo-mcp
+    name: Neo MCP
+    domain: AI/ML
+    status: registry-only
+    note: "自主 ML/DL 工程师"
+  - id: tabicl-mcp
+    name: TabICL MCP
+    domain: AI/ML
+    status: registry-only
+    note: "表格零样本分类/回归 (ICML 2025/2026)"
+  - id: mlloop
+    name: MLLoop
+    domain: AI/ML
+    status: registry-only
+    note: "科学方法论 ML 训练"
+  - id: ai-data-science-mcp
+    name: MCP AI Data Science Agent
+    domain: AI/ML
+    status: registry-only
+  - id: universal-netlist-mcp
+    name: Universal Netlist MCP
+    domain: EE
+    status: registry-only
+    note: "Cadence/Altium/KiCad 原理图理解"
+  - id: mcp-server-mcsa
+    name: MCSA MCP
+    domain: EE
+    status: registry-only
+    note: "电机电流特征分析, 21 工具"
+  - id: electronics-mcp
+    name: Electronics MCP
+    domain: EE
+    status: registry-only
+  - id: metamcp
+    name: MetaMCP
+    domain: 多代理
+    status: registry-only
+    note: "MCP 聚合器"
+  - id: agentset-mcp
+    name: Agentset MCP
+    domain: 多代理
+    status: registry-only
+  - id: mcp-run-python
+    name: MCP Run Python
+    domain: 开发
+    status: registry-only
+    note: "Pyodide 沙箱"
+  - id: mcp-browser-agent
+    name: MCP Browser Agent
+    domain: 浏览器自动化
+    status: registry-only
+  - id: browserbase-mcp
+    name: Browserbase MCP
+    domain: 浏览器自动化
+    status: pending-key
+    note: "BROWSERBASE_API_KEY"
