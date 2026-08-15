@@ -1,0 +1,28 @@
+{
+  "product": "cognify-engine",
+  "version": "1.0.0",
+  "certified_at": "2026-08-15T15:26:07",
+  "checks": [
+    {
+      "item": "22 维元能力全部 active",
+      "pass": true,
+      "detail": "22/22"
+    },
+    {
+      "item": "元闭环率 ≥90%",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "item": "治理回归证据 (1052/1053)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "item": "同步镜像规模 (hub/sessions >100)",
+      "pass": true,
+      "detail": "161"
+    }
+  ],
+  "overall": "CERTIFIED"
+}

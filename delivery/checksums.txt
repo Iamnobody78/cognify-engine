@@ -1,0 +1,7 @@
+26b340a1efbe0229  certificate.json
+2c5c2a2b7327fcc2  cli\cognify.py
+1be419a73b78c597  demo\DEMO.md
+230beb28d7bb4fb4  manifest.json
+9b408ba9fac22978  observations\snapshot_20260815_152607.json
+8cc503392f28324e  README.md
+55ef623d477c7815  STATUS.md
