@@ -1,3 +1,7 @@
+## 🏛️ 统一开发入口
+
+> ⚠️ **开发迁移公告**: 本仓库已并入 [`cognify-engine`](https://github.com/Iamnobody78/cognify-engine) (插件平台 PLUGINIFY v1.0)。所有新开发/迭代/CI 均迁移至该仓库, 本仓库仅保留历史与外部贡献入口。
+
 # Cognify Engine
 
 **认知操作产品 (插件平台 v2.0)**: 融合元模型控制工程 (MMCE)、价值控制工程 (VCE)、
