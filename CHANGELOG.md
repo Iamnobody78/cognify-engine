@@ -1,5 +1,13 @@
 # Changelog
 
+## v2.2.3 (2026-08-16) — 🎉 PyPI 正式发布
+
+- **cognify-engine@2.2.3 已上线 PyPI** (`pip install cognify-engine`), GitHub Release v2.2.3 已创建 (Latest)
+- 发布链路修复: OIDC 失败 (PyPI 禁止非用户身份创建新项目) → Token 路径 403 (Secret 名不匹配: PYPI vs PYPI_API_TOKEN) → 兼容修复 → **success**
+- CI 修复: pyyaml 依赖 (protocol_gateway 需要), CI 全绿
+- 诚实标注: wheel 含 cognify+core (库能力), 完整 CLI 打包在 v2.3.0; cognify/__init__.py 版本号 2.1.0 待同步
+- 后续: 项目已存在 → 下次发布可切回 OIDC 零 Token
+
 ## v2.2.4 (2026-08-16) — 元批判 P0 整改 (声明-代码对账)
 
 ### 整改 (基于代码实证批判, 逐项核验后修复)
