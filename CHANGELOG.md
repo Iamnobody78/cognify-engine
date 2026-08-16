@@ -1,5 +1,21 @@
 # Changelog
 
+## v2.1.6 (2026-08-16) — 首个真实外部基准分数 (AgencyBench Code 域)
+
+### 新增
+- **首个"他证"分数**: AgencyBench Code/scenario1/subtask1 端到端完整评估
+  - 链路: description.json 任务 → DSH 桥接 (deepseek-v4-flash, 145s) → 模型生成 equation.py (识别数据真实关系 ≈ -0.8·t·A, 提出交叉项模型) → 本地独立执行 evaluate_equation.py → **MSE 1.08e-4 → rubric 10/10**
+  - 产物: benchmark/external/agencybench_code_full_1.json (含成本/调用记录)
+  - 诚实披露: ①自建验证器 (rubric 公式本地评分, 非官方 sii_agent_sdk+Docker) ②基线线性模型亦 10/10 (subtask1 目标易达标) ③模型自报 MSE 1e-8 与本地实测 1e-4 有差异, 以本地为准
+- **资产发现**: scenario1 source/ 四件套 (equation.py/analysis.py/evaluate_equation.py/equation.parquet) 实际在位, 本地可跑 (numpy/pandas/scipy/pyarrow)
+
+### 修复
+- 桥接超时: DSH headless 大提示词推理可达 10 分钟 → call_dsh 默认超时 180s→600s; 客户端 urllib 需同步放长
+- 评估脚本 3 次推理调用 (552s 成功未采用/600s 超时/145s 采用) 记录于产物, 成本透明
+
+### 工程
+- 本地适配器 5/5 (98.0) | 他证: AgencyBench Code 1 任务 10/10 | 注册表 26 项
+
 ## v2.1.5 (2026-08-16) — 外部基准评估通道打通 (DSH 桥接)
 
 ### 新增

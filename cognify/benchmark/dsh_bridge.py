@@ -34,8 +34,9 @@ DSH_HOME = r"C:\Users\ivy\.dsh"
 LOG = Path(r"C:\Users\ivy\.aionui-tri-sync\benchmark\external\dsh_bridge_log.jsonl")
 
 
-def call_dsh(prompt: str, timeout: int = 180) -> str:
-    """调用 DSH headless profile 单次推理, 返回模型输出。"""
+def call_dsh(prompt: str, timeout: int = 600) -> str:
+    """调用 DSH headless profile 单次推理, 返回模型输出。
+    大提示词/长输出可达数分钟, 默认 600s 超时。"""
     env = dict(__import__("os").environ)
     env["DSH_HOME"] = DSH_HOME
     r = subprocess.run([NODE, DSH, "--profile", "headless", prompt],
