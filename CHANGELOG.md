@@ -1,5 +1,17 @@
 # Changelog
 
+## v2.2.0 (2026-08-16) — 元层开发落地 (META-LEVEL-DEV P0/P1)
+
+### 新增
+- **动态真相源 (P0)**: `cognify generate-status` — STATUS.md + certificate.json 从运行时实时采集 (元能力/闭环/债务/守护/心跳/调用链认证/基准/插件/进化), 静态元数据彻底动态化
+- **自举校验 (P0)**: `cognify bootstrap` — manifest.json 资产清单 ↔ 实际文件一致性 + 孤儿插件目录检测 (实测 7 资产/10 插件全一致)
+- **认知自省 (P1)**: `cognify self-analyze` — git 30 天分析 (317 提交: feat 78/fix 35/docs 62) + 脆弱模块识别 (simulation 945/governance 611 变更) + CEE 推演路线图建议
+- 引擎: cognify/self/meta_dev.py (产品模块) + daemon/meta_dev.py 调度壳 + 4 个 CLI dispatch
+
+### 工程
+- 动态状态: 30/30 active | 闭环 91.7% | 调用链 CERTIFIED | 基准 98.5 | 进化 96.2
+- 自举: ✅ 一致 (0 缺失/0 孤儿) | 自省: 脆弱模块 5 个已识别
+
 ## v2.1.9 (2026-08-16) — 元能力强制调用 (META-CALL-FORCE) + 元层面 MCP 探测
 
 ### 新增

@@ -996,6 +996,24 @@ def main():
                            errors="replace", timeout=180)
         print((r.stdout or r.stderr or "")[-2000:])
         return r.returncode
+    if cmd == "generate-status":
+        r = subprocess.run([PY, str(TRI / "daemon/meta_dev.py"), "generate-status"],
+                           capture_output=True, text=True, encoding="utf-8",
+                           errors="replace", timeout=120)
+        print((r.stdout or r.stderr or "")[-2000:])
+        return r.returncode
+    if cmd == "bootstrap":
+        r = subprocess.run([PY, str(TRI / "daemon/meta_dev.py"), "bootstrap"],
+                           capture_output=True, text=True, encoding="utf-8",
+                           errors="replace", timeout=120)
+        print((r.stdout or r.stderr or "")[-2000:])
+        return r.returncode
+    if cmd == "self-analyze":
+        r = subprocess.run([PY, str(TRI / "daemon/meta_dev.py"), "self-analyze"],
+                           capture_output=True, text=True, encoding="utf-8",
+                           errors="replace", timeout=120)
+        print((r.stdout or r.stderr or "")[-2000:])
+        return r.returncode
     if cmd == "product":
         return product_cmd(sys.argv[2:])
     if cmd == "whoami":
