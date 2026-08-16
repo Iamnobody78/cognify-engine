@@ -300,6 +300,34 @@ def deliver(decisions: list, sense_sum: dict, executed: list, learned: dict,
         lines.append("**[异常]**")
         for er in errors:
             lines.append(f"- ⚠️ {er}")
+    # ---- TRANSPARENT-PLAN v1.0: 下一步计划 (五段结构) ----
+    d_sum = sense_sum.get("summary", {}).get("debts", {})
+    next_actions = []
+    if not ss.get("daemon_alive"):
+        next_actions.append(("恢复同步守护", "python daemon/sync_daemon.py", "守护恢复运行"))
+    if n_ask > 0:
+        next_actions.append(("检查请示队列", "cognify meta decision --queue", "请示项清单"))
+    next_actions.append(("下一轮心跳", "python daemon/perpetual_iterate.py heartbeat", "心跳 #N+1 报告"))
+    if not next_actions:
+        next_actions = [("下一轮心跳", "python daemon/perpetual_iterate.py heartbeat", "心跳 #N+1 报告")]
+    lines += [
+        "",
+        "## 📌 下一步计划（立即执行）", "",
+        "### 1. 具体动作",
+        *[f"- [ ] {a[0]} — 执行 `{a[1]}` — 产出: {a[2]}" for a in next_actions], "",
+        "### 2. 目的与预期成果",
+        "- **目的**: 持续感知系统状态, 自动执行低风险迭代, 保持三端同步与元能力健康",
+        "- **预期成果**: 下一轮心跳报告 (债务/认证/守护状态刷新), 自主率趋势延续", "",
+        "### 3. 依赖与前提",
+        f"- [ ] 同步守护运行中 ({'✅' if ss.get('daemon_alive') else '❌ 需先恢复'})",
+        f"- [ ] 认证证据在位 (certificate.json: {'✅' if sense_sum.get('cert_ok') else '⚠️'})", "",
+        "### 4. 时间估计",
+        "- **预计耗时**: 约 1 分钟 (单轮心跳)",
+        "- **下次汇报时间**: 30 分钟后 (调度任务自动触发)", "",
+        "### 5. 备选方案（如遇阻塞）",
+        "- [ ] 若守护异常: 先执行 watchdog 自愈, 再恢复心跳",
+        "- [ ] 若认证失败: 定位失败项并修复后重跑 cert", "",
+    ]
     HEARTBEAT_DIR.mkdir(parents=True, exist_ok=True)
     latest = HEARTBEAT_DIR / "latest.md"
     latest.write_text("\n".join(lines), encoding="utf-8")
