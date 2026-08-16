@@ -67,6 +67,13 @@ def call_memory() -> dict:
             except Exception:
                 continue
     hit = bool(rows)
+    if hit:
+        try:  # 2.3 闭环运行时化: 产出消费审计
+            sys.path.insert(0, str(PROD / "cognify/self"))
+            import consumption  # noqa: PLC0415
+            consumption.log_consumption("learning/ledger", "meta_call", "ledger.jsonl")
+        except Exception:
+            pass
     return {"module": "元记忆", "ok": hit, "detail": f"检索到 {len(rows)} 条历史记录",
             "sample": (rows[-1].get("entry", "")[:50] if rows else None)}
 

@@ -42,8 +42,20 @@ def _json(p: Path, default=None):
 
 
 # ---------------------------------------------------------------- generate-status
+def _consume(consumer, producer, artifact):
+    try:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import consumption  # noqa: PLC0415
+        consumption.log_consumption(producer, consumer, artifact)
+    except Exception:
+        pass
+
+
 def generate_status() -> dict:
     """动态采集运行时数据 → STATUS.md + certificate.json (计算取代硬编码)。"""
+    _consume("generate-status", "meta/status", "status.json")
+    _consume("generate-status", "debt/debt_inventory", "debt_inventory.json")
+    _consume("generate-status", "benchmark/trend_data", "trend_data.json")
     meta = _json(TRI / "meta/status.json", {})
     closure = _json(TRI / "meta/closure/closure_report.json", {})
     debt = _json(TRI / "debt/debt_inventory.json", {}).get("debts", [])
@@ -76,11 +88,19 @@ def generate_status() -> dict:
         "plugins": f"{p_verified}/{len(plugins)} verified",
         "evolve_overall": evolve.get("overall") if evolve else None,
     }
+    # 2.3 闭环运行时化: 真实消费率 (静态映射降级 fallback) — 须在 lines 构建前
+    try:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import consumption  # noqa: PLC0415
+        rc = consumption.runtime_closure_rate()
+        data["runtime_closure"] = f"{rc['consumed']}/{rc['expected']} (真实消费)"
+    except Exception:
+        data["runtime_closure"] = "fallback"
     lines = [
         "# Cognify Engine — 产品状态 (动态生成)", "",
         f"> {data['ts']} | 由 `cognify generate-status` 从运行时采集, 非手工维护", "",
         f"## 元能力: {data['meta_active']} active | health={data['meta_health']}",
-        f"## 元闭环: {data['closure_rate']*100:.1f}%" if isinstance(data["closure_rate"], (int, float)) else "## 元闭环: ?",
+        f"## 元闭环(静态): {data['closure_rate']*100:.1f}% | 元闭环(运行时): {data.get('runtime_closure', '?')}" if isinstance(data["closure_rate"], (int, float)) else "## 元闭环: ?",
         f"## 债务: {data['debt']} 已解决",
         f"## 同步守护: {'✅ 运行中' if data['daemon'] else '❌ 未运行'}",
         f"## 心跳: {data['heartbeats']} 份 (最新: {data['latest_hb']})",

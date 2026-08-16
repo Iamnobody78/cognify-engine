@@ -58,6 +58,15 @@ def smoke_thinking() -> dict:
                 "detail": f"{type(exc).__name__}: {exc}"}
 
 
+def _consume(consumer, producer, artifact):
+    try:
+        sys.path.insert(0, str(PROD / "cognify/self"))
+        import consumption  # noqa: PLC0415
+        consumption.log_consumption(producer, consumer, artifact)
+    except Exception:
+        pass
+
+
 def smoke_memory() -> dict:
     t0 = time.time()
     try:
@@ -66,6 +75,8 @@ def smoke_memory() -> dict:
         if p.exists():
             n = sum(1 for l in p.read_text(encoding="utf-8", errors="replace").splitlines() if l.strip())
         ok = n >= 1
+        if ok:
+            _consume("meta_smoke", "learning/ledger", "ledger.jsonl")
         return {"cap": "元记忆", "ok": ok, "ms": int((time.time() - t0) * 1000),
                 "detail": f"学习账本检索 {n} 条"}
     except Exception as exc:  # noqa: BLE001

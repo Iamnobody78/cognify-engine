@@ -193,10 +193,20 @@ def log_evidence(ev: dict, verify: dict, org: dict, overall: float) -> bool:
 
 
 # ---------------------------------------------------------------- Phase V: Validate
+def _consume(consumer, producer, artifact):
+    try:
+        sys.path.insert(0, str(PROD / "cognify/self"))
+        import consumption  # noqa: PLC0415
+        consumption.log_consumption(producer, consumer, artifact)
+    except Exception:
+        pass
+
+
 def validate_dual_track() -> dict:
     """双轨验证: 基准 trend 最新 + 自使用最近记录 → overall; 低于上周期 → 回滚标记。"""
     trend = _json(TRI / "benchmark/trend_data.json", {}).get("runs", [])
     bench = trend[-1]["total_score"] if trend else None
+    _consume("evolve", "meta-call/certification_report", "certification_report.json")
     sv = _json(TRI / "self_validate/self_validation_result.json", None)
     selfval = sv.get("overall_score") if sv else None
     overall = round((bench + selfval) / 2, 1) if bench is not None and selfval is not None else None
