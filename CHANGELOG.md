@@ -113,3 +113,9 @@
 - 首轮验证: 健康 7/7, 合规 33.3% BLOCK — 8 类元工具已部署未使用 (真实治理发现)
 - 引擎级证据: 元执行/元决策/元学习/元思考 ✅ (exec-audit/decision/CLS/MMC)
 - 外部基准 (MR-Ben/Reflection-Bench) 待数据集接入 (诚实边界)
+
+## v2.1.0 (2026-08-16) — MCP-UNIVERSAL-FORCE + MCP-LOW-DISK
+
+- mcp_universal_force.py: V.A.L.I.D.A.T.E. 八步法, 三端可用性矩阵 (首轮 14/14 全通)
+- mcp_low_disk.py: C.L.E.A.N.-R.U.N. 七步法, 阈值 (<5GB 拒启/85%/2GB/1GB), 策略固化
+- MCP-LOW-DISK-WEEKLY 调度 (每周一 06:00); 空间检查历史 jsonl

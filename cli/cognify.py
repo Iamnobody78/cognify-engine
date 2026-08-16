@@ -900,6 +900,18 @@ def main():
                            errors="replace")
         print((r.stdout or r.stderr or "")[-1500:])
         return r.returncode
+    if cmd == "mcp" and len(sys.argv) > 3 and sys.argv[2] == "universal":
+        r = subprocess.run([PY, str(TRI / "daemon/mcp_universal_force.py"), *sys.argv[3:]],
+                           capture_output=True, text=True, encoding="utf-8",
+                           errors="replace")
+        print((r.stdout or r.stderr or "")[-1500:])
+        return r.returncode
+    if cmd == "mcp" and len(sys.argv) > 3 and sys.argv[2] == "low-disk":
+        r = subprocess.run([PY, str(TRI / "daemon/mcp_low_disk.py"), *sys.argv[3:]],
+                           capture_output=True, text=True, encoding="utf-8",
+                           errors="replace")
+        print((r.stdout or r.stderr or "")[-1500:])
+        return r.returncode
     if cmd == "meta-disk":
         r = subprocess.run([PY, str(TRI / "daemon/meta_disk_govern.py"), *sys.argv[2:]],
                            capture_output=True, text=True, encoding="utf-8",
