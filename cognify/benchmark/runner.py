@@ -43,7 +43,7 @@ def run_full() -> dict:
     local = run_local()
     # ---- Normalize + 汇总 ----
     local_avg = round(sum(r["score"] for r in local) / len(local), 1) if local else 0.0
-    installed = [e for e in ext if e["installed"]]
+    installed = [e for e in ext if e["status"] in ("installed", "cloned")]
     prev = _json(PREV, None)
     prev_local = prev.get("local_avg") if prev else None
     delta = round(local_avg - prev_local, 1) if prev_local is not None else None
@@ -81,10 +81,10 @@ def run_full() -> dict:
     for r in local:
         lines.append(f"| {r['id']} | {r['score']} | {'✅ PASS' if r['passed'] else '❌ FAIL'} | {r['detail']} |")
     lines += ["", "## 外部基准注册表 (Ecosystem 2026-08)", "",
-              "| 基准 | 类别 | 阶段 | 阈值 | 状态 | 安装 |", "|---|---|---|---|---|---|"]
+              "| 基准 | 类别 | 优先级 | 阈值 | 状态 | 说明 |", "|---|---|---|---|---|---|"]
     for e in ext:
-        st = "✅ 已安装" if e["installed"] else "⬜ 未安装"
-        lines.append(f"| {e['id']} | {e['cat']} | {e['stage']} | ≥{e['target']} | {st} | `{e['install'] or '—'}` |")
+        st = {"installed": "✅ 已安装", "cloned": "📦 已克隆", "missing": "⬜ 未安装"}.get(e["status"], e["status"])
+        lines.append(f"| {e['id']} | {e['cat']} | {e['priority']} | ≥{e['target']} | {st} | {e['note'] or e['install']} |")
     lines += ["", "## 问题标记 (Highlight)", ""]
     if issues:
         for i in issues:

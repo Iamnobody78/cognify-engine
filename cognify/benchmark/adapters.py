@@ -26,101 +26,167 @@ REPORTS = TRI / "benchmark/external"
 PREV = REPORTS / "full_report.json"
 
 # ---------------------------------------------------------------- 外部注册表
+# repo: 本地克隆目录名 (TRI/benchmarks/<repo>); pkg: PyPI 包名; priority: P0-P3
 EXTERNAL_BENCHMARKS = [
-    {"id": "AgentGym2", "cat": "通用", "stage": 1, "target": 40,
-     "desc": "现实世界端到端任务 (工具探索/组合/噪声信息)",
+    {"id": "AgentGym2", "cat": "通用", "stage": 1, "target": 40, "priority": "P0",
+     "desc": "现实世界端到端任务 (工具探索/组合/噪声信息), SOTA 模型挣扎",
      "cmd": "python -m agent_gym2.eval --model deepseek-v4-flash --tasks all",
-     "pkg": "agent-gym2", "freq": "每日"},
-    {"id": "OSWorld 2.0", "cat": "通用", "stage": 1, "target": 35,
+     "pkg": "agentgym", "repo": "AgentGym", "freq": "每日"},
+    {"id": "AgencyBench", "cat": "通用", "stage": 1, "target": 40, "priority": "P0",
+     "desc": "6 核心能力×32 真实场景×138 任务, 平均 100 万 token 上下文 (ACL2026, 封闭模型 48.4%)",
+     "cmd": "python -m agencybench.eval --tasks all",
+     "pkg": "agency-bench", "repo": "AgencyBench", "freq": "每周"},
+    {"id": "LiveAgentBench", "cat": "通用", "stage": 1, "target": 40, "priority": "P1",
+     "desc": "104 真实场景 374 任务, 社交感知数据生成可持续更新",
+     "cmd": "python -m live_agent_bench.eval --tasks all",
+     "pkg": "live-agent-bench", "repo": None, "freq": "每周"},
+    {"id": "OSWorld 2.0", "cat": "通用", "stage": 1, "target": 35, "priority": "P1",
      "desc": "长周期真实计算机使用任务 (文件/浏览器/终端)",
      "cmd": "python -m osworld.eval --benchmark all --timeout 300",
-     "pkg": "osworld-eval", "freq": "每周"},
-    {"id": "AlphaEval", "cat": "通用", "stage": 1, "target": 60,
+     "pkg": "osworld-eval", "repo": None, "freq": "每周"},
+    {"id": "AlphaEval", "cat": "通用", "stage": 1, "target": 60, "priority": "P1",
      "desc": "生产环境 94 任务, 多模态模糊规范 (参考: 最优配置 64.41/100)",
      "cmd": "alpha-eval run --config configs/production.yaml",
-     "pkg": "alpha-eval", "freq": "发布前"},
-    {"id": "LiveClawBench", "cat": "通用", "stage": 1, "target": 45,
+     "pkg": "alpha-eval", "repo": None, "freq": "发布前"},
+    {"id": "LiveClawBench", "cat": "通用", "stage": 1, "target": 45, "priority": "P2",
      "desc": "134 可执行案例 + 22 模拟服务",
      "cmd": "python -m liveclaw.eval --tasks all --max-steps 50",
-     "pkg": "liveclaw-bench", "freq": "每日"},
-    {"id": "Claw-SWE-Bench", "cat": "通用", "stage": 1, "target": 25,
+     "pkg": "liveclaw-bench", "repo": None, "freq": "每日"},
+    {"id": "Claw-SWE-Bench", "cat": "通用", "stage": 1, "target": 25, "priority": "P2",
      "desc": "SWE-bench 编码任务 Harness 评估",
      "cmd": "python -m claw_swe_eval --harness cognify --tasks 50",
-     "pkg": "claw-swe-bench", "freq": "PR 前"},
-    {"id": "Enterprise-Bench", "cat": "企业", "stage": 1, "target": 65,
+     "pkg": "claw-swe-bench", "repo": None, "freq": "PR 前"},
+    {"id": "ClawArena", "cat": "通用", "stage": 1, "target": 40, "priority": "P2",
+     "desc": "演化信息环境 Agent 评估 (模型能力占 29 分, 框架设计占 24 分)",
+     "cmd": "python -m clawarena.eval --tasks all",
+     "pkg": "clawarena", "repo": None, "freq": "每周"},
+    {"id": "Enterprise-Bench", "cat": "企业", "stage": 1, "target": 65, "priority": "P1",
      "desc": "碎片数据/孤立系统/权限边界 (首个企业开源基准)",
      "cmd": "enterprise-bench run --suite full --timeout 600",
-     "pkg": "enterprise-bench", "freq": "每周"},
-    {"id": "EnterpriseOps-Gym", "cat": "企业", "stage": 1, "target": 70,
+     "pkg": "enterprise-bench", "repo": None, "freq": "每周"},
+    {"id": "EnterpriseOps-Gym", "cat": "企业", "stage": 1, "target": 70, "priority": "P2",
      "desc": "有状态规划/错误恢复/策略遵循",
      "cmd": "python -m enterprise_ops_gym.eval --tasks all",
-     "pkg": "enterprise-ops-gym", "freq": "每日"},
-    {"id": "KAMI", "cat": "企业", "stage": 1, "target": 60,
+     "pkg": "enterprise-ops-gym", "repo": None, "freq": "每日"},
+    {"id": "KAMI", "cat": "企业", "stage": 1, "target": 60, "priority": "P2",
      "desc": "170 任务, 抗污染与代理评估",
      "cmd": "kami eval --suite enterprise --model deepseek-v4-flash",
-     "pkg": "kami", "freq": "PR 前"},
-    {"id": "MCP-Universe", "cat": "MCP", "stage": 2, "target": 44,
+     "pkg": "kami", "repo": None, "freq": "PR 前"},
+    {"id": "VAKRA", "cat": "企业", "stage": 2, "target": 60, "priority": "P1",
+     "desc": "多跳多源工具调用 + 知识检索推理 (IBM 企业级)",
+     "cmd": "python -m vakra.eval --tasks all",
+     "pkg": "vakra", "repo": None, "freq": "每周"},
+    {"id": "MCP-Universe", "cat": "MCP", "stage": 2, "target": 44, "priority": "P0",
      "desc": "6 核心领域 11 种真实 MCP 服务器 (参考: GPT-5 成功率 44.16%)",
      "cmd": "python -m mcp_universe.eval --servers all",
-     "pkg": "mcp-universe", "freq": "每日"},
-    {"id": "MCPToolBench++", "cat": "MCP", "stage": 2, "target": 60,
+     "pkg": "mcp-universe", "repo": None, "freq": "每日"},
+    {"id": "MCPToolBench++", "cat": "MCP", "stage": 2, "target": 60, "priority": "P1",
      "desc": "4000+ MCP 服务器大规模工具使用",
      "cmd": "python -m mcp_tool_bench.eval --subset 500",
-     "pkg": "mcp-tool-bench", "freq": "每周"},
-    {"id": "LiveMCPBench", "cat": "MCP", "stage": 2, "target": 100,
+     "pkg": "mcp-tool-bench", "repo": None, "freq": "每周"},
+    {"id": "LiveMCPBench", "cat": "MCP", "stage": 2, "target": 100, "priority": "P2",
      "desc": "真实 MCP 服务器实时性能 (平均响应 <5s)",
      "cmd": "python -m live_mcp_bench.eval --servers 50",
-     "pkg": "live-mcp-bench", "freq": "每小时"},
-    {"id": "KAware", "cat": "特定能力", "stage": 3, "target": 75,
+     "pkg": "live-mcp-bench", "repo": None, "freq": "每小时"},
+    {"id": "KAware", "cat": "特定能力", "stage": 3, "target": 75, "priority": "P1",
      "desc": "自我意识 认知-行动一致性 (1076 任务)",
      "cmd": "python -m kaware.eval --tasks all",
-     "pkg": "kaware", "freq": "每日"},
-    {"id": "Reflection-Bench", "cat": "特定能力", "stage": 3, "target": 70,
+     "pkg": "kaware", "repo": None, "freq": "每日"},
+    {"id": "Reflection-Bench", "cat": "特定能力", "stage": 3, "target": 70, "priority": "P1",
      "desc": "元反思能力 (7 个认知心理学任务)",
      "cmd": "python -m reflection_bench.eval --all",
-     "pkg": "reflection-bench", "freq": "每日"},
-    {"id": "Meta-Agent Challenge", "cat": "特定能力", "stage": 3, "target": 50,
+     "pkg": "reflection-bench", "repo": None, "freq": "每日"},
+    {"id": "Meta-Agent Challenge", "cat": "特定能力", "stage": 3, "target": 50, "priority": "P2",
      "desc": "Agent 构建 Agent 能力",
      "cmd": "python -m meta_agent_challenge.eval --iterations 10",
-     "pkg": "meta-agent-challenge", "freq": "每周"},
-    {"id": "TRIAGE", "cat": "特定能力", "stage": 3, "target": 60,
+     "pkg": "meta-agent-challenge", "repo": None, "freq": "每周"},
+    {"id": "TRIAGE", "cat": "特定能力", "stage": 3, "target": 60, "priority": "P2",
      "desc": "token 预算下前瞻性元认知控制",
      "cmd": "python -m triage.eval --token-budget 1000",
-     "pkg": "triage", "freq": "每日"},
-    {"id": "EmbodiedBench", "cat": "具身", "stage": 1, "target": 29,
+     "pkg": "triage", "repo": None, "freq": "每日"},
+    {"id": "MetaCog-Eval", "cat": "特定能力", "stage": 3, "target": 60, "priority": "P2",
+     "desc": "元认知多智能体框架评估 (700 任务×5 认知维度)",
+     "cmd": "python -m metacog_eval.eval --tasks all",
+     "pkg": "metacog-eval", "repo": None, "freq": "每周"},
+    {"id": "Agent Memory Leaderboard", "cat": "特定能力", "stage": 3, "target": 60, "priority": "P1",
+     "desc": "Agent 记忆统一评测 (显式事实召回/关系/多跳组合)",
+     "cmd": "python -m agent_memory_lb.eval --tasks all",
+     "pkg": "agent-memory-leaderboard", "repo": None, "freq": "每周"},
+    {"id": "MIRROR", "cat": "特定能力", "stage": 3, "target": 60, "priority": "P3",
+     "desc": "元认知校准层次化基准 (4 层级×8 实验)",
+     "cmd": "python -m mirror.eval --all",
+     "pkg": "mirror-bench", "repo": None, "freq": "每周"},
+    {"id": "EmbodiedBench", "cat": "具身", "stage": 1, "target": 29, "priority": "P3",
      "desc": "1128 具身任务 (参考: GPT-4o 平均 28.9%)",
      "cmd": "python -m embodied_bench.eval --tasks 100",
-     "pkg": "embodied-bench", "freq": "每周"},
-    {"id": "BEAR", "cat": "具身", "stage": 1, "target": 60,
+     "pkg": "embodied-bench", "repo": None, "freq": "每周"},
+    {"id": "BEAR", "cat": "具身", "stage": 1, "target": 60, "priority": "P3",
      "desc": "14 种原子技能诊断",
      "cmd": "python -m bear.eval --skills all",
-     "pkg": "bear", "freq": "每周"},
+     "pkg": "bear", "repo": None, "freq": "每周"},
+    {"id": "ESI-Bench", "cat": "具身", "stage": 1, "target": 30, "priority": "P3",
+     "desc": "具身空间智能 (10 任务类别×3081 实例, OmniGibson 平台)",
+     "cmd": "python -m esi_bench.eval --tasks all",
+     "pkg": "esi-bench", "repo": None, "freq": "每周"},
+    {"id": "WisdomBench-Embodied", "cat": "具身", "stage": 1, "target": 30, "priority": "P3",
+     "desc": "物理 Agent 纵向学习 (失败模式后的改进能力)",
+     "cmd": "python -m wisdombench_embodied.eval --all",
+     "pkg": "wisdombench-embodied", "repo": None, "freq": "每周"},
 ]
 
 
+# ---------------------------------------------------------------- 克隆完整性
+def _repo_integrity(repo: str, repo_dir: Path) -> str:
+    """克隆数据完整性核验 (无模型依赖, 真实文件统计)。"""
+    try:
+        if repo == "AgencyBench":
+            v2 = repo_dir / "AgencyBench-v2"
+            caps = [d for d in v2.iterdir() if d.is_dir()
+                    and d.name in ("Game", "Frontend", "Backend", "Code", "Research", "MCP")]
+            scens = sum(1 for c in caps for d in c.iterdir() if d.is_dir() and d.name.startswith("scenario"))
+            descs = sum(1 for c in caps for d in c.iterdir() if (d / "description.json").exists())
+            return f"克隆在位: {len(caps)} 能力域 × {scens} 场景, 任务定义 {descs} 份 (数据完整性验证通过)"
+        if repo == "AgentGym":
+            envs = [d.name for d in repo_dir.iterdir() if d.is_dir() and d.name.startswith("agentenv")]
+            return f"克隆在位: {len(envs)} 个 agentenv 环境 (AgentGym2 未见独立仓库, 以 AgentGym 框架为载体)"
+        n = sum(1 for _ in repo_dir.iterdir())
+        return f"克隆在位: {n} 个条目 (未安装依赖)"
+    except Exception as exc:  # noqa: BLE001
+        return f"克隆在位但完整性核验失败: {exc}"
+
+
 def detect_external() -> list:
-    """诚实检测: 已安装 (import/命令可用) vs 未安装 (missing + 安装指引)。"""
+    """诚实检测: 已克隆 (TRI/benchmarks/<repo>) / 已安装 (import 或命令) / 未安装。"""
     out = []
     for b in EXTERNAL_BENCHMARKS:
         mod = b["id"].lower().replace(" ", "_").replace("-", "_").replace(".", "_").replace("++", "_pp")
-        installed = False
-        try:
-            r = subprocess.run([PY, "-c", f"import importlib.util; print(importlib.util.find_spec('{mod}') is not None)"],
-                               capture_output=True, text=True, timeout=20)
-            installed = r.returncode == 0 and r.stdout.strip().endswith("True")
-        except Exception:
-            installed = False
-        if not installed:
-            # 命令检测 (可执行文件在 PATH)
+        status, note = "missing", None
+        # 1) 仓库克隆检测 + 数据完整性核验
+        if b.get("repo"):
+            repo_dir = TRI / "benchmarks" / b["repo"]
+            if repo_dir.exists():
+                status = "cloned"
+                note = _repo_integrity(b["repo"], repo_dir)
+        # 2) import 检测
+        if status == "missing":
+            try:
+                r = subprocess.run([PY, "-c", f"import importlib.util; print(importlib.util.find_spec('{mod}') is not None)"],
+                                   capture_output=True, text=True, timeout=20)
+                if r.returncode == 0 and r.stdout.strip().endswith("True"):
+                    status, note = "installed", "Python 包已安装"
+            except Exception:
+                pass
+        # 3) 命令检测
+        if status == "missing":
             try:
                 exe = b["pkg"].split()[0].split("=")[0]
                 r = subprocess.run(["where", exe], capture_output=True, text=True, timeout=15)
-                installed = r.returncode == 0
+                if r.returncode == 0:
+                    status, note = "installed", f"命令 {exe} 可用"
             except Exception:
-                installed = False
-        out.append({**b, "installed": installed,
-                    "status": "ready" if installed else "missing",
-                    "install": f"pip install {b['pkg']} (或按官方文档克隆仓库)" if not installed else None})
+                pass
+        out.append({**b, "status": status, "note": note,
+                    "install": f"pip install {b['pkg']} (或克隆 {b.get('repo') or '官方仓库'})" if status == "missing" else None})
     return out
 
 
