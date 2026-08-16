@@ -140,9 +140,9 @@ def smoke_verify() -> dict:
     t0 = time.time()
     try:
         c = json.loads((TRI / "meta-call/certification_report.json").read_text(encoding="utf-8"))
-        ok = bool(c.get("certified"))
-        return {"cap": "元验证", "ok": ok, "ms": int((time.time() - t0) * 1000),
-                "detail": f"调用链认证 {'CERTIFIED' if ok else '未认证'}"}
+        ok = bool(c.get("certified")) and len(c.get("checklist", {})) >= 5
+        return {"cap": "元验证", "ok": ok, "ms": max(int((time.time() - t0) * 1000), 1),
+                "detail": f"调用链认证 {'CERTIFIED' if ok else '未认证'} ({len(c.get('checklist', {}))} 项检查)"}
     except Exception as exc:  # noqa: BLE001
         return {"cap": "元验证", "ok": False, "ms": int((time.time() - t0) * 1000),
                 "detail": f"{type(exc).__name__}: {exc}"}

@@ -142,7 +142,11 @@ def generate_status() -> dict:
     else:
         lines.insert(2, f"## 认证: {cert_state.get('overall')} | grade={cert_state.get('grade', '?')} | "
                         f"{cert_state.get('certified_at', '?')[:16]}")
-    (PROD / "STATUS.md").write_text("\n".join(l for l in lines if l), encoding="utf-8")
+    # B1 输出隔离: STATUS.md 写 ~/.cognify (COGNIFY_OUT), 仓库保持纯源码
+    out_dir = Path(os.environ.get("COGNIFY_OUT", str(Path.home() / ".cognify"))) / "status"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    (out_dir / "STATUS.md").write_text("\n".join(l for l in lines if l), encoding="utf-8")
+    (PROD / "STATUS.md").write_text("\n".join(l for l in lines if l), encoding="utf-8")  # 兼容: 仓库内保留镜像 (gitignore 排除)
     return data
 
 
