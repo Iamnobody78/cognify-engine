@@ -98,3 +98,10 @@
 - 元CV/ML/DL/具身/ME/EE/AI 12 项 (cv-mcp/hf-cv-server/cadquery/pcbparts/meta-prompt-mcp/rosbag...)
 - 论文/源码/基准支撑矩阵 → docs/adaptation/meta_mcp_matrix.md (MR-Ben/Reflection-Bench 等 7 基准)
 - 门禁全 PASS (14 ready 100% healthy)
+
+## v2.1.0 (2026-08-16) — META-DISK-GOVERN v1.0 元硬盘治理
+
+- meta_disk_govern.py: 六维模型 (D1-D6) + S.C.A.N.-R.E.P.O.R.T. 九步法
+- cognify meta-disk --status/--scan/--govern/clean --confirm
+- 首轮治理: 69% 使用率, 🟢 10GB 可清理 (执行待确认)
+- DISK-GOVERN-WEEKLY 调度 (每周一 09:00); 回滚清单 + 审计日志

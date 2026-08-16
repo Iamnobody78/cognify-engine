@@ -900,6 +900,12 @@ def main():
                            errors="replace")
         print((r.stdout or r.stderr or "")[-1500:])
         return r.returncode
+    if cmd == "meta-disk":
+        r = subprocess.run([PY, str(TRI / "daemon/meta_disk_govern.py"), *sys.argv[2:]],
+                           capture_output=True, text=True, encoding="utf-8",
+                           errors="replace")
+        print((r.stdout or r.stderr or "")[-1500:])
+        return r.returncode
     if cmd == "cognitive" and len(sys.argv) > 2 and sys.argv[2] in ("--mce", "mce"):
         text = sys.argv[3] if len(sys.argv) > 3 else ""
         code = (f"import sys; sys.path.insert(0, r'{TRI}/daemon'); import cve_s; "
