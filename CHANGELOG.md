@@ -1,5 +1,17 @@
 # Changelog
 
+## v2.2.1 (2026-08-16) — 元批判补全: 经验→行为映射 + 完整性审计
+
+### 新增 (元批判执行路径 A/B/C)
+- **失败模式分析**: `cognify meta-call analyze` — 调用历史提取失败模式 (每模块失败率/连续失败 streak) → failure_patterns.json
+- **自适应调用链**: `cognify meta-call chain` — 按历史失败模式调整权重, 连续 3 次失败自动降权 (预览)
+- **经验注入**: run_chain 执行前读取失败模式, 连续失败模块注入本次上下文 (经验→行为映射, 不再是纯仪式)
+- **完整性审计**: `cognify audit-debt` — 幽灵资产 (manifest 有/文件无) + 未记录资产 (文件有/manifest 无), 实测 0 幽灵 + 26 未记录 (插件 src 未入清单, 真实发现)
+- **自省→债务提案**: `cognify debt-auto-create` — 脆弱模块 (30 天变更≥100) 自动生成 DEBT 提案 (P1 simulation 945/governance 611, P2 meta_harness 103) → debt_proposals.json
+
+### 工程
+- 调用链 2 次记录 0 失败 (基线); 完整性 0 幽灵; 提案 3 个待 debt_engine 消费
+
 ## v2.2.0 (2026-08-16) — 元层开发落地 (META-LEVEL-DEV P0/P1)
 
 ### 新增

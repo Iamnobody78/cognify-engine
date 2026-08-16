@@ -1014,6 +1014,18 @@ def main():
                            errors="replace", timeout=120)
         print((r.stdout or r.stderr or "")[-2000:])
         return r.returncode
+    if cmd == "audit-debt":
+        r = subprocess.run([PY, str(TRI / "daemon/meta_dev.py"), "audit-debt"],
+                           capture_output=True, text=True, encoding="utf-8",
+                           errors="replace", timeout=120)
+        print((r.stdout or r.stderr or "")[-2000:])
+        return r.returncode
+    if cmd == "debt-auto-create":
+        r = subprocess.run([PY, str(TRI / "daemon/meta_dev.py"), "debt-auto-create"],
+                           capture_output=True, text=True, encoding="utf-8",
+                           errors="replace", timeout=120)
+        print((r.stdout or r.stderr or "")[-2000:])
+        return r.returncode
     if cmd == "product":
         return product_cmd(sys.argv[2:])
     if cmd == "whoami":

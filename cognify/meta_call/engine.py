@@ -135,19 +135,95 @@ CALLS = [call_memory, call_thinking, call_decision, call_cognition, call_reflect
 
 def run_chain() -> dict:
     MC.mkdir(parents=True, exist_ok=True)
+    # 路径 A/C: 执行前查询历史失败模式, 注入本次上下文 (经验→行为映射)
+    adaptive = []
+    pat = _json(MC / "failure_patterns.json", None)
+    if pat is None:
+        pat = analyze_failures()
+    for rec in pat.get("recommendations", []):
+        if rec.get("streak", 0) >= 3:
+            adaptive.append(f"{rec['module']} 连续失败 {rec['streak']} 次 — 本次降权/重点核查")
     results = [f() for f in CALLS]
     verify = call_verify(results)
     results.append(verify)
     entry = {"id": f"MC-{datetime.now().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:4]}",
              "ts": _now(), "version": VERSION, "results": results,
-             "certified": verify["ok"]}
+             "certified": verify["ok"], "adaptive": adaptive}
     with open(LOG, "a", encoding="utf-8") as fh:
         fh.write(json.dumps(entry, ensure_ascii=False) + "\n")
     CERT.write_text(json.dumps({"id": entry["id"], "ts": entry["ts"],
                                 "certified": entry["certified"],
+                                "adaptive": adaptive,
                                 "checklist": {r["module"]: r["ok"] for r in results}},
                                ensure_ascii=False, indent=2), encoding="utf-8")
     return entry
+
+
+def analyze_failures() -> dict:
+    """路径 A/C: 失败模式分析 — 从调用历史提取失败模式, 供调用链自适应。"""
+    patterns = {"total_calls": 0, "per_module": {}, "failed_streak": {}, "trends": {}}
+    rows = []
+    if LOG.exists():
+        for line in LOG.read_text(encoding="utf-8", errors="replace").splitlines():
+            try:
+                rows.append(json.loads(line))
+            except Exception:
+                continue
+    patterns["total_calls"] = len(rows)
+    for e in rows:
+        for r in e.get("results", []):
+            mod = r.get("module")
+            if not mod:
+                continue
+            m = patterns["per_module"].setdefault(mod, {"calls": 0, "fails": 0, "last_ts": None})
+            m["calls"] += 1
+            if not r.get("ok"):
+                m["fails"] += 1
+            m["last_ts"] = e.get("ts")
+    # 连续失败 streak (按最近 N 条)
+    for mod in patterns["per_module"]:
+        streak = 0
+        for e in reversed(rows[-15:]):
+            r = next((x for x in e.get("results", []) if x.get("module") == mod), None)
+            if r and not r.get("ok"):
+                streak += 1
+            elif r:
+                break
+        patterns["failed_streak"][mod] = streak
+    # 建议 (数据驱动)
+    patterns["recommendations"] = []
+    for mod, m in patterns["per_module"].items():
+        rate = m["fails"] / m["calls"] if m["calls"] else 0
+        if m["fails"] > 0:
+            patterns["recommendations"].append(
+                {"module": mod, "fail_rate": round(rate, 2), "streak": patterns["failed_streak"][mod],
+                 "action": "降权/跳过" if patterns["failed_streak"][mod] >= 3 else "关注"})
+    (MC / "failure_patterns.json").write_text(
+        json.dumps(patterns, ensure_ascii=False, indent=2), encoding="utf-8")
+    return patterns
+
+
+def chain_preview() -> dict:
+    """路径 B: 自适应调用链预览 — 按历史失败模式调整顺序/权重。"""
+    pat = _json(MC / "failure_patterns.json", analyze_failures())
+    chain = []
+    for fn in CALLS:
+        name = fn.__name__.replace("call_", "")
+        mod = {"元记忆": "元记忆", "元思考": "元思考", "元决策": "元决策",
+               "元认知": "元认知", "元反思": "元反思"}.get({"memory": "元记忆", "thinking": "元思考",
+               "decision": "元决策", "cognition": "元认知", "reflection": "元反思"}.get(name, ""), name)
+        m = pat.get("per_module", {}).get(mod, {})
+        fails = m.get("fails", 0)
+        streak = pat.get("failed_streak", {}).get(mod, 0)
+        weight = "normal"
+        if streak >= 3:
+            weight = "降权(历史连续失败)"
+        elif fails > 0:
+            weight = f"关注(历史失败 {fails} 次)"
+        chain.append({"module": mod, "weight": weight,
+                      "history": {"calls": m.get("calls", 0), "fails": fails}})
+    return {"ts": _now(), "chain": chain,
+            "adaptive_note": "调用链顺序固定, 但权重按历史失败模式调整; 连续 3 次失败自动降权"}
 
 
 def main():
@@ -159,6 +235,22 @@ def main():
             print(f"  {'✅' if r['ok'] else '❌'} {r['module']}: {r['detail']}")
         print(f"[meta-call] → {LOG}")
         return 0 if e["certified"] else 1
+    if cmd == "analyze":
+        p = analyze_failures()
+        print(f"[meta-call] 失败模式分析: {p['total_calls']} 次调用")
+        for mod, m in p["per_module"].items():
+            print(f"  {mod}: {m['calls']} 次 / {m['fails']} 失败 (连续 {p['failed_streak'].get(mod, 0)})")
+        for rec in p["recommendations"]:
+            print(f"  ⚠️ {rec['module']}: 失败率 {rec['fail_rate']} → {rec['action']}")
+        print(f"[meta-call] → {MC / 'failure_patterns.json'}")
+        return 0 if not p["recommendations"] else 1
+    if cmd == "chain":
+        c = chain_preview()
+        print(f"[meta-call] 自适应调用链预览 ({c['ts'][:16]}):")
+        for x in c["chain"]:
+            print(f"  {x['module']}: {x['weight']} (历史 {x['history']['calls']} 次/{x['history']['fails']} 失败)")
+        print(f"[meta-call] {c['adaptive_note']}")
+        return 0
     if cmd == "status":
         c = _json(CERT, None)
         if c is None:

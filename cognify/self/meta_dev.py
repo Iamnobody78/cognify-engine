@@ -158,6 +158,55 @@ def self_analyze() -> dict:
         return {"ts": _now(), "error": f"{type(exc).__name__}: {exc}"}
 
 
+def bootstrap_audit() -> dict:
+    """完整性审计: 幽灵资产 (manifest 有但文件无) + 未记录资产 (文件有但 manifest 无)。"""
+    man = _json(PROD / "manifest.json", {})
+    recorded = {}
+    for a in man.get("assets", []):
+        probe = a.get("probe")
+        if probe:
+            recorded[Path(probe)] = a.get("key")
+    ghost = [{"key": k, "probe": str(p)} for p, k in recorded.items() if not p.exists()]
+    # 未记录资产: 插件目录中存在的 py/md 但 manifest assets 未提及 (按插件 key 粗检)
+    unrecorded = []
+    for p in (PROD / "plugins").glob("*/src/*.py"):
+        rel = str(p)
+        if not any(rel in str(rp) for rp in recorded):
+            unrecorded.append(rel)
+    return {"ts": _now(), "ghost_assets": ghost, "unrecorded_files": unrecorded[:10],
+            "ghost_count": len(ghost), "unrecorded_count": len(unrecorded)}
+
+
+def debt_proposals() -> dict:
+    """自省→债务提案: 脆弱模块 (变更 > 阈值) 自动生成 DEBT 提案。"""
+    try:
+        r = subprocess.run(["git", "-C", str(PROD), "log", "--since=30 days ago",
+                            "--name-only", "--pretty=format:"], capture_output=True,
+                           text=True, encoding="utf-8", errors="replace", timeout=60)
+        freq = {}
+        for line in (r.stdout or "").splitlines():
+            line = line.strip()
+            if line and line.endswith(".py"):
+                k = "/".join(line.split("/")[:2])
+                freq[k] = freq.get(k, 0) + 1
+        hot = sorted(freq.items(), key=lambda x: -x[1])
+        proposals = []
+        for mod, n in hot[:5]:
+            if n >= 100:
+                proposals.append({"module": mod, "changes_30d": n,
+                                  "dim": "D6", "sev": "P1" if n >= 300 else "P2",
+                                  "desc": f"模块 {mod} 30 天变更 {n} 次 (脆弱性信号, self-analyze 自动提案)",
+                                  "root": "变更频率高可能反映设计不稳定或需求活跃",
+                                  "solution": "重构/拆分该模块或补充针对性测试"})
+        out = {"ts": _now(), "source": "self-analyze --debt-auto-create", "proposals": proposals}
+        p = TRI / "meta-deploy/debt_proposals.json"
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
+        return out
+    except Exception as exc:  # noqa: BLE001
+        return {"ts": _now(), "error": str(exc)}
+
+
 def main():
     cmd = sys.argv[1] if len(sys.argv) > 1 else "generate-status"
     if cmd == "generate-status":
@@ -176,6 +225,14 @@ def main():
             print(f"  ⚠️ 孤儿插件目录: {o}")
         print("[meta-dev] ✅ 自举一致性" if b["ok"] else "[meta-dev] ⚠️ 存在不一致")
         return 0 if b["ok"] else 1
+    if cmd == "audit-debt":
+        a = bootstrap_audit()
+        print(f"[meta-dev] 完整性审计: 幽灵资产 {a['ghost_count']} | 未记录文件 {a['unrecorded_count']}")
+        for g in a["ghost_assets"]:
+            print(f"  👻 {g['key']}: {g['probe']}")
+        for u in a["unrecorded_files"]:
+            print(f"  📄 未记录: {u}")
+        return 0 if not a["ghost_assets"] else 1
     if cmd == "self-analyze":
         a = self_analyze()
         print(f"[meta-dev] 自省: {a.get('summary', a.get('error'))}")
@@ -186,6 +243,13 @@ def main():
         for rec in a.get("recommendations", []):
             if rec:
                 print(f"  建议: {rec}")
+        return 0
+    if cmd == "debt-auto-create":
+        p = debt_proposals()
+        print(f"[meta-dev] 债务提案: {len(p.get('proposals', []))} 个")
+        for prop in p.get("proposals", []):
+            print(f"  {prop['sev']} {prop['module']}: {prop['desc'][:60]}")
+        print(f"[meta-dev] → {TRI / 'meta-deploy/debt_proposals.json'}")
         return 0
     print(__doc__)
     return 1
