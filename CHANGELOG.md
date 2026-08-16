@@ -82,3 +82,12 @@
 - 修正 4 个固定入口路径 (mcp-cad-studio→dist/cli.js, three-ws-vision→src/index.js, chrome-devtools→build/.../bin, cad-mcp-server→dist/src) SDK 4/4 PASS
 - 新增 51 项: 元层/元编程/元算法/元编排/数据库/浏览器/搜索/安全/开发 (npm 18 + pypi 13 核查)
 - 未验证项一律 registry-only 待 SDK 验证 (防 AionUi 握手失败复发)
+
+## v2.1.0 (2026-08-16) — 元层 MCP 全维度入库 (注册表 245 项)
+
+- 元哲学/元理论/元系统/元模型 19 项 (mcp-wisdom/steelmind/clear-thought/MPC/metamcp/MetaGO...)
+- 元分析/元优化/元数据/元计算 15 项 (Cochrane/medresearch/compressor/promptdiet/OpenMetadata/MaxCompute/PySpark...)
+- 元搜索/元设计/元语言/元沟通 18 项 (metasearch2/meta-mcp-search/astryx/figma-bridge/lsp-mcp/metaengine/metacall...)
+- 元知识/元数学/元类别 21 项 (MKG/memento/plexus/sagemath/axiom/open-ontologies/OAK/EBi-OLS...)
+- npm 18 + pypi 7 核查; 未验证项 registry-only 待 SDK 验证
+- 部署追踪门禁全 PASS: 覆盖率 100% 健康度 100% (14 ready 全 connected)

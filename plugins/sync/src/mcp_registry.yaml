@@ -1016,3 +1016,368 @@ servers:
   domain: 开发
   status: registry-only
   note: TUI/CLI 终端自动化; 来源待确认
+- id: mcp-wisdom
+  name: MCP Wisdom
+  domain: 元哲学
+  status: registry-only
+  note: 9 哲学思维工具; npm 1.0.1 存在, 待 SDK 验证
+- id: alexandria-mcp
+  name: Alexandria MCP
+  domain: 元哲学
+  status: registry-only
+  note: 4.6M 文本块 2 万+ 哲学著作; 远程 HTTP https://alexandria.aidatanorge.no/mcp
+- id: steelmind
+  name: Steelmind MCP
+  domain: 元哲学
+  status: registry-only
+  note: 苏格拉底+钢化论证; npm @stabgan/steelmind-mcp 2.0.1 存在, 待 SDK 验证
+- id: openended-nars
+  name: OpenEnded + NARS
+  domain: 元哲学
+  status: registry-only
+  note: 非公理推理系统; git 形态
+- id: agi-mcp-server
+  name: AGI MCP Server
+  domain: 元哲学
+  status: registry-only
+  note: 元认知好奇哲学代理; git 形态
+- id: philosophy-mcp
+  name: Philosophy MCP
+  domain: 元哲学
+  status: registry-only
+  note: 多语言哲学语料库; git 形态
+- id: clear-thought
+  name: Clear Thought MCP
+  domain: 元理论
+  status: registry-only
+  note: 系统性思维/心智模型; npm @mseep/clear-thought-mcp-server 1.1.2 存在, 待 SDK 验证
+- id: mpc-mcp
+  name: MPC 四值逻辑
+  domain: 元理论
+  status: registry-only
+  note: 承诺/暂停/冲突/重置; pypi mpc-mcp-server 0.3.3 存在, 待 SDK 验证
+- id: structured-argumentation
+  name: Structured Argumentation
+  domain: 元理论
+  status: registry-only
+  note: 形式辩证法; git 形态
+- id: scientific-method-mcp
+  name: Scientific Method
+  domain: 元理论
+  status: registry-only
+  note: 假设检验/实验设计; git 形态
+- id: formal-dialectics
+  name: Formal Dialectics
+  domain: 元理论
+  status: registry-only
+  note: 辩证推理; git 形态
+- id: metaphorical-mapping
+  name: Metaphorical Mapping
+  domain: 元理论
+  status: registry-only
+  note: 类比推理映射; git 形态
+- id: metamcp-navichat
+  name: MetaMCP (navichat)
+  domain: 元系统
+  status: pending-app
+  note: Docker 聚合器 navichat/metamcp
+- id: meta-mcp-infinitimeless
+  name: meta-mcp-server
+  domain: 元系统
+  status: registry-only
+  note: 跨服务器编排; git 形态
+- id: mentu-mcp
+  name: Mentu MCP
+  domain: 元系统
+  status: registry-only
+  note: 12 元工具折叠; git 形态
+- id: magg-mcp
+  name: Magg
+  domain: 元系统
+  status: registry-only
+  note: LLM 自主发现/安装 MCP; git 形态
+- id: n8n-meta-agent
+  name: n8n Meta Agent
+  domain: 元系统
+  status: pending-app
+  note: 需 n8n
+- id: odoo-model-mcp
+  name: Odoo Model MCP
+  domain: 元模型
+  status: pending-app
+  note: 需 Odoo 环境
+- id: meta-api-mcp
+  name: Meta API MCP
+  domain: 元模型
+  status: registry-only
+  note: 任意 API→LLM 适配层; git 形态
+- id: cochrane-meta-mcp
+  name: Cochrane Meta-Analysis
+  domain: 元分析
+  status: registry-only
+  note: Cochrane 标准 Meta 分析; git 形态
+- id: medresearch-ai
+  name: MedResearch AI
+  domain: 元分析
+  status: pending-key
+  note: 46 工具医学综述; 需 API 凭据
+- id: mcp-compressor
+  name: MCP Compressor
+  domain: 元优化
+  status: registry-only
+  note: 70-97% Token 缩减; git 形态
+- id: meta-mcp-optimizer
+  name: '@meta-mcp/server'
+  domain: 元优化
+  status: registry-only
+  note: 87-91% Token 节省; npm 未发布, 来源待确认
+- id: promptdiet
+  name: PromptDiet
+  domain: 元优化
+  status: registry-only
+  note: AST 骨架化 85% 缩减; npm 0.3.0 存在, 待 SDK 验证
+- id: stacklok-mcp-optimizer
+  name: MCP Optimizer (Stacklok)
+  domain: 元优化
+  status: registry-only
+  note: 企业级优化器; git 形态
+- id: mcp-trino-optimizer
+  name: Trino Optimizer
+  domain: 元优化
+  status: pending-app
+  note: 需 Trino/Iceberg
+- id: openmetadata-mcp
+  name: OpenMetadata MCP
+  domain: 元数据
+  status: pending-key
+  note: 需 OpenMetadata 实例+token
+- id: mcmcp
+  name: MaxCompute MCP
+  domain: 元数据
+  status: pending-key
+  note: 需阿里云 AK/SK
+- id: server-card-openmcp
+  name: Server Card / OpenMCP
+  domain: 元数据
+  status: registry-only
+  note: MCP 自我描述标准
+- id: pyspark-mcp
+  name: PySpark MCP
+  domain: 元计算
+  status: pending-app
+  note: 需 Spark; pypi 0.0.6 存在
+- id: starrocks-mcp
+  name: StarRocks MCP
+  domain: 元计算
+  status: pending-app
+  note: 需 StarRocks 实例
+- id: hologres-mcp
+  name: Hologres MCP
+  domain: 元计算
+  status: pending-key
+  note: 需阿里云 Hologres
+- id: bytehouse-mcp
+  name: ByteHouse MCP
+  domain: 元计算
+  status: pending-key
+  note: 需火山引擎 ByteHouse
+- id: metasearch2-mcp
+  name: Metasearch2 MCP
+  domain: 元搜索
+  status: registry-only
+  note: Rust 元搜索免 key; npm 0.1.0 存在, 待 SDK 验证
+- id: metasearch-mcp-py
+  name: MetaSearchMCP (Python)
+  domain: 元搜索
+  status: registry-only
+  note: 20+ 提供商聚合; pypi 未发布
+- id: eggsearch
+  name: Eggsearch
+  domain: 元搜索
+  status: registry-only
+  note: 搜索+抓取+证据打包; 来源待确认
+- id: searxng-mcp
+  name: SearXNG MCP
+  domain: 元搜索
+  status: pending-app
+  note: 需 SearXNG 实例; pypi 0.1.9 存在
+- id: meta-mcp-search
+  name: Meta-MCP-Search
+  domain: 元搜索
+  status: registry-only
+  note: 语义路由 1000+ 工具; npm 1.1.1 存在, 待 SDK 验证
+- id: infinitemcp
+  name: InfiniteMCP
+  domain: 元搜索
+  status: registry-only
+  note: MCP 生态网关; 来源待确认
+- id: wet-mcp
+  name: Wet MCP
+  domain: 元搜索
+  status: registry-only
+  note: Web 搜索+学术; 来源待确认
+- id: astryx
+  name: Astryx (Meta)
+  domain: 元设计
+  status: registry-only
+  note: React 设计系统 MCP; npm 0.0.0 存在, 待 SDK 验证
+- id: figma-bridge
+  name: Design Bridge
+  domain: 元设计
+  status: pending-key
+  note: 需 Figma 凭据; npm figma-design-bridge 0.1.0 存在
+- id: serendie-mcp
+  name: Serendie MCP
+  domain: 元设计
+  status: registry-only
+  note: 三菱设计系统; 远程 HTTP
+- id: lsp-mcp
+  name: LSP MCP
+  domain: 元语言
+  status: registry-only
+  note: 跨语言代码智能; npm 0.0.1-security 存在(名称警告), 待 SDK 验证
+- id: metaengine-mcp
+  name: MetaEngine MCP
+  domain: 元语言
+  status: registry-only
+  note: OpenAPI→类型安全代码; npm @metaengine/mcp-server 1.4.2 存在, 待 SDK 验证
+- id: autotranslate-mcp
+  name: AutoTranslate MCP
+  domain: 元语言
+  status: registry-only
+  note: 多语言翻译; npm @autotranslate/mcp 0.0.2 存在, 待 SDK 验证
+- id: metacall-mcp
+  name: MetaCall MCP
+  domain: 元沟通
+  status: pending-key
+  note: FaaS 面; 需 METACALL_TOKEN
+- id: meta-ai-mcp
+  name: Meta AI MCP
+  domain: 元沟通
+  status: pending-key
+  note: WhatsApp/IG 消息; 需 META_AI_API_KEY
+- id: mcp-agent-comm
+  name: Agent Communication
+  domain: 元沟通
+  status: registry-only
+  note: 多代理 MCP 通信; TS 库
+- id: mentu-ai-metamcp
+  name: Mentu AI MetaMCP
+  domain: 元沟通
+  status: registry-only
+  note: N 子 MCP→4 元工具; npm @iflow-mcp/mentu-ai-metamcp 0.4.1 存在, 待 SDK 验证
+- id: mcp-uplift
+  name: MCP Uplift
+  domain: 元沟通
+  status: registry-only
+  note: 2026-07-28 协议桥接; git 形态
+- id: mkg-neo4j
+  name: Meta Knowledge Graph
+  domain: 元知识
+  status: pending-app
+  note: Neo4j 自改进记忆层; 需 Neo4j
+- id: memento-mcp
+  name: Memento MCP
+  domain: 元知识
+  status: pending-app
+  note: Neo4j 知识图谱记忆; npm 0.4.1 存在+需 Neo4j
+- id: plexus-kg
+  name: Plexus
+  domain: 元知识
+  status: pending-app
+  note: 类型化知识图谱; Docker 形态
+- id: gctrl-mcp
+  name: GCTRL MCP
+  domain: 元知识
+  status: pending-key
+  note: 文本→Neo4j+Qdrant; npm 1.0.1 存在+需网关
+- id: knowledge-keeper
+  name: Knowledge Keeper
+  domain: 元知识
+  status: registry-only
+  note: 32 工具 BM25/混合检索; git 形态
+- id: zettelkasten-mcp
+  name: Zettelkasten MCP
+  domain: 元知识
+  status: registry-only
+  note: 卡片盒笔记法; git 形态
+- id: megamem
+  name: MegaMem
+  domain: 元知识
+  status: registry-only
+  note: Obsidian→时序知识图谱; 插件形态
+- id: sagemath-mcp
+  name: SageMath MCP
+  domain: 元数学
+  status: pending-app
+  note: 33 工具 CAS; pypi 0.6.0 存在+需 SageMath
+- id: axiom-math
+  name: Axiom Math
+  domain: 元数学
+  status: registry-only
+  note: Giac/Xcas WASM CAS; npm 1.0.5 存在, 待 SDK 验证
+- id: advanced-math-mcp
+  name: Advanced Math
+  domain: 元数学
+  status: registry-only
+  note: 17 工具符号数学; 来源待确认
+- id: math-mcp-server
+  name: Math MCP Server
+  domain: 元数学
+  status: registry-only
+  note: 全栈数学; pypi 0.1.0 存在, 待 SDK 验证
+- id: mseep-math
+  name: '@mseep/math-mcp'
+  domain: 元数学
+  status: registry-only
+  note: 轻量数学; npm 0.1.3 存在, 待 SDK 验证
+- id: mallory-mcp
+  name: Mallory MCP
+  domain: 元数学
+  status: registry-only
+  note: 符号+数值数学; git 形态
+- id: metamodel-mcp
+  name: MetaModel MCP
+  domain: 元数学
+  status: registry-only
+  note: 电子表格式公式引擎; 来源待确认
+- id: open-ontologies
+  name: Open Ontologies
+  domain: 元类别
+  status: registry-only
+  note: 70+ 工具本体推理; Rust git 形态
+- id: fabric-ontology
+  name: Fabric Ontology
+  domain: 元类别
+  status: pending-key
+  note: Microsoft Fabric; 需凭据
+- id: oak-mcp
+  name: OAK MCP
+  domain: 元类别
+  status: registry-only
+  note: 生物医学本体; pypi 0.1.16 存在, 待 SDK 验证
+- id: irontology-mcp
+  name: Irontology MCP
+  domain: 元类别
+  status: registry-only
+  note: 企业本体发现; Rust git 形态
+- id: ebi-ols-mcp
+  name: EBI OLS MCP
+  domain: 元类别
+  status: registry-only
+  note: 250+ 生物医学本体; npm @pipeworx/mcp-ebi-ols 0.1.0 存在, 待 SDK 验证
+- id: onta-mcp
+  name: '@onta/mcp'
+  domain: 元类别
+  status: registry-only
+  note: 自然语言图谱管理 18 工具; npm 0.1.52 存在, 待 SDK 验证
+- id: zype-com-mcp
+  name: Zype Com MCP
+  domain: 元类别
+  status: registry-only
+  note: 自定义元数据 Schema; git 形态
+- id: atlas-mcp
+  name: Atlas MCP
+  domain: 元类别
+  status: pending-app
+  note: Apache Atlas 数据目录; 需实例
