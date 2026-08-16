@@ -1,7 +1,7 @@
 {
   "product": "cognify-engine",
   "version": "2.0.0",
-  "certified_at": "2026-08-16T18:51:08",
+  "certified_at": "2026-08-16T19:21:09",
   "checks": [
     {
       "item": "30 维元能力全部 active",
@@ -21,7 +21,7 @@
     {
       "item": "同步镜像规模 (hub/sessions >100)",
       "pass": true,
-      "detail": "173"
+      "detail": "176"
     },
     {
       "item": "插件平台 (7 插件 + 生命周期冒烟)",
