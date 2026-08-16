@@ -1,10 +1,10 @@
-[build-system]
+﻿[build-system]
 requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "cognify-engine"
-version = "2.1.0"
+version = "2.2.3"
 description = "认知操作产品 — AI 代理治理与认知操作系统 (插件平台 PLUGINIFY v1.0)"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -32,3 +32,4 @@ cognify = "cognify._cli:main"
 
 [tool.setuptools]
 packages = ["cognify"]
+

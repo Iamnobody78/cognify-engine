@@ -238,8 +238,53 @@ def bootstrap_fix() -> dict:
     return {"ts": _now(), "fixed": fixed, "external_dep_warnings": warned}
 
 
+def pypi_status() -> dict:
+    """发布就绪检查: OIDC workflow / pyproject / 版本冲突 / 最近 tag。"""
+    wf = PROD / ".github/workflows/release.yml"
+    wf_oidc = wf.exists() and "id-token: write" in wf.read_text(encoding="utf-8", errors="replace")
+    pyproject = PROD / "pyproject.toml"
+    name = version = None
+    if pyproject.exists():
+        txt = pyproject.read_text(encoding="utf-8", errors="replace")
+        for line in txt.splitlines():
+            if line.strip().startswith("name") and "=" in line:
+                name = line.split("=", 1)[1].strip().strip('"').strip("'")
+            if line.strip().startswith("version") and "=" in line:
+                version = line.split("=", 1)[1].strip().strip('"').strip("'")
+    # PyPI 已有同名包?
+    pypi_exists = False
+    try:
+        import urllib.request
+        urllib.request.urlopen(f"https://pypi.org/pypi/{name}/json", timeout=15)
+        pypi_exists = True
+    except Exception:
+        pypi_exists = False
+    # 最近 tag
+    last_tag = ""
+    try:
+        r = subprocess.run(["git", "-C", str(PROD), "tag", "--sort=-creatordate"],
+                           capture_output=True, text=True, timeout=20)
+        last_tag = (r.stdout or "").splitlines()[0] if r.stdout.strip() else ""
+    except Exception:
+        pass
+    return {"ts": _now(), "oidc_workflow": wf_oidc, "pyproject": pyproject.exists(),
+            "name": name, "version": version, "pypi_exists": pypi_exists,
+            "last_tag": last_tag,
+            "ready": wf_oidc and pyproject.exists() and not pypi_exists,
+            "next_step": "PyPI 后台添加受信任发布者 (Owner: Iamnobody78 / Repo: cognify-engine / Workflow: release.yml) 后打 tag"}
+
+
 def main():
     cmd = sys.argv[1] if len(sys.argv) > 1 else "generate-status"
+    if cmd == "pypi-status":
+        p = pypi_status()
+        print(f"[meta-dev] PyPI 发布就绪: {'✅ READY' if p['ready'] else '⚠️ 未就绪'}")
+        print(f"  OIDC workflow: {'✅' if p['oidc_workflow'] else '❌'} | pyproject: {'✅' if p['pyproject'] else '❌'}"
+              f" | 包 {p['name']}@{p['version']}")
+        print(f"  PyPI 已有同名包: {'✅ (版本冲突?)' if p['pypi_exists'] else '✅ 未占用'}"
+              f" | 最近 tag: {p['last_tag'] or '无'}")
+        print(f"  下一步: {p['next_step']}")
+        return 0 if p["ready"] else 1
     if cmd == "generate-status":
         d = generate_status()
         print(f"[meta-dev] STATUS.md + certificate.json 已动态生成")
