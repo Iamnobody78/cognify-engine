@@ -105,3 +105,11 @@
 - cognify meta-disk --status/--scan/--govern/clean --confirm
 - 首轮治理: 69% 使用率, 🟢 10GB 可清理 (执行待确认)
 - DISK-GOVERN-WEEKLY 调度 (每周一 09:00); 回滚清单 + 审计日志
+
+## v2.1.0 (2026-08-16) — META-VERIFY-FORCE v1.0 元层强制验证
+
+- meta_verify_force.py: V.E.R.I.F.Y. 六步法 + 三级门禁 (80%/50%/熔断)
+- cognify meta-verify --full/--compliance/--benchmark/--trend
+- 首轮验证: 健康 7/7, 合规 33.3% BLOCK — 8 类元工具已部署未使用 (真实治理发现)
+- 引擎级证据: 元执行/元决策/元学习/元思考 ✅ (exec-audit/decision/CLS/MMC)
+- 外部基准 (MR-Ben/Reflection-Bench) 待数据集接入 (诚实边界)
