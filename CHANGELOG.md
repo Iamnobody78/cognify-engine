@@ -1,5 +1,20 @@
 # Changelog
 
+## v2.1.8 (2026-08-16) — DSH 生态找回 + 模块清单扩至 47 项
+
+### 新增
+- **生态实证**: 克隆 Oh-My-DSH / awesome-dsh-plugin 社区目录, 实测规模 **精选 1320 / 生态快照 1667 仓库 / 448K Star** (远超此前引用的 322/990)
+- **29 项候选仓库批量探测**: 15/29 真实存在 (4 社区目录 + 11 模块仓库: dsh-memory/context-doctor/better-sidebar/at-file/TUI/desktop/pet/reverse-skill/harness-tui/tianshu-tui/context-vista); 14 项 owner 未确认 → 诚实标注待探
+- **审计引擎扩至 47 模块**: 新增记忆增强/安全审计/UI交互/开发运行时/工作流 5 类别 19 模块, 生态目录数据源解析 (curated 257 overrides + 19 manual)
+- **元提示词**: DSH-ECOSYSTEM v1.0 入库 (71 条); DSH-SELF-RECOVER 更新 (新增 19 模块清单 + 诚实边界标注)
+
+### 修复
+- 审计 local_ok: 待部署/待接入 均不计本地已有 (47 模块: 22 已有/25 待部署)
+
+### 工程
+- 他证: AgencyBench Code 2/2 (10/10) | 元能力审计 47 模块 (22/25) | 生态目录 2 个已克隆
+- 下一步: dsh-find-plugin 作为生态检索入口; 按 P0 (记忆/安全) 优先部署
+
 ## v2.1.7 (2026-08-16) — 元能力部署审计 + subtask2 他证分数
 
 ### 新增

@@ -56,6 +56,26 @@ MODULES = [
     ("交互类", "元沟通", "meta-ai 类 (待接入)", []),
     ("治理类", "元治理", "cognify gov (内置)", []),
     ("治理类", "元决策", "META-DECISION-ENGINE (三层过滤)", []),
+    # ---- 新增: DSH 生态找回模块 (2026-08-16 探测) ----
+    ("记忆增强", "灵枢五层记忆", "待部署: dsh-memory (12 记忆工具)", ["FuRongJun-1999/dsh-memory"]),
+    ("记忆增强", "Hermes 式记忆", "待部署: dsh-hermes-memory (自动记忆+skill)", ["mbj733/dsh-hermes-memory"]),
+    ("记忆增强", "因果记忆图谱", "待部署: dsh-engram-relay (N-gram 哈希寻址)", ["yjh051108/dsh-engram-relay"]),
+    ("记忆增强", "上下文注入审计", "待部署: dsh-context-doctor (重复/冲突检测)", ["Zhenyu98/dsh-context-doctor"]),
+    ("记忆增强", "长期人格记忆", "待部署: dsh-persona-memory (纠正检测/容量合并)", []),
+    ("安全审计", "本地安全审计", "待部署: dsh-security-audit", []),
+    ("安全审计", "上下文可见性", "待部署: context-vista (token 环形图)", ["GooodWei/context-vista"]),
+    ("UI交互", "侧边栏工作台", "待部署: DSH-better-sidebar (文件/终端/Git)", ["omdsh-dev/DSH-better-sidebar"]),
+    ("UI交互", "@ 引用文件", "待部署: dsh-at-file", ["omdsh-dev/dsh-at-file"]),
+    ("UI交互", "终端 UI", "待部署: dsh-TUI", ["ccch1mneyyy/dsh-TUI"]),
+    ("UI交互", "桌面端", "待部署: deepseek-harness-desktop", ["anywhere-labs/deepseek-harness-desktop"]),
+    ("UI交互", "桌面宠物", "待部署: dsh-pet (精灵图/番茄钟)", ["zealot00/dsh-pet"]),
+    ("开发运行时", "社区发行版", "待部署: Oh-My-DSH (精选目录)", ["like-study1/Oh-My-DSH"]),
+    ("开发运行时", "逆向工程技能包", "待部署: dsh-reverse-skill (85 SKILL.md)", ["dhicoc/dsh-reverse-skill"]),
+    ("开发运行时", "Rust TUI", "待部署: deepseek-harness-tui", ["openma-ai/deepseek-harness-tui"]),
+    ("开发运行时", "TUI 变体", "待部署: dsh-tianshu-tui", ["huiliyi37/dsh-tianshu-tui"]),
+    ("工作流", "深度研究编排", "待部署: dsh-deepresearch (workflow 引擎)", []),
+    ("工作流", "规划/执行路由", "待部署: dsh-plan-execute (双模型)", []),
+    ("工作流", "零依赖工具套件", "待部署: dsh-toolkit (calculator/csv/regex)", []),
 ]
 
 
@@ -79,13 +99,26 @@ def audit() -> dict:
         pass
     # 2) DSH 环境扫描
     dsh_profiles = [p.name for p in (DSH / "profiles").iterdir() if p.is_dir()] if (DSH / "profiles").exists() else []
+    # 2b) 生态目录数据源 (Oh-My-DSH 真实解析)
+    eco = {"oh_my_dsh": None, "awesome": None}
+    omd = TRI / "benchmarks/Oh-My-DSH/data"
+    if (omd / "curated.json").exists():
+        try:
+            c = json.loads((omd / "curated.json").read_text(encoding="utf-8"))
+            eco["oh_my_dsh"] = {"curated_overrides": len(c.get("overrides", {})),
+                                "manual": len(c.get("manual", [])),
+                                "min_stars": c.get("min_stars")}
+        except Exception:
+            pass
+    if (TRI / "benchmarks/awesome-dsh-plugin").exists():
+        eco["awesome"] = {"cloned": True}
     # 3) 模块逐项审计
     modules = []
     for cat, name, local, repos in MODULES:
         sources = []
         for repo in repos:
             sources.append({"repo": repo, "exists": _git_exists(repo)})
-        local_ok = "待接入" not in local
+        local_ok = "待接入" not in local and "待部署" not in local
         modules.append({"cat": cat, "module": name, "local_impl": local,
                         "local_ok": local_ok, "community_sources": sources,
                         "status": "已有本地实现" if local_ok else "本地缺失",
@@ -95,7 +128,8 @@ def audit() -> dict:
     have = sum(1 for m in modules if m["local_ok"])
     report = {"ts": time.strftime("%Y-%m-%dT%H:%M:%S"), "total": len(modules),
               "local_have": have, "local_missing": len(modules) - have,
-              "dsh_profiles": dsh_profiles, "cognify_meta": st, "modules": modules}
+              "dsh_profiles": dsh_profiles, "cognify_meta": st,
+              "ecosystem_dirs": eco, "modules": modules}
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     return report
