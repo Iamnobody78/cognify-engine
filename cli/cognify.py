@@ -25,6 +25,7 @@ cognify CLI v2.0.0 — 认知操作产品统一入口 (插件平台 PLUGINIFY)
   cognify benchmark --all   # 基准测试 (8 域 B.E.N.C.H. + T.R.E.N.D.)
   cognify self-validate --start|--status|--history   # 自使用验证 (SELF-VALIDATE-ITERATE 轨 B)
   cognify iterate --report|--sprint   # 双轨融合报告 / 冲刺模式 (轨 C/D)
+  cognify evolve --report|--status|--trend|--force   # 强制进化 (EVOLVE-FORCE E.V.O.L.V.E.)
 """
 import json
 import subprocess
@@ -974,6 +975,12 @@ def main():
         r = subprocess.run([PY, str(TRI / "daemon/iterate.py"), *sys.argv[2:]],
                            capture_output=True, text=True, encoding="utf-8",
                            errors="replace", timeout=180)
+        print((r.stdout or r.stderr or "")[-2000:])
+        return r.returncode
+    if cmd == "evolve":
+        r = subprocess.run([PY, str(TRI / "daemon/evolve.py"), *sys.argv[2:]],
+                           capture_output=True, text=True, encoding="utf-8",
+                           errors="replace", timeout=300)
         print((r.stdout or r.stderr or "")[-2000:])
         return r.returncode
     if cmd == "product":

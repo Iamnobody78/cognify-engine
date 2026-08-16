@@ -1,0 +1,17 @@
+{
+  "id": "cognify.evolve",
+  "name": "Evolve Force",
+  "version": "0.1.0",
+  "description": "EVOLVE-FORCE 强制进化引擎: E.V.O.L.V.E. 六步法 (证据扫描/验证/组织/审计/双轨验证/强制执行) + 每日进化门禁",
+  "author": "Iamnobody78",
+  "license": "MIT",
+  "main": "plugin.py",
+  "dependencies": {
+    "cognify.core": ">=1.0.0 <3.0.0",
+    "cognify.self_validate": ">=0.1.0"
+  },
+  "capabilities": ["evolve", "evidence-gate", "audit-trail", "force-mode", "rollback-detect"],
+  "hooks": ["on_load", "on_enable", "on_disable", "on_unload"],
+  "verified": true,
+  "source": "cognify/evolve/engine.py (产品模块, 见 VENDORED.md)"
+}

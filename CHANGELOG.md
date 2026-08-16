@@ -1,5 +1,22 @@
 # Changelog
 
+## v2.1.3 (2026-08-16) — 强制进化引擎 (EVOLVE-FORCE)
+
+### 新增
+- **P0 强制进化引擎**: `cognify evolve --report/--status/--trend/--force/--activate` (cognify/evolve/engine.py)
+  - E.V.O.L.V.E. 六步法: Evidence 扫描 (5 检查项: commit/测试≥98%/性能不倒退/文档/新功能) → Verify (git cat-file commit 核验 + pytest 证据在位) → Organize (分类 fix/optimize/new/docs/test + 贡献度评分) → Log (evolution_audit.jsonl 只追加 + 写后校验, 记录失败=进化无效) → Validate (双轨整体 vs 上周期, 倒退→回滚标记) → Enforce (门禁失败→债务 P0 优先提案 Top3)
+  - 门禁: 5 项 ≥3 满足否则强制进化模式; 首轮实测 **5/5 证据, 整体 96.2, 模式 normal**
+- **P2 插件 `cognify.evolve`**: plugins/evolve/ (manifest + plugin.py + VENDORED.md), 冒烟通过
+- **调度**: EVOLVE-DAILY 每日 23:30 全链执行 (Register-ScheduledTask, 已触发验证 LastResult 0)
+- **元提示词入库**: EVOLVE-FORCE v1.0 → meta_prompts 索引 (json+yaml, 66 条; 修复 SELF-VALIDATE-ITERATE 被同步进程覆盖丢失问题)
+
+### 修复
+- 审计日志读取: _json() 误用于 jsonl 整读 (首行解析为 dict 后 .read_text 崩溃) → 逐行解析取最后一条
+- activate 内嵌 schtasks 被沙箱拒绝 (WinError 5) → 任务改用 Register-ScheduledTask cmdlet 注册; evolve.py 保留 --activate 入口
+
+### 工程
+- 门禁: 进化证据 5/5 | 基准 8/8 (98.5) | 自使用 5/5 (94.0) | 双轨整体 96.2 | 审计链 1 条 (只追加)
+
 ## v2.1.2 (2026-08-16) — 双轨验证闭环 (SELF-VALIDATE-ITERATE)
 
 ### 新增
