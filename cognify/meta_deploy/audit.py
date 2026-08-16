@@ -11,6 +11,10 @@ audit.py — DSH-SELF-RECOVER / META-DEPLOY-ALL 审计引擎 (Phase F: Find)
 """
 import os
 import json
+import os as _os, sys as _sys
+_sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.dirname(__file__))))
+import cognify.paths as paths
+
 import subprocess
 import sys
 import time
@@ -21,9 +25,9 @@ try:
 except (AttributeError, ValueError):
     pass
 
-TRI = Path(os.environ.get("COGNIFY_TRI", r"C:\Users\ivy\.aionui-tri-sync"))
+TRI = paths.TRI
 DSH = Path(r"C:\Users\ivy\.dsh")
-PROD = Path(os.environ.get("COGNIFY_PROD", r"C:\Users\ivy\AppData\Roaming\AionUi\aionui\conversations\2026\07\27\aionrs-temp-48324704\cognify-engine"))
+PROD = paths.PROD
 OUT = TRI / "meta-deploy/meta_audit_before.json"
 
 # 25+ 模块清单: 社区检索关键词 + 候选仓库 (真实探测用)

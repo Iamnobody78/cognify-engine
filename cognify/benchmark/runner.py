@@ -15,6 +15,10 @@ runner.py — BENCHMARK-FULL-AUTO 统一基准执行器 (B.E.N.C.H.-F.U.L.L.)
 """
 import os
 import json
+import os as _os, sys as _sys
+_sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.dirname(__file__))))
+import cognify.paths as paths
+
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -27,7 +31,7 @@ except (AttributeError, ValueError):
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from adapters import PREV, REPORTS, detect_external, run_local  # noqa: E402
 
-TRI = Path(os.environ.get("COGNIFY_TRI", r"C:\Users\ivy\.aionui-tri-sync"))
+TRI = paths.TRI
 FULL_MD = TRI / "benchmark/benchmark_full_report.md"
 
 

@@ -9,6 +9,10 @@ consumption.py — 闭环运行时化 (批判 2.3)
 用法: import consumption; consumption.log_consumption(producer, consumer, artifact)
 """
 import json
+import os as _os, sys as _sys
+_sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.dirname(__file__))))
+import cognify.paths as paths
+
 import os
 import sys
 from datetime import datetime
@@ -19,7 +23,7 @@ try:
 except (AttributeError, ValueError):
     pass
 
-TRI = Path(os.environ.get("COGNIFY_TRI", r"C:\Users\ivy\.aionui-tri-sync"))
+TRI = paths.TRI
 LOG = TRI / "closure/consumption_log.jsonl"
 
 # 期望消费配对 (静态映射, fallback 用; 真实消费率以审计日志为准)

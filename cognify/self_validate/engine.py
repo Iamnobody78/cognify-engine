@@ -19,6 +19,10 @@ engine.py — SELF-VALIDATE-ITERATE v1.0 自使用验证引擎
 """
 import os
 import faulthandler
+import os as _os, sys as _sys
+_sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.dirname(__file__))))
+import cognify.paths as paths
+
 import json
 import sqlite3
 import subprocess
@@ -33,9 +37,9 @@ try:
 except (AttributeError, ValueError):
     pass
 
-TRI = Path(os.environ.get("COGNIFY_TRI", r"C:\Users\ivy\.aionui-tri-sync"))
-PROD = Path(os.environ.get("COGNIFY_PROD", r"C:\Users\ivy\AppData\Roaming\AionUi\aionui\conversations\2026\07\27\aionrs-temp-48324704\cognify-engine"))
-PY = os.environ.get("COGNIFY_PY", r"C:\Users\ivy\AppData\Local\Programs\Python\Python312\python.exe")
+TRI = paths.TRI
+PROD = paths.PROD
+PY = paths.PY
 SV = TRI / "self_validate"
 DB = SV / "self_validate.db"
 LATEST = SV / "self_validation_result.json"

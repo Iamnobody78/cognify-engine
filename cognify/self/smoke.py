@@ -15,6 +15,10 @@ smoke.py — 元能力冒烟化 (批判阶段 2.1: 从"存在"到"运行")
 用法: python smoke.py
 """
 import faulthandler
+import os as _os, sys as _sys
+_sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.dirname(__file__))))
+import cognify.paths as paths
+
 import json
 import os
 import subprocess
@@ -29,9 +33,9 @@ try:
 except (AttributeError, ValueError):
     pass
 
-TRI = Path(os.environ.get("COGNIFY_TRI", r"C:\Users\ivy\.aionui-tri-sync"))
-PROD = Path(os.environ.get("COGNIFY_PROD", r"C:\Users\ivy\AppData\Roaming\AionUi\aionui\conversations\2026\07\27\aionrs-temp-48324704\cognify-engine"))
-PY = os.environ.get("COGNIFY_PY", r"C:\Users\ivy\AppData\Local\Programs\Python\Python312\python.exe")
+TRI = paths.TRI
+PROD = paths.PROD
+PY = paths.PY
 EV = TRI / "meta-smoke/evidence.jsonl"
 
 
