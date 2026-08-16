@@ -170,8 +170,27 @@ def assess_plugins(names: list) -> list:
     return out
 
 
+def mcp_stats() -> dict:
+    """2.4 MCP 口径拆分: 分类统计 + 对外宣称口径 (ready+registered)。"""
+    import yaml as _yaml
+    from collections import Counter
+    reg = _yaml.safe_load((TRI / "config/mcp_registry.yaml").read_text(encoding="utf-8"))
+    servers = reg.get("servers", [])
+    c = Counter(s.get("status") for s in servers)
+    outer = c.get("ready", 0) + c.get("registered", 0)
+    return {"total": len(servers), "by_status": dict(c), "outer_claim": outer,
+            "outer_note": f"对外宣称只引用 ready({c.get('ready', 0)}) + registered({c.get('registered', 0)}) = {outer}"}
+
+
 def main():
     cmd = sys.argv[1] if len(sys.argv) > 1 else "audit"
+    if cmd == "mcp-stats":
+        m = mcp_stats()
+        print(f"[meta-deploy] MCP 注册表: 总数 {m['total']}")
+        for k, v in m["by_status"].items():
+            print(f"  {k}: {v}")
+        print(f"[meta-deploy] 对外口径: {m['outer_note']}")
+        return 0
     if cmd == "audit":
         r = audit()
         print(f"[meta-deploy] 模块 {r['total']} | 本地已有 {r['local_have']} | 缺失 {r['local_missing']}")

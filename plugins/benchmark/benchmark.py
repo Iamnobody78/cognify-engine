@@ -57,7 +57,10 @@ def bench_meta_capability() -> dict:
     cl = _json(TRI / "meta/closure/closure_report.json", {})
     active_ok = st.get("active_count") == "30/30"
     closure = cl.get("closure_rate", 0)
-    score = round(closure * 100, 1) if active_ok else round(closure * 80, 1)
+    if not active_ok:
+        score = 0.0  # 2.5 负向用例修复: 30 维全挂 = 域失败 (不再被 closure 兜底掩盖)
+    else:
+        score = round(closure * 100, 1)
     return {"domain": "元能力体系", "score": score,
             "passed": active_ok and closure >= 0.9,
             "details": {"active": st.get("active_count"), "closure": closure}}
@@ -325,10 +328,58 @@ def cmd_fix() -> int:
     return 1
 
 
+
+def selftest() -> int:
+    """2.5 负向用例: 注入已知缺陷, 验证各域评分确实能检测 (检测力自检)。"""
+    import yaml
+    fails = []
+    orig = _json(TRI / "meta/status.json", {})
+    fake = dict(orig, active_count="0/30")
+    try:
+        (TRI / "meta/status.json").write_text(json.dumps(fake, ensure_ascii=False), encoding="utf-8")
+        r = bench_meta_capability()
+        if r["score"] >= 50:
+            fails.append("元能力域: 坏状态未被检测 (0/30 仍高分)")
+    finally:
+        (TRI / "meta/status.json").write_text(json.dumps(orig, ensure_ascii=False), encoding="utf-8")
+    reg_p = TRI / "config/mcp_registry.yaml"
+    orig_reg = reg_p.read_text(encoding="utf-8") if reg_p.exists() else None
+    try:
+        reg = yaml.safe_load(orig_reg) if orig_reg else {}
+        for s in reg.get("servers", []):
+            s["status"] = "missing"
+        reg_p.write_text(yaml.safe_dump(reg, allow_unicode=True, sort_keys=False), encoding="utf-8")
+        r = bench_mcp()
+        if r["score"] >= 50:
+            fails.append("MCP 域: 全 missing 未被检测")
+    finally:
+        if orig_reg:
+            reg_p.write_text(orig_reg, encoding="utf-8")
+    gov_p = TRI / "debt/pytest_full_20260815.txt"
+    orig_g = gov_p.read_text(encoding="utf-8") if gov_p.exists() else None
+    try:
+        gov_p.write_text("0 passed, 1 failed in 0.01s", encoding="utf-8")
+        r = bench_governance()
+        if r["score"] >= 50:
+            fails.append("治理域: 全 failed 未被检测")
+    finally:
+        if orig_g:
+            gov_p.write_text(orig_g, encoding="utf-8")
+    if fails:
+        print("[bench-selftest] ❌ 检测力缺陷:")
+        for x in fails:
+            print(f"  - {x}")
+        return 1
+    print("[bench-selftest] ✅ 负向用例全通过: 缺陷注入均被检测 (检测力自检)")
+    return 0
+
+
 def main():
     argv = sys.argv[1:]
     cmd = (argv[0] if argv else "all").lstrip("-")
     BM.mkdir(parents=True, exist_ok=True)
+    if cmd == "selftest":
+        return selftest()
     if cmd in ("all", "run"):
         s = run_all()
         write_reports()
@@ -337,6 +388,16 @@ def main():
             print(f"  {'✅' if r['passed'] else '❌'} {r['domain']}: {r['score']}")
         print(f"[bench] → {REPORT}")
         return 0 if s["passed"] >= 7 else 1
+    if cmd == "full":
+        # BENCHMARK-FULL-AUTO: 8 域 + 外部基准适配器 (产品模块 runner.py)
+        import subprocess
+        prod = Path(r"C:\Users\ivy\AppData\Roaming\AionUi\aionui\conversations\2026\07\27\aionrs-temp-48324704\cognify-engine")
+        r = subprocess.run([r"C:\Users\ivy\AppData\Local\Programs\Python\Python312\python.exe",
+                            str(prod / "cognify/benchmark/runner.py"), "full"],
+                           capture_output=True, text=True, encoding="utf-8",
+                           errors="replace", timeout=600)
+        print(r.stdout or r.stderr or "")
+        return r.returncode
     if cmd == "score":
         s = run_all()
         print(f"[bench] 健康评分: {s['total_score']}/100")

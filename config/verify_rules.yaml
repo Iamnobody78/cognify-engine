@@ -1,0 +1,27 @@
+# meta-verify 评分规则 (2.7 版本化)
+# 规则变更必须: 1) 更新 version 2) 追加规则变更日志 (meta-verify/rules_changelog.jsonl)
+version: "1.0"
+updated: "2026-08-16"
+scope: "META-VERIFY-FORCE 合规率判定 (meta_verify_force.py)"
+
+categories:
+  元调用:
+    - 证据: tool_usage_log 真实调用记录
+    - 判定: 类别在必调用清单中且有真实调用证据 → 合规
+  元引擎:
+    - 证据: 引擎级产物 (exec-audit/decision/CLS/MMC/closure)
+    - 判定: 产物存在且非空 → 合规 (存在性级)
+  元数学:
+    - 证据: axiom-math MCP 真实调用
+    - 判定: 真实调用成功 → 合规 (grade=specific)
+
+grading:
+  existence: "产物存在即合规 (默认)"
+  specific: "特定工具真实调用才合规 (更严格)"
+  compliance_target: 0.9
+  history:
+    - {date: "2026-08-15", rate: "33%", note: "初始口径 (引擎级证据缺失)"}
+    - {date: "2026-08-15", rate: "91.7%", note: "补引擎级证据 11/12"}
+    - {date: "2026-08-16", rate: "100%", note: "axiom-math 元数学真实接入, 12/12"}
+
+note: "任何分数变化必须可追溯到本文件版本或 changelog 变更"
