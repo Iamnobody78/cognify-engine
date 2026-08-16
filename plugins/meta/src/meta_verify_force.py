@@ -111,10 +111,11 @@ def record_invocations() -> dict:
         if row.get("item"):
             calls.append({"ts": row.get("ts", row.get("cycle")), "tool": row.get("item"),
                           "source": "decision-hist"})
-    with open(USAGE_LOG, "a", encoding="utf-8") as f:
-        for c in calls:
-            f.write(json.dumps(c, ensure_ascii=False) + "\n")
-    return {"ts": _now(), "total": len(calls), "calls": calls[-30:]}
+    for row in _jsonl(USAGE_LOG):
+        if row.get("tool"):
+            calls.append({"ts": row.get("ts"), "tool": row.get("tool"),
+                          "source": row.get("source", "usage-log")})
+    return {"ts": _now(), "total": len(calls), "calls": calls[-300:]}
 
 
 # ---------------------------------------------------------------- I: Integrity

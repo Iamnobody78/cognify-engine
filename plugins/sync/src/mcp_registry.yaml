@@ -1314,8 +1314,11 @@ servers:
 - id: axiom-math
   name: Axiom Math
   domain: 元数学
-  status: registry-only
-  note: Giac/Xcas WASM CAS; npm 1.0.5 存在, 待 SDK 验证
+  status: ready
+  note: Giac/Xcas WASM CAS (SDK 验证通过; 固定入口)
+  command: C:\Users\ivy\AppData\Local\hermes\node\node.exe
+  args:
+  - C:\Users\ivy\.aionui-tri-sync\mcp-server\node_modules\axiom-math\.\dist\cli.js
 - id: advanced-math-mcp
   name: Advanced Math
   domain: 元数学

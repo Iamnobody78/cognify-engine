@@ -141,3 +141,10 @@
 - 引擎级元调用证据扩展至 11/12 类别 (真实运行产物映射: 元认知/元分析/元优化/元知识/元类别/元编程)
 - 元数学诚实缺失 (无真实数学引擎, 待 sagemath/axiom 验证接入)
 - 合规门禁从 BLOCK → PASS; 趋势可追踪 (meta-verify --trend)
+
+## v2.1.0 (2026-08-16) — META-VERIFY 合规率 100% (12/12)
+
+- axiom-math (Giac/Xcas WASM CAS) SDK 验证通过 → 固定安装 + 三端注册 (Hermes/AionUi/注册表 ready)
+- 元数学真实调用证据接入 tool_usage_log; 合规率 91.7%→100%
+- 修复: usage log 膨胀 (去重复追加), 调用窗口 60→300
+- 趋势: 33% → 91.7% → 100% 单调上升
