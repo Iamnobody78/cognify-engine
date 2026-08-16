@@ -5,14 +5,13 @@ servers:
   domain: 基础
   status: ready
   transport: stdio
-  command: npx
+  command: C:\Users\ivy\AppData\Local\hermes\node\node.exe
   args:
-  - -y
-  - '@modelcontextprotocol/server-filesystem'
-  - C:/Users/ivy/AppData/Roaming/AionUi/aionui/conversations/2026/07/27/aionrs-temp-48324704
+  - C:\Users\ivy\.aionui-tri-sync\mcp-server\node_modules\@modelcontextprotocol/server-filesystem\dist/index.js
   systems:
   - hermes
   - aionui
+  note: '| 固定入口 (node 直连, ~1.5s)'
 - id: git
   name: Git
   domain: 开发
@@ -24,15 +23,15 @@ servers:
   domain: 开发
   status: ready
   transport: stdio
-  command: npx
+  command: C:\Users\ivy\AppData\Local\hermes\node\node.exe
   args:
-  - -y
-  - '@modelcontextprotocol/server-github'
+  - C:\Users\ivy\.aionui-tri-sync\mcp-server\node_modules\@modelcontextprotocol/server-github\dist/index.js
   env:
     GITHUB_PERSONAL_ACCESS_TOKEN: <gh-auth-token>
   systems:
   - hermes
   - aionui
+  note: '| 固定入口 (node 直连, ~1.5s)'
 - id: fetch
   name: Fetch
   domain: 信息检索
@@ -43,25 +42,25 @@ servers:
   domain: 记忆
   status: ready
   transport: stdio
-  command: npx
+  command: C:\Users\ivy\AppData\Local\hermes\node\node.exe
   args:
-  - -y
-  - '@modelcontextprotocol/server-memory'
+  - C:\Users\ivy\.aionui-tri-sync\mcp-server\node_modules\@modelcontextprotocol/server-memory\dist/index.js
   systems:
   - hermes
   - aionui
+  note: '| 固定入口 (node 直连, ~1.5s)'
 - id: sequential-thinking
   name: Sequential Thinking
   domain: 推理
   status: ready
   transport: stdio
-  command: npx
+  command: C:\Users\ivy\AppData\Local\hermes\node\node.exe
   args:
-  - -y
-  - '@modelcontextprotocol/server-sequential-thinking'
+  - C:\Users\ivy\.aionui-tri-sync\mcp-server\node_modules\@modelcontextprotocol/server-sequential-thinking\dist/index.js
   systems:
   - hermes
   - aionui
+  note: '| 固定入口 (node 直连, ~1.5s)'
 - id: sqlite
   name: SQLite
   domain: 数据库
@@ -73,25 +72,25 @@ servers:
   domain: 浏览器自动化
   status: ready
   transport: stdio
-  command: npx
+  command: C:\Users\ivy\AppData\Local\hermes\node\node.exe
   args:
-  - -y
-  - '@playwright/mcp@latest'
+  - C:\Users\ivy\.aionui-tri-sync\mcp-server\node_modules\@playwright/mcp\cli.js
   systems:
   - hermes
   - aionui
+  note: '| 固定入口 (node 直连, ~1.5s)'
 - id: chrome-devtools
   name: Chrome DevTools
   domain: 浏览器自动化
   status: ready
   transport: stdio
-  command: npx
+  command: C:\Users\ivy\AppData\Local\hermes\node\node.exe
   args:
-  - -y
-  - chrome-devtools-mcp@latest
+  - C:\Users\ivy\.aionui-tri-sync\mcp-server\node_modules\chrome-devtools-mcp\dist/index.js
   systems:
   - hermes
   - aionui
+  note: '| 固定入口 (node 直连, ~1.5s)'
 - id: cognify
   name: Cognify Engine
   domain: 认知操作
@@ -320,13 +319,12 @@ servers:
 - id: loki-cad-mcp
   name: Loki CAD MCP
   domain: ME-通用CAD
-  status: pending-app
+  status: ready
   transport: stdio
-  command: npx
+  command: C:\Users\ivy\AppData\Local\hermes\node\node.exe
   args:
-  - -y
-  - loki-cad-mcp
-  note: '11 工具: 几何体/STL-STEP-OBJ-GLTF 导出/3D 打印验证/网格修复'
+  - C:\Users\ivy\.aionui-tri-sync\mcp-server\node_modules\loki-cad-mcp\dist\index.js
+  note: '11 工具: 几何体/STL/3D 打印验证 (固定入口, ~1.5s; AionUi connected)'
   systems:
   - hermes
   - aionui
@@ -335,12 +333,10 @@ servers:
   domain: ME-通用CAD
   status: ready
   transport: stdio
-  command: npx
+  command: C:\Users\ivy\AppData\Local\hermes\node\node.exe
   args:
-  - -y
-  - github:flujo-app/mcp-cad-studio
-  - --stdio
-  note: WASM CAD 内核, 免本地 CAD, 布尔运算/STL-OBJ 导入
+  - C:\Users\ivy\.aionui-tri-sync\mcp-server\node_modules\mcp-cad-studio\dist/index.js
+  note: WASM CAD 内核, 免本地 CAD, 布尔运算/STL-OBJ 导入 | 固定入口 (node 直连, ~1.5s)
   systems:
   - hermes
   - aionui
@@ -349,11 +345,10 @@ servers:
   domain: ME-通用CAD
   status: ready
   transport: stdio
-  command: npx
+  command: C:\Users\ivy\AppData\Local\hermes\node\node.exe
   args:
-  - -y
-  - cad-mcp-server
-  note: '只读 STEP 检查: 尺寸/体积/壁厚/拔模角/DFM 规则'
+  - C:\Users\ivy\.aionui-tri-sync\mcp-server\node_modules\cad-mcp-server\dist/index.js
+  note: '只读 STEP 检查: 尺寸/体积/壁厚/拔模角/DFM 规则 | 固定入口 (node 直连, ~1.5s)'
   systems:
   - hermes
   - aionui
@@ -462,11 +457,10 @@ servers:
   domain: CV
   status: ready
   transport: stdio
-  command: npx
+  command: C:\Users\ivy\AppData\Local\hermes\node\node.exe
   args:
-  - -y
-  - '@three-ws/vision-mcp'
-  note: 免费免密钥, 自动走 NVIDIA NIM 视觉通道 (npm 0.1.1 已验证)
+  - C:\Users\ivy\.aionui-tri-sync\mcp-server\node_modules\@three-ws/vision-mcp\dist/index.js
+  note: 免费免密钥, 自动走 NVIDIA NIM 视觉通道 (npm 0.1.1 已验证) | 固定入口 (node 直连, ~1.5s)
   systems:
   - hermes
   - aionui
@@ -475,11 +469,10 @@ servers:
   domain: CV
   status: ready
   transport: stdio
-  command: npx
+  command: C:\Users\ivy\AppData\Local\hermes\node\node.exe
   args:
-  - -y
-  - '@jesonliu/image-recognition-mcp'
-  note: OpenAI 兼容视觉桥 (npm 0.1.0 已验证)
+  - C:\Users\ivy\.aionui-tri-sync\mcp-server\node_modules\@jesonliu/image-recognition-mcp\dist/index.js
+  note: OpenAI 兼容视觉桥 (npm 0.1.0 已验证) | 固定入口 (node 直连, ~1.5s)
   systems:
   - hermes
   - aionui
@@ -488,11 +481,11 @@ servers:
   domain: CV
   status: ready
   transport: stdio
-  command: npx
+  command: C:\Users\ivy\AppData\Local\hermes\node\node.exe
   args:
-  - -y
-  - '@me9rez/llm-vision-mcp'
-  note: OpenAI 兼容视觉模型转文字 (npm 0.0.3 已验证)
+  - C:\Users\ivy\.aionui-tri-sync\mcp-server\node_modules\@me9rez/llm-vision-mcp\index.js
+  - mcp
+  note: OpenAI 兼容视觉模型转文字 (npm 0.0.3 已验证) | 固定入口 (node 直连, ~1.5s)
   systems:
   - hermes
   - aionui
@@ -501,11 +494,10 @@ servers:
   domain: CV
   status: ready
   transport: stdio
-  command: npx
+  command: C:\Users\ivy\AppData\Local\hermes\node\node.exe
   args:
-  - -y
-  - visionsearch-mcp
-  note: 本地优先多模态网页/PDF 检索 (npm 1.1.4 已验证)
+  - C:\Users\ivy\.aionui-tri-sync\mcp-server\node_modules\visionsearch-mcp\dist/index.js
+  note: 本地优先多模态网页/PDF 检索 (npm 1.1.4 已验证) | 固定入口 (node 直连, ~1.5s)
   systems:
   - hermes
   - aionui

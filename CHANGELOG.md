@@ -67,3 +67,12 @@
   tabicl/automl/mlflow/neo/ultimate (uvx pypi 验证) + zerofit/predicatalot (docker)
 - 具身/CV 30 项: 精确分类 (pending-hardware 5 / pending-app 14 / registry-only 8 / pending-key 3)
 - pypi/npm 核查: 12 存在 / 5 缺失 (ml-lab/datascience/tabpfn/mujoco 包名待确认, 如实 registry-only)
+
+## v2.1.0 (2026-08-16) — MCP 固定入口化 (13/13 服务器)
+
+- 根因: npx 每次解析开销 10-18s 超 AionUi 握手窗口 (8-10s)
+- 方案: 固定安装 13 个 ready 服务器到 ~/.aionui-tri-sync/mcp-server/, node 直连
+- SDK 同款客户端实测: 13/13 PASS, 平均 1.6s (0.7-3.5s)
+- 修复: llm-vision 需 mcp 子命令 (7 tools); visionsearch npx 路径 bug → 固定入口直连 (8 tools)
+- neo-mcp uvx 崩溃 (.fsutil 导入失败) → 移除/降级; loki-cad-mcp 误降级修正
+- AionUi + Hermes 13 行全部切换固定入口; 注册表 14 ready
