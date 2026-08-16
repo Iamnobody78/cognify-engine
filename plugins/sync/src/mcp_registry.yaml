@@ -86,7 +86,7 @@ servers:
   transport: stdio
   command: C:\Users\ivy\AppData\Local\hermes\node\node.exe
   args:
-  - C:\Users\ivy\.aionui-tri-sync\mcp-server\node_modules\chrome-devtools-mcp\dist/index.js
+  - C:\Users\ivy\.aionui-tri-sync\mcp-server\node_modules\chrome-devtools-mcp\build\src\bin\chrome-devtools-mcp.js
   systems:
   - hermes
   - aionui
@@ -335,7 +335,7 @@ servers:
   transport: stdio
   command: C:\Users\ivy\AppData\Local\hermes\node\node.exe
   args:
-  - C:\Users\ivy\.aionui-tri-sync\mcp-server\node_modules\mcp-cad-studio\dist/index.js
+  - C:\Users\ivy\.aionui-tri-sync\mcp-server\node_modules\mcp-cad-studio\dist\cli.js
   note: WASM CAD 内核, 免本地 CAD, 布尔运算/STL-OBJ 导入 | 固定入口 (node 直连, ~1.5s)
   systems:
   - hermes
@@ -347,7 +347,7 @@ servers:
   transport: stdio
   command: C:\Users\ivy\AppData\Local\hermes\node\node.exe
   args:
-  - C:\Users\ivy\.aionui-tri-sync\mcp-server\node_modules\cad-mcp-server\dist/index.js
+  - C:\Users\ivy\.aionui-tri-sync\mcp-server\node_modules\cad-mcp-server\dist\src\index.js
   note: '只读 STEP 检查: 尺寸/体积/壁厚/拔模角/DFM 规则 | 固定入口 (node 直连, ~1.5s)'
   systems:
   - hermes
@@ -459,7 +459,7 @@ servers:
   transport: stdio
   command: C:\Users\ivy\AppData\Local\hermes\node\node.exe
   args:
-  - C:\Users\ivy\.aionui-tri-sync\mcp-server\node_modules\@three-ws/vision-mcp\dist/index.js
+  - C:\Users\ivy\.aionui-tri-sync\mcp-server\node_modules\@three-ws\vision-mcp\src\index.js
   note: 免费免密钥, 自动走 NVIDIA NIM 视觉通道 (npm 0.1.1 已验证) | 固定入口 (node 直连, ~1.5s)
   systems:
   - hermes
@@ -761,3 +761,258 @@ servers:
   domain: CV
   status: registry-only
   note: 30 工具免视觉模型像素级定位; git clone 形态, 安装路径待评估
+- id: steelmind-mcp
+  name: Steelmind MCP
+  domain: 元层
+  status: registry-only
+  note: 苏格拉底式推理; npm/pypi 未找到, 待确认来源
+- id: memcoach
+  name: MemCoach
+  domain: 元层
+  status: registry-only
+  note: 项目记忆/需求反问/缺陷复盘; npm 0.1.1 存在, 待 SDK 验证
+- id: mcp-memory-graph
+  name: MCP Memory Graph
+  domain: 元层
+  status: registry-only
+  note: 知识图谱+混合搜索; npm 2.10.3 存在, 待 SDK 验证
+- id: memoria
+  name: Memoria
+  domain: 元层
+  status: registry-only
+  note: 无限本地语义记忆; npm 0.1.0 存在, 待 SDK 验证
+- id: mnemo-mcp
+  name: Mnemo MCP
+  domain: 元层
+  status: registry-only
+  note: 混合搜索持久记忆; npm 1.2.1/pypi 2.7.0 存在, 待 SDK 验证
+- id: cachly-mcp
+  name: Cachly MCP
+  domain: 元层
+  status: registry-only
+  note: 120+ 工具持久会话; 来源待确认
+- id: mcp-feedback-enhanced
+  name: Feedback Enhanced
+  domain: 元层
+  status: registry-only
+  note: 交互式反馈循环; npm 1.2.23 存在, 待 SDK 验证
+- id: mcp-reasoning
+  name: MCP Reasoning
+  domain: 元层
+  status: registry-only
+  note: 35 推理工具; 来源待确认
+- id: mirror-mcp
+  name: Mirror MCP
+  domain: 元层
+  status: registry-only
+  note: 递归自问内省; npm 0.0.8 存在, 待 SDK 验证
+- id: structured-thinking
+  name: Structured Thinking
+  domain: 元层
+  status: registry-only
+  note: 思维导图式探索; npm 1.0.2 存在, 待 SDK 验证
+- id: reflection-mcp
+  name: Reflection MCP
+  domain: 元层
+  status: registry-only
+  note: Reflexion 自我反思; 来源待确认
+- id: metacognitive-monitoring
+  name: Metacognitive Monitoring
+  domain: 元层
+  status: registry-only
+  note: 知识边界自我监控; 来源待确认
+- id: metago-mcp
+  name: MetaGO MCP
+  domain: 元层
+  status: registry-only
+  note: 53 工具 KMWI 记忆+元进化; github 形态
+- id: pltm-mcp
+  name: PLTM MCP
+  domain: 元层
+  status: registry-only
+  note: 78 工具元认知实验; 来源待确认
+- id: deepseek-official-mcp
+  name: DeepSeek 官方 MCP
+  domain: 元层
+  status: pending-key
+  note: 远程 https://deepseek-mcp.ragweld.com/mcp + API key
+- id: deepseek-harness-mcp
+  name: DeepSeek Harness MCP
+  domain: 元层
+  status: registry-only
+  note: Codex→DSH 委托桥; 来源待确认
+- id: mcp-pif-cljs
+  name: MCP-PIF (ClojureScript)
+  domain: 元编程
+  status: registry-only
+  note: 运行时工具创建 meta-evolve; git 形态
+- id: mcp-coordinator
+  name: MCP Coordinator
+  domain: 元编程
+  status: registry-only
+  note: 自优化编排器; 来源待确认
+- id: self-improve
+  name: Self-Improve
+  domain: 元编程
+  status: registry-only
+  note: 纠正学习→规则存储; npm 1.1.0 存在, 待 SDK 验证
+- id: ts-mcp-wrapper
+  name: TS MCP Wrapper
+  domain: 元编程
+  status: registry-only
+  note: TS 聚合元服务器; 来源待确认
+- id: metago-algorithms
+  name: MetaGO Algorithms
+  domain: 元算法
+  status: registry-only
+  note: 927 算法 57 工具; github 形态
+- id: meta-prompt-mcp
+  name: Meta-Prompt MCP
+  domain: 元编排
+  status: registry-only
+  note: Conductor+Expert 多 Agent; 来源待确认
+- id: localeye
+  name: LocalEye
+  domain: CV
+  status: registry-only
+  note: 本地浏览器+截图分析; npm 1.0.0 存在, 待 SDK 验证
+- id: srclight
+  name: Srclight
+  domain: 开发
+  status: registry-only
+  note: 29 工具深度代码索引; pypi 0.20.1 存在, 待 SDK 验证
+- id: xray-mcp
+  name: Xray
+  domain: 开发
+  status: registry-only
+  note: 跨语言项目结构映射; npm 0.5.1 存在, 待 SDK 验证
+- id: think-mcp
+  name: Think MCP
+  domain: 开发
+  status: registry-only
+  note: MCP 推理服务器; npm 0.1.5 存在, 待 SDK 验证
+- id: engram
+  name: Engram
+  domain: 开发
+  status: registry-only
+  note: 跨会话共享记忆; npm 0.0.1 存在, 待 SDK 验证
+- id: unitree-mujoco
+  name: Unitree MuJoCo
+  domain: 具身
+  status: pending-hardware
+  note: Unitree 机器人仿真; 来源待确认
+- id: obniz
+  name: Obniz MCP
+  domain: 具身
+  status: pending-hardware
+  note: 物理设备控制; npm 4.1.0 存在
+- id: phantymotus
+  name: PhanthyMotus
+  domain: 具身
+  status: registry-only
+  note: 开源具身智能平台; 来源待确认
+- id: cadkit-mcp
+  name: CadKit MCP
+  domain: ME
+  status: pending-app
+  note: Onshape 参数化 CAD; 来源待确认
+- id: solidworks-mcp
+  name: SolidWorks MCP
+  domain: ME
+  status: pending-app
+  note: 需 SolidWorks
+- id: radia-mcp
+  name: Radia MCP
+  domain: ME
+  status: pending-app
+  note: Coreform Cubit/Gmsh CAE; pypi 1.4.37 存在
+- id: build123d-mcp
+  name: Build123d MCP
+  domain: ME
+  status: pending-app
+  note: build123d 交互 CAD; pypi 0.3.82 存在
+- id: spicebridge
+  name: SPICEBridge
+  domain: EE
+  status: pending-app
+  note: 28 工具电路设计; 来源待确认
+- id: ansys-aedt-mcp
+  name: Ansys AEDT MCP
+  domain: EE
+  status: pending-app
+  note: 需 AEDT; pypi 0.1.3 存在
+- id: tidb-zero
+  name: TiDB Cloud Zero
+  domain: 数据库
+  status: pending-key
+  note: 免费 MySQL 实例; 需 TiDB 账号
+- id: sql-mcp-server
+  name: SQL MCP Server
+  domain: 数据库
+  status: registry-only
+  note: 混合 SQL 查询; 来源待确认
+- id: mcp-db-connector-lite
+  name: DB Connector Lite
+  domain: 数据库
+  status: registry-only
+  note: SQLite 访问; 来源待确认
+- id: mcp-memory-supabase
+  name: Memory Supabase
+  domain: 数据库
+  status: pending-key
+  note: pgvector 语义记忆; 需 Supabase
+- id: instanode-mcp
+  name: Instanode MCP
+  domain: 数据库
+  status: pending-key
+  note: 临时 Postgres; 需账号
+- id: supersurf-mcp
+  name: SuperSurf MCP
+  domain: 浏览器
+  status: registry-only
+  note: Chrome 扩展控制; npm 3.3.0 存在, 待 SDK 验证
+- id: mare-browser-mcp
+  name: Mare Browser
+  domain: 浏览器
+  status: registry-only
+  note: Chromium 控制; npm 1.3.0 存在, 待 SDK 验证
+- id: freeweb-mcp
+  name: FreeWeb MCP
+  domain: 浏览器
+  status: registry-only
+  note: 6 层降级抓取; npm 3.4.0 存在, 待 SDK 验证
+- id: perplexity-mcp
+  name: Perplexity MCP
+  domain: 搜索
+  status: pending-key
+  note: 需 API key
+- id: arxiv-mcp
+  name: ArXiv MCP
+  domain: 搜索
+  status: registry-only
+  note: 论文搜索; 来源待确认
+- id: mcp-safety-scanner
+  name: MCPSafetyScanner
+  domain: 安全
+  status: registry-only
+  note: MCP 服务器安全审计; npm 1.1.1 存在, 待 SDK 验证
+- id: delinea-mcp
+  name: Delinea MCP
+  domain: 安全
+  status: pending-key
+  note: 凭据检索; 需 Delinea
+- id: owasp-mcp-guide
+  name: OWASP MCP Guide
+  domain: 安全
+  status: registry-only
+  note: MCP 安全清单文档
+- id: mcp-forge
+  name: MCP Forge
+  domain: 开发
+  status: registry-only
+  note: 30 秒脚手架 MCP; 来源待确认
+- id: terminal-mcp
+  name: Terminal MCP
+  domain: 开发
+  status: registry-only
+  note: TUI/CLI 终端自动化; 来源待确认

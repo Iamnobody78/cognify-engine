@@ -76,3 +76,9 @@
 - 修复: llm-vision 需 mcp 子命令 (7 tools); visionsearch npx 路径 bug → 固定入口直连 (8 tools)
 - neo-mcp uvx 崩溃 (.fsutil 导入失败) → 移除/降级; loki-cad-mcp 误降级修正
 - AionUi + Hermes 13 行全部切换固定入口; 注册表 14 ready
+
+## v2.1.0 (2026-08-16) — MCP 注册表 172 项 + 4 入口修正
+
+- 修正 4 个固定入口路径 (mcp-cad-studio→dist/cli.js, three-ws-vision→src/index.js, chrome-devtools→build/.../bin, cad-mcp-server→dist/src) SDK 4/4 PASS
+- 新增 51 项: 元层/元编程/元算法/元编排/数据库/浏览器/搜索/安全/开发 (npm 18 + pypi 13 核查)
+- 未验证项一律 registry-only 待 SDK 验证 (防 AionUi 握手失败复发)
