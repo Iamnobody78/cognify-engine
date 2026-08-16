@@ -1,5 +1,23 @@
 # Changelog
 
+## v2.1.5 (2026-08-16) — 外部基准评估通道打通 (DSH 桥接)
+
+### 新增
+- **P0 DSH 模型桥接**: cognify/benchmark/dsh_bridge.py — OpenAI 兼容 /v1/chat/completions → `dsh --profile headless` (deepseek-v4-flash 真实推理)
+  - 纯标准库实现, 每次请求 spawn DSH headless (诚实慢速: 15-85s/次), 调用日志 jsonl
+  - 实测: OpenAI SDK 客户端连通 (含 usage 字段); AgencyBench Code/scenario1/subtask1 真实任务端到端冒烟 84s (产物 external/agencybench_code_smoke_1.json)
+- **本地适配器第 5 项**: DSH 模型桥接可用性探测 (benchmark --full 实测 100.0, 15.9s)
+- **注册表状态升级**: AgencyBench = 已克隆 + 数据完整性 + **评估链路冒烟通过** (他证通道就绪)
+- **诚实核验**: 用户方描述的 conda/examples/eval.py/API key 前提与本地不符 → 全部实测纠正 (conda 无, examples/ 无, agentenv 未装, .env 无); AgentGym searchqa 环境需外部数据集 + FAISS RAG + conda → 标记本地不可行
+
+### 修复
+- detect_external 克隆完整性核验补 AgencyBench 双文件统计 + 冒烟状态
+- runner 报告适配 status 三级状态 (missing/cloned/installed) + 优先级列
+
+### 工程
+- 本地适配器 5/5 (98.0) | 8 域 8/8 (98.5) | 自使用 5/5 (94.0) | 注册表 26 项 (P0×3 已克隆)
+- 评估成本实测: 桥接单次推理 15-85s (DSH headless), 大任务评估需分批
+
 ## v2.1.4 (2026-08-16) — 全基准测试体系 (BENCHMARK-FULL-AUTO)
 
 ### 新增

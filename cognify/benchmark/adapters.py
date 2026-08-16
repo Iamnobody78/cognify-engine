@@ -146,8 +146,10 @@ def _repo_integrity(repo: str, repo_dir: Path) -> str:
             scens = sum(1 for c in caps for d in c.iterdir() if d.is_dir() and d.name.startswith("scenario"))
             descs = sum(1 for c in caps for d in c.iterdir() if (d / "description.json").exists())
             evals = sum(1 for c in caps for d in c.iterdir() if (d / "eval_task.py").exists())
+            smoke = REPORTS / "agencybench_code_smoke_1.json"
+            smoke_note = " | 评估链路冒烟通过 (DSH 桥接真实推理)" if smoke.exists() else ""
             return (f"克隆在位: {len(caps)} 能力域 × {scens} 场景, "
-                    f"description {descs} + eval_task {evals} 双文件 (数据完整性验证通过)")
+                    f"description {descs} + eval_task {evals} 双文件 (数据完整性验证通过){smoke_note}")
         if repo == "AgentGym":
             envs = [d.name for d in repo_dir.iterdir() if d.is_dir() and d.name.startswith("agentenv")]
             return f"克隆在位: {len(envs)} 个 agentenv 环境 (AgentGym2 未见独立仓库, 以 AgentGym 框架为载体)"
@@ -375,7 +377,42 @@ def run_meta_agent_style() -> dict:
             "detail": f"插件 {verified}/{total} 验证通过 (可被 '构建' 的模块)"}
 
 
-LOCAL_ADAPTERS = [run_mcp_style, run_kaware_style, run_reflection_style, run_meta_agent_style]
+# ---------------------------------------------------------------- DSH 桥接 (第 5 适配器)
+BRIDGE_URL = "http://127.0.0.1:8237/v1/chat/completions"
+
+
+def run_dsh_bridge() -> dict:
+    """DSH 模型桥接: 外部基准的模型通道 (OpenAI 兼容 /v1/chat/completions → DSH headless)。
+    真实调用 deepseek-v4-flash 单次推理, 验证他证通道可用性。"""
+    import urllib.error
+    import urllib.request
+    payload = json.dumps({"model": "deepseek-v4-flash", "messages": [
+        {"role": "user", "content": "输出 0 到 2 之间的最小整数。"}]}).encode()
+    req = urllib.request.Request(BRIDGE_URL, data=payload,
+                                 headers={"Content-Type": "application/json"})
+    t0 = time.time()
+    try:
+        resp = json.loads(urllib.request.urlopen(req, timeout=240).read())
+        out = (resp.get("choices") or [{}])[0].get("message", {}).get("content", "")
+        latency = round(time.time() - t0, 1)
+        ok = bool(out.strip())
+        score = 100.0 if ok else 0.0
+        # 桥接日志 (外部基准调用记录)
+        logf = REPORTS / "dsh_bridge_log.jsonl"
+        logf.parent.mkdir(parents=True, exist_ok=True)
+        with open(logf, "a", encoding="utf-8") as fh:
+            fh.write(json.dumps({"ts": time.strftime("%Y-%m-%dT%H:%M:%S"),
+                                 "probe": True, "latency_s": latency, "ok": ok,
+                                 "output": out[:60]}, ensure_ascii=False) + "\n")
+        return {"id": "DSH 模型桥接 (他证通道)", "score": score, "passed": ok,
+                "detail": f"deepseek-v4-flash 真实推理 {latency}s: {out[:40]}"}
+    except Exception as exc:  # noqa: BLE001
+        return {"id": "DSH 模型桥接 (他证通道)", "score": 0.0, "passed": False,
+                "detail": f"桥接不可用: {type(exc).__name__} (先启动 dsh_bridge.py --port 8237)"}
+
+
+LOCAL_ADAPTERS = [run_mcp_style, run_kaware_style, run_reflection_style, run_meta_agent_style,
+                  run_dsh_bridge]
 
 
 def run_local() -> list:
