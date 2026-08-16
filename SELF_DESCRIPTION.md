@@ -1,6 +1,6 @@
-# SELF_DESCRIPTION — Cognify Engine 系统说明书 (ARCH-HEAL-CLOSE E1)
+﻿# SELF_DESCRIPTION — Cognify Engine 系统说明书 (ARCH-HEAL-CLOSE E1)
 
-> 动态生成: 2026-08-16T15:05:26 | 版本 2.1.0
+> 动态生成: 2026-08-16T15:05:26 | 版本 2.2.3
 
 ## 🪪 系统身份卡
 
@@ -24,7 +24,7 @@
 
 ## 📊 当前状态快照
 
-- 认证: CERTIFIED | 版本 2.1.0
+- 认证: CERTIFIED | 版本 2.2.3
 - 健康评分: 100/100 (E2)
 
 ## 🚀 快速入口

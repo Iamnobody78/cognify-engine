@@ -1,4 +1,4 @@
-﻿[build-system]
+[build-system]
 requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
@@ -31,5 +31,7 @@ docs = ["mkdocs-material>=9.5"]
 cognify = "cognify._cli:main"
 
 [tool.setuptools]
-packages = ["cognify"]
+# P0 整改 (元批判): core/ 为运行时依赖入包; cli/plugins 完整打包为 v2.3.0 项
+# (cli 为脚本目录, plugins 为嵌套快照 — 打包方案设计中, 当前 wheel 提供库能力 + 诚实降级入口)
+packages = ["cognify", "core"]
 

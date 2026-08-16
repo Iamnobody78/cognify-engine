@@ -154,12 +154,12 @@ def cert():
     src = len(list((TRI / "hub/sessions").rglob("*.zstd"))) if (TRI / "hub/sessions").exists() else 0
     sync_ok = src > 100
     checks.append(("同步镜像规模 (hub/sessions >100)", sync_ok, f"{src}"))
-    # 5. 插件平台: 7 插件 manifest + 生命周期冒烟 (红线 3)
+    # 5. 插件平台: ≥7 插件 manifest + 生命周期冒烟 (红线 3) — P0 整改: 动态数
     from core.plugin_manager import PluginManager
     pm = PluginManager(PROD)
     recs = pm.discover()
     nplug = len(recs)
-    plug_ok = nplug == 7
+    plug_ok = nplug >= 7
     if plug_ok:
         try:
             pm.resolve_order()
@@ -167,9 +167,9 @@ def cert():
         except Exception as exc:  # noqa: BLE001
             plug_ok = False
             print(f"   [插件冒烟失败] {exc}")
-    checks.append(("插件平台 (7 插件 + 生命周期冒烟)", plug_ok, f"{nplug} 插件"))
+    checks.append(("插件平台 (≥7 插件 + 生命周期冒烟)", plug_ok, f"{nplug} 插件"))
     ok = all(o for _, o, _ in checks)
-    cert = {"product": "cognify-engine", "version": "2.0.0",
+    cert = {"product": "cognify-engine", "version": "2.2.3",
             "certified_at": NOW.isoformat(timespec="seconds"),
             "checks": [{"item": n, "pass": o, "detail": d} for n, o, d in checks],
             "overall": "CERTIFIED" if ok else "NOT_CERTIFIED"}

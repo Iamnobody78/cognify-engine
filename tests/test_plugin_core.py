@@ -21,12 +21,14 @@ def pm():
 
 
 def test_discover_seven_plugins(pm):
-    assert len(pm.records()) == 7
+    # P0 整改: 插件数只增不减 → 断言 ≥7 且核心 7 个必须存在 (动态, 与仓库 10 插件一致)
+    assert len(pm.records()) >= 7
     ids = {r.plugin_id for r in pm.records()}
-    assert ids == {
+    core_ids = {
         "cognify.governance", "cognify.simulation", "cognify.cognitive",
         "cognify.sync", "cognify.meta", "cognify.debt", "cognify.dashboard",
     }
+    assert core_ids <= ids, f"核心插件缺失: {core_ids - ids}"
 
 
 def test_manifests_valid(pm):
@@ -37,7 +39,7 @@ def test_manifests_valid(pm):
 
 def test_dependency_order(pm):
     order = pm.resolve_order()
-    assert len(order) == 7
+    assert len(order) >= 7
     # sync 依赖 cognitive -> sync 必须排在 cognitive 之后
     assert order.index("cognify.sync") > order.index("cognify.cognitive")
 
@@ -101,5 +103,5 @@ def test_registry_roundtrip(tmp_path, pm):
     pm.registry_path = reg
     pm.save_registry()
     data = json.loads(reg.read_text(encoding="utf-8"))
-    assert data["count"] == 7
+    assert data["count"] >= 7  # P0 整改: 动态插件数 (当前 10)
     assert data["plugins"][0]["id"].startswith("cognify.")

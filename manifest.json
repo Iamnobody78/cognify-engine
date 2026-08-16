@@ -1,58 +1,58 @@
-{
-  "name": "cognify-engine",
-  "version": "2.0.0",
-  "architecture": "plugin-platform",
-  "generated": "2026-08-15T16:11:52",
-  "assets": [
-    {
-      "key": "governance",
-      "label": "治理引擎",
-      "source": "agent-governance-v2/src",
-      "present": true,
-      "probe": "C:\\Users\\ivy\\AppData\\Roaming\\AionUi\\aionui\\conversations\\2026\\07\\27\\aionrs-temp-48324704\\agent-governance-v2\\src\\protocol_gateway.py"
-    },
-    {
-      "key": "simulation",
-      "label": "仿真平台",
-      "source": "bottlesumo-pi",
-      "present": true,
-      "probe": "C:\\Users\\ivy\\AppData\\Roaming\\AionUi\\aionui\\conversations\\2026\\07\\27\\aionrs-temp-48324704\\bottlesumo_pi\\simulation\\abdl_runner.py"
-    },
-    {
-      "key": "sync",
-      "label": "三方同步",
-      "source": "tri-sync daemon",
-      "present": true,
-      "probe": "C:\\Users\\ivy\\.aionui-tri-sync\\daemon\\sync_daemon.py"
-    },
-    {
-      "key": "meta",
-      "label": "元能力体系",
-      "source": "meta_capabilities.py (22 维)",
-      "present": true,
-      "probe": "C:\\Users\\ivy\\.aionui-tri-sync\\daemon\\meta_capabilities.py"
-    },
-    {
-      "key": "debt",
-      "label": "债务系统",
-      "source": "debt_miner + debt_engine",
-      "present": true,
-      "probe": "C:\\Users\\ivy\\.aionui-tri-sync\\daemon\\debt_engine.py"
-    },
-    {
-      "key": "cognitive",
-      "label": "认知操作系统",
-      "source": "cve_s + mmc_agent",
-      "present": true,
-      "probe": "C:\\Users\\ivy\\.aionui-tri-sync\\daemon\\cve_s.py"
-    },
-    {
-      "key": "prompts",
-      "label": "元提示词库",
-      "source": "meta_prompts (45 条)",
-      "present": true,
-      "probe": "C:\\Users\\ivy\\AppData\\Roaming\\AionUi\\aionui\\conversations\\2026\\07\\27\\aionrs-temp-48324704\\.aionui\\meta_prompts"
-    }
-  ],
-  "plugins": 7
+﻿{
+    "name":  "cognify-engine",
+    "version":  "2.2.3",
+    "architecture":  "plugin-platform",
+    "generated":  "2026-08-16T20:33:10",
+    "assets":  [
+                   {
+                       "key":  "governance",
+                       "label":  "治理引擎",
+                       "source":  "agent-governance-v2/src",
+                       "present":  true,
+                       "probe":  "C:\\Users\\ivy\\AppData\\Roaming\\AionUi\\aionui\\conversations\\2026\\07\\27\\aionrs-temp-48324704\\agent-governance-v2\\src\\protocol_gateway.py"
+                   },
+                   {
+                       "key":  "simulation",
+                       "label":  "仿真平台",
+                       "source":  "bottlesumo-pi",
+                       "present":  true,
+                       "probe":  "C:\\Users\\ivy\\AppData\\Roaming\\AionUi\\aionui\\conversations\\2026\\07\\27\\aionrs-temp-48324704\\bottlesumo_pi\\simulation\\abdl_runner.py"
+                   },
+                   {
+                       "key":  "sync",
+                       "label":  "三方同步",
+                       "source":  "tri-sync daemon",
+                       "present":  true,
+                       "probe":  "C:\\Users\\ivy\\.aionui-tri-sync\\daemon\\sync_daemon.py"
+                   },
+                   {
+                       "key":  "meta",
+                       "label":  "元能力体系",
+                       "source":  "meta_capabilities.py (22 维)",
+                       "present":  true,
+                       "probe":  "C:\\Users\\ivy\\.aionui-tri-sync\\daemon\\meta_capabilities.py"
+                   },
+                   {
+                       "key":  "debt",
+                       "label":  "债务系统",
+                       "source":  "debt_miner + debt_engine",
+                       "present":  true,
+                       "probe":  "C:\\Users\\ivy\\.aionui-tri-sync\\daemon\\debt_engine.py"
+                   },
+                   {
+                       "key":  "cognitive",
+                       "label":  "认知操作系统",
+                       "source":  "cve_s + mmc_agent",
+                       "present":  true,
+                       "probe":  "C:\\Users\\ivy\\.aionui-tri-sync\\daemon\\cve_s.py"
+                   },
+                   {
+                       "key":  "prompts",
+                       "label":  "元提示词库",
+                       "source":  "meta_prompts (45 条)",
+                       "present":  true,
+                       "probe":  "C:\\Users\\ivy\\AppData\\Roaming\\AionUi\\aionui\\conversations\\2026\\07\\27\\aionrs-temp-48324704\\.aionui\\meta_prompts"
+                   }
+               ],
+    "plugins":  7
 }
