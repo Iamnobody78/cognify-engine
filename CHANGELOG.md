@@ -119,3 +119,11 @@
 - mcp_universal_force.py: V.A.L.I.D.A.T.E. 八步法, 三端可用性矩阵 (首轮 14/14 全通)
 - mcp_low_disk.py: C.L.E.A.N.-R.U.N. 七步法, 阈值 (<5GB 拒启/85%/2GB/1GB), 策略固化
 - MCP-LOW-DISK-WEEKLY 调度 (每周一 06:00); 空间检查历史 jsonl
+
+## v2.1.0 (2026-08-16) — ARCH-HEAL-CLOSE v1.0 架构自愈与闭环
+
+- arch_heal_close.py: 六大闭环引擎 E1-E6 + C.L.O.S.E. 五步法
+- 首轮: 健康 100/100 (green), 六引擎产出全生成
+- SELF_DESCRIPTION.md / METAGOVERNANCE_PROTOCOL.md / SIM2REAL_PROTOCOL.md / vNEXT_PROPOSAL.md
+- cognify meta close --full/--health/--describe/--vnext + cognify whoami
+- ARCH-CLOSE-WEEKLY 调度 (每周一 00:00)
