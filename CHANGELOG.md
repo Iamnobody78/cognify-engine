@@ -135,3 +135,9 @@
 - serve 公开 API: /api/v1/mce/compile /vce/scan /cee/evolve /govern/evaluate /meta/status /health (实测通过)
 - docker-compose.yml + Dockerfile (cognify-api + dashboard profile)
 - GitHub: Discussions 启用 + main 分支保护 (1 review, enforce_admins=false)
+
+## v2.1.0 (2026-08-16) — META-VERIFY 合规率 33%→91.7% PASS
+
+- 引擎级元调用证据扩展至 11/12 类别 (真实运行产物映射: 元认知/元分析/元优化/元知识/元类别/元编程)
+- 元数学诚实缺失 (无真实数学引擎, 待 sagemath/axiom 验证接入)
+- 合规门禁从 BLOCK → PASS; 趋势可追踪 (meta-verify --trend)

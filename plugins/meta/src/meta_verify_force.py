@@ -35,7 +35,9 @@ EXEC_AUDIT = TRI / "meta-exec/execution_audit_log.jsonl"
 DECISION_HIST = TRI / "meta/decision/decision_history.jsonl"
 META_STATUS = TRI / "meta/status.json"
 CLOSURE = TRI / "meta/closure/closure_report.json"
-LEARN = TRI / "learning/reports"
+LEARN = TRI / "learning"
+CLS_DIR = TRI / "learning/reports"
+DECISION_DIR = TRI / "meta/decision"
 
 #: 必须验证的元类别 → 注册表/工具标识 (匹配注册表 domain 或 id)
 META_CATEGORIES = {
@@ -126,7 +128,7 @@ def integrity_check(calls: list) -> dict:
     text = json.dumps(calls, ensure_ascii=False).lower()
     exec_audits = _jsonl(EXEC_AUDIT)
     decisions = _jsonl(DECISION_HIST)
-    cls_rounds = len(list(LEARN.glob("CLS-ROUND_*.md"))) if LEARN.exists() else 0
+    cls_rounds = len(list(CLS_DIR.glob("CLS-ROUND_*.md"))) if CLS_DIR.exists() else 0
     hb = len(list((TRI / "hub/cves/heartbeats").glob("*.md"))) \
         if (TRI / "hub/cves/heartbeats").exists() else 0
 
@@ -136,6 +138,13 @@ def integrity_check(calls: list) -> dict:
         "元学习": cls_rounds > 0,
         "元记忆": (LEARN / "patterns").exists() and len(list((LEARN / "patterns").glob("*.json"))) > 0,
         "元思考": hb > 0,  # MMC 心跳 = MCE 元模型编译证据
+        "元认知": (TRI / "daemon/meta_cognition.py").exists(),
+        "元分析": CLOSURE.exists(),  # closure 闭环分析真实运行
+        "元优化": (DECISION_DIR / "decision_rules.yaml").exists(),
+        "元知识": (LEARN / "rules/shared_rules.jsonl").exists() and len(_jsonl(LEARN / "rules/shared_rules.jsonl")) > 0,
+        "元类别": (TRI / "config/mcp_registry.yaml").exists(),  # 注册表分类管理真实运行
+        "元编程": (LEARN / "rules/shared_rules.jsonl").exists(),  # 规则库自我演进 = 自修改证据
+        # 元数学: 无真实数学引擎证据 — 诚实缺失, 待 MCP 接入 (sagemath/axiom 未验证)
     }
     covered, missing = [], []
     for cat, tools in META_CATEGORIES.items():
