@@ -1,5 +1,25 @@
 # Changelog
 
+## v2.1.4 (2026-08-16) — 全基准测试体系 (BENCHMARK-FULL-AUTO)
+
+### 新增
+- **P0 全基准执行器**: `cognify benchmark --full` (cognify/benchmark/adapters.py + runner.py, B.E.N.C.H.-F.U.L.L. 八步)
+  - **外部基准注册表 17 项** (AgentGym2/OSWorld 2.0/AlphaEval/LiveClawBench/Claw-SWE-Bench/Enterprise-Bench/EnterpriseOps-Gym/KAMI/MCP-Universe/MCPToolBench++/LiveMCPBench/KAware/Reflection-Bench/Meta-Agent/TRIAGE/EmbodiedBench/BEAR): 类别/阈值/命令/安装指引, **诚实检测 ready/missing (当前 0/17 未安装, 不造假分数)**
+  - **本地真实适配器 4 项**: MCP 生态 (真实启动 4 个 MCP 服务器: cognify/filesystem/memory/sequential-thinking, 连接+工具调用评估 100.0) / 自我意识一致性 KAware 风格 (最近 10 条决策 MCE+VCE, 100.0) / 元反思 Reflection 风格 (MMC 心跳闭环率+自检 6/6, 100.0) / Agent 构建能力 Meta-Agent 风格 (插件 verified 9/10, 90.0)
+  - 首轮: **本地 4/4 PASS, 均分 97.5** (基准报告 benchmark_full_report.md + full_report.json 趋势)
+- **调度**: BENCHMARK-WEEKLY 升级为 `benchmark.py full` (8 域 + 外部适配器), 已触发验证 LastResult 0
+- **元提示词入库**: BENCHMARK-FULL-AUTO v1.0 → **AionUi 源目录** (~/.aionui/meta_prompts, meta_system.py 重建索引 67 条) → 守护镜像 hub
+- **修复元提示词持久化根因**: 索引曾被同步守护覆盖 (只写 hub 镜像不持久) → 全部新条目改入源目录 + L1 重建, hub 由 TRI-SYNC 自动镜像
+
+### 修复
+- 外部检测误报 (find_spec 未打印) → print 布尔结果判定
+- 元反思分母错误 (len(hb)=30 vs 样本 10) → 样本数; 自检计数混入动作行 → 限定 "## 闭环自检" 段
+- EVOLVE-FORCE 元提示词 md 缺失 (上轮只更新索引未写文件) → 补写
+
+### 工程
+- 门禁: 本地全基准 4/4 (97.5) | 8 域 8/8 (98.5) | 自使用 5/5 (94.0) | 双轨 96.2 | 进化证据 5/5
+- 外部基准 17 项诚实标注未安装 (集成阶段 1-3 待选型接入)
+
 ## v2.1.3 (2026-08-16) — 强制进化引擎 (EVOLVE-FORCE)
 
 ### 新增

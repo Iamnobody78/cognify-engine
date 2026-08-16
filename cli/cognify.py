@@ -23,6 +23,7 @@ cognify CLI v2.0.0 — 认知操作产品统一入口 (插件平台 PLUGINIFY)
   cognify plugin enable <id> / disable <id>   # 热插拔
   cognify pluginify --all   # 插件化改造验证 (P.L.U.G.I.N. 全流程)
   cognify benchmark --all   # 基准测试 (8 域 B.E.N.C.H. + T.R.E.N.D.)
+  cognify benchmark --full  # 全基准 (BENCHMARK-FULL-AUTO: 外部注册表 17 项 + 本地真实 4 项)
   cognify self-validate --start|--status|--history   # 自使用验证 (SELF-VALIDATE-ITERATE 轨 B)
   cognify iterate --report|--sprint   # 双轨融合报告 / 冲刺模式 (轨 C/D)
   cognify evolve --report|--status|--trend|--force   # 强制进化 (EVOLVE-FORCE E.V.O.L.V.E.)
