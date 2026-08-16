@@ -1,0 +1,16 @@
+{
+  "id": "cognify.benchmark",
+  "name": "Benchmark Controller",
+  "version": "0.1.0",
+  "description": "BENCHMARK-AUTO + BENCHMARK-CONTINUOUS 基准测试控制器: 8 域健康评分 / B.E.N.C.H. 五步法 / T.R.E.N.D. 趋势与退化警告",
+  "author": "Iamnobody78",
+  "license": "MIT",
+  "main": "plugin.py",
+  "dependencies": {
+    "cognify.core": ">=1.0.0 <3.0.0"
+  },
+  "capabilities": ["benchmark", "health-score", "trend", "regression-warning"],
+  "hooks": ["on_load", "on_enable", "on_disable", "on_unload"],
+  "verified": true,
+  "source": "~/.aionui-tri-sync/daemon/benchmark.py (frozen snapshot, 见 VENDORED.md)"
+}

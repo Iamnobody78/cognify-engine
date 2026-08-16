@@ -1,5 +1,24 @@
 # Changelog
 
+## v2.1.1 (2026-08-16) — 基准测试体系 (BENCHMARK-AUTO + BENCHMARK-CONTINUOUS)
+
+### 新增
+- **P0 基准控制器**: `cognify benchmark --all/--score/--trend/--warnings` (cli/cognify.py dispatch → daemon/benchmark.py)
+- **8 域健康评分**: 元能力体系 / MCP生态 / 三系统同步 / 治理引擎 / 认知引擎 / 统一工程 / 磁盘健康 / 元自动化 (B.E.N.C.H. 五步法)
+- **T.R.E.N.D. 趋势**: trend_data.json 30 轮滚动 + 退化警告 (单轮降幅 ≤-5 告警), 阈值 ≥90 优秀 / 80-89 良好 / 70-79 警告 / <70 危险
+- **P2 插件 `cognify.benchmark`**: plugins/benchmark/ (manifest + plugin.py + 冻结快照 + VENDORED.md), 冒烟通过
+- 首轮全量基准: 整体 98.5/100, 8/8 域 PASS (基线 2026-08-16T15:36)
+
+### 修复
+- MCP 生态评分溢出: registry 以 YAML 解析 + 三端镜像一致性度量 (ready 服务器须同时存在于 Hermes config 与 AionUi 库), 得分钳制 [0,100]
+- 总分污染: 各域得分统一钳制 [0,100] 后取均值 (原 318.5 溢出值已从趋势剔除)
+- 治理引擎误判 0: pytest 在 0 failed 时省略该段, 改为分别提取 passed/failed/skipped
+- 认知引擎误判 56.2: 仅统计 MMC 自检心跳 (mmce_*), 排除无闭合段的汇总报告 (perpetual_*) → 真实 96.4%
+- Hermes config.yaml 非法 YAML: mcp_sync.py 改用单引号标量写 Windows 路径 (双引号内 `\U`/`\t` 被 YAML 当转义), 存量 14 处双引号路径已迁移, 严格解析恢复
+
+### 工程
+- 门禁: 基准 8/8 PASS (98.5) | META-VERIFY 12/12 | cert 5/5 | unity 6/6 | deploy-track 100%
+
 ## v2.1.0 (2026-08-15) — 产品化路线图 (PRODUCT-ROADMAP)
 
 ### 新增

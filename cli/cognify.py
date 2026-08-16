@@ -955,6 +955,12 @@ def main():
                            errors="replace")
         print((r.stdout or r.stderr or "")[-1500:])
         return r.returncode
+    if cmd == "benchmark":
+        r = subprocess.run([PY, str(TRI / "daemon/benchmark.py"), *sys.argv[2:]],
+                           capture_output=True, text=True, encoding="utf-8",
+                           errors="replace")
+        print((r.stdout or r.stderr or "")[-2000:])
+        return r.returncode
     if cmd == "product":
         return product_cmd(sys.argv[2:])
     if cmd == "whoami":
