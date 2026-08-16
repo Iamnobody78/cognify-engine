@@ -101,6 +101,17 @@ def generate_status() -> dict:
         "plugins": f"{p_verified}/{len(plugins)} verified",
         "evolve_overall": evolve.get("overall") if evolve else None,
     }
+
+    # A6 维度事实源校验: capabilities.yaml (30 维) ↔ status.json 计数
+    try:
+        import yaml as _yaml
+        cap = _yaml.safe_load((PROD / "config/capabilities.yaml").read_text(encoding="utf-8"))
+        yaml_n = len(cap.get("capabilities", []))
+        st_n = int(str(data["meta_active"]).split("/")[0]) if data["meta_active"] else -1
+        data["dim_source_check"] = ("PASS yaml=%d status=%d" % (yaml_n, st_n)) if yaml_n == st_n else ("MISMATCH yaml=%d status=%d" % (yaml_n, st_n))
+    except Exception as exc:
+        data["dim_source_check"] = "yaml 缺失: %s" % exc
+
     # 2.3 闭环运行时化: 真实消费率 (静态映射降级 fallback) — 须在 lines 构建前
     try:
         sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -120,7 +131,7 @@ def generate_status() -> dict:
         f"## 元调用链: {'✅ CERTIFIED' if data['call_certified'] else '❌ 未认证'}",
         f"## 基准: {data['benchmark_total']}/100" if data["benchmark_total"] is not None else "",
         f"## 插件: {data['plugins']}",
-        f"## 进化: 最近整体 {data['evolve_overall']}" if data["evolve_overall"] is not None else "",
+        f"## 维度源: {data.get('dim_source_check', '?')} | 进化: {data.get('evolve_overall', '?')}" if data["evolve_overall"] is not None else "",
     ]
     # A1 单一写者 (三期 N1): certificate.json 只由 cert() 写 — generate-status 只读不写
     cert_state = _json(PROD / "certificate.json", None)

@@ -30,7 +30,7 @@ python cli/cognify.py serve --port 8080   # 认知服务 API (P0)
 
 - P0 认知服务 API: /mce /vce /cee /governance/evaluate (`cognify serve`)
 - P1 文档站: https://iamnobody78.github.io/cognify-engine (gh-pages)
-- P2 PyPI: pyproject 就绪, 上传待 token | P3 注册表: plugin search/install
+- P2 PyPI: pyproject 就绪, 上传待 token | P3 注册表: plugin search/install (库模式: cognify+core; 完整 CLI 版 vNext — v2.3.0 打包已就绪, 未发布)
 
 ## 插件开发
 
@@ -45,4 +45,5 @@ python cli/cognify.py serve --port 8080   # 认知服务 API (P0)
 ## 文档
 
 - STATUS.md (运行状态) / manifest.json (资产清单) / demo/DEMO.md (演示)
+
 

@@ -1,0 +1,185 @@
+version: '1.0'
+updated: '2026-08-16'
+total: 30
+note: '单一事实源: meta_capabilities.py / generate-status / cert 均以此为准'
+capabilities:
+- id: M01
+  name: 元认知
+  layer: 核心认知
+  evidence: daemon/meta_cognition.py + honesty_guard 注册表 24 项
+  smoke_cmd: null
+  grade: existence
+- id: M02
+  name: 元记忆
+  layer: 核心认知
+  evidence: LIBRARIAN 149 馆藏 + hub/history + meta_decisions.jsonl
+  smoke_cmd: learning/ledger 检索
+  grade: smoke
+- id: M03
+  name: 元学习
+  layer: 核心认知
+  evidence: PROSPECT 29 失败模式 + engineering_rules
+  smoke_cmd: 账本读写
+  grade: smoke
+- id: M04
+  name: 元思考
+  layer: 核心认知
+  evidence: reports/metathink_report.md (静态) + think 钩子 (本引擎)
+  smoke_cmd: cve_s.mce_compile
+  grade: smoke
+- id: M05
+  name: 元逻辑
+  layer: 逻辑语言
+  evidence: 治理网关 AST 守卫 93/93 + verification.py
+  smoke_cmd: 协议网关裁决
+  grade: smoke
+- id: M06
+  name: 元语言
+  layer: 逻辑语言
+  evidence: language/fingerprint.json (本引擎 language, 报告语言指纹)
+  smoke_cmd: null
+  grade: existence
+- id: M07
+  name: 元理论
+  layer: 逻辑语言
+  evidence: META-ARCHITECT 导出 (理论栈=协议栈 42 条)
+  smoke_cmd: null
+  grade: existence
+- id: M08
+  name: 元哲学
+  layer: 逻辑语言
+  evidence: BOUNDARY.md 代理宣言 + HONEST-BOUNDARY 协议
+  smoke_cmd: null
+  grade: existence
+- id: M09
+  name: 元伦理
+  layer: 行为伦理
+  evidence: CONTEXT-GOVERN 行为规则 8 条 + 红线库
+  smoke_cmd: null
+  grade: existence
+- id: M10
+  name: 元审视
+  layer: 行为伦理
+  evidence: honesty_guard scan + meta_cognition.audit
+  smoke_cmd: honesty_guard scan
+  grade: smoke
+- id: M11
+  name: 元幻觉
+  layer: 行为伦理
+  evidence: honesty_guard Layer 4 (注册表核验)
+  smoke_cmd: null
+  grade: existence
+- id: M12
+  name: 元遗忘
+  layer: 行为伦理
+  evidence: honesty_guard Layer 5 + meta_decisions.jsonl
+  smoke_cmd: null
+  grade: existence
+- id: M13
+  name: 元编程
+  layer: 工程治理
+  evidence: MHA-ARCH + debt 修复闭环 (conftest.py/插件安装)
+  smoke_cmd: null
+  grade: existence
+- id: M14
+  name: 元数据
+  layer: 工程治理
+  evidence: hub/history lineage + reconcile 导出
+  smoke_cmd: null
+  grade: existence
+- id: M15
+  name: 元治理
+  layer: 工程治理
+  evidence: DSH-INHERIT-GOV 审计 + VCE 扫描 + debt_library.yaml
+  smoke_cmd: null
+  grade: existence
+- id: M16
+  name: 元进化
+  layer: 工程治理
+  evidence: MHA-ARCH A.C.Q.U.I.R.E + 债务偿还闭环 (10 已解决)
+  smoke_cmd: null
+  grade: existence
+- id: M17
+  name: 元评估
+  layer: 补全层
+  evidence: evaluation/scorecard.json (本引擎 evaluate)
+  smoke_cmd: null
+  grade: existence
+- id: M18
+  name: 元韧性
+  layer: 补全层
+  evidence: resilience/fallback_chain.json + 降级测试 (本引擎 resilience)
+  smoke_cmd: null
+  grade: existence
+- id: M19
+  name: 元时间
+  layer: 补全层
+  evidence: temporal/timeline.jsonl (本引擎 temporal, 含历史里程碑种子)
+  smoke_cmd: null
+  grade: existence
+- id: M20
+  name: 元成本
+  layer: 补全层
+  evidence: cost/budget_report.json (本引擎 cost, 实测耗时)
+  smoke_cmd: null
+  grade: existence
+- id: M21
+  name: 元互操作
+  layer: 补全层
+  evidence: interop/schema.json (三方元产物统一 Schema)
+  smoke_cmd: null
+  grade: existence
+- id: M22
+  name: 元闭环
+  layer: 补全层
+  evidence: closure/closure_report.json (产出→消费方映射)
+  smoke_cmd: null
+  grade: existence
+- id: M23
+  name: 元决策
+  layer: 元决策层
+  evidence: decision_rules.yaml + meta_decision.py 三层过滤
+  smoke_cmd: null
+  grade: existence
+- id: M24
+  name: 元风险
+  layer: 元决策层
+  evidence: risk_keywords 评估 (decide 输出 risk 字段)
+  smoke_cmd: null
+  grade: existence
+- id: M25
+  name: 元学习决策
+  layer: 元决策层
+  evidence: decision_history.jsonl (用户纠正学习)
+  smoke_cmd: null
+  grade: existence
+- id: M26
+  name: 元执行监督
+  layer: 元执行层
+  evidence: META-EXECUTOR pre_exec_hook (E.X.E.C.U.T.E. 七步法)
+  smoke_cmd: null
+  grade: existence
+- id: M27
+  name: 元解耦执行
+  layer: 元执行层
+  evidence: 原子单元拆解 + 独立子进程执行 (execution_units.json)
+  smoke_cmd: null
+  grade: existence
+- id: M28
+  name: 元自举恢复
+  layer: 元执行层
+  evidence: 健康检查 + 崩溃恢复 (bootstrap_report.json)
+  smoke_cmd: null
+  grade: existence
+- id: M29
+  name: 元执行审计
+  layer: 元执行层
+  evidence: 全执行审计 (execution_audit_log.jsonl)
+  smoke_cmd: null
+  grade: existence
+- id: M30
+  name: 元执行回滚
+  layer: 元执行层
+  evidence: 失败回滚记录 (rollback_log.jsonl)
+  smoke_cmd: null
+  grade: existence
