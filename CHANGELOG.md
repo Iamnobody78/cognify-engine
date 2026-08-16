@@ -3,10 +3,11 @@
 ## v2.1.1 (2026-08-16) — 基准测试体系 (BENCHMARK-AUTO + BENCHMARK-CONTINUOUS)
 
 ### 新增
-- **P0 基准控制器**: `cognify benchmark --all/--score/--trend/--warnings` (cli/cognify.py dispatch → daemon/benchmark.py)
+- **P0 基准控制器**: `cognify benchmark --all/--score/--domain/--report/--trend/--warnings/--fix` (cli/cognify.py dispatch → daemon/benchmark.py)
 - **8 域健康评分**: 元能力体系 / MCP生态 / 三系统同步 / 治理引擎 / 认知引擎 / 统一工程 / 磁盘健康 / 元自动化 (B.E.N.C.H. 五步法)
-- **T.R.E.N.D. 趋势**: trend_data.json 30 轮滚动 + 退化警告 (单轮降幅 ≤-5 告警), 阈值 ≥90 优秀 / 80-89 良好 / 70-79 警告 / <70 危险
+- **T.R.E.N.D. 全链路**: trend_data.json 30 轮滚动 + trend_report.md (Notify) + degradation_report.md (Review) + 域级退化告警 (Escalate: 域下降 >5% 告警 / >10% 修复模式) + `--fix` 决策 (Decide)
 - **P2 插件 `cognify.benchmark`**: plugins/benchmark/ (manifest + plugin.py + 冻结快照 + VENDORED.md), 冒烟通过
+- **调度**: BENCHMARK-WEEKLY 计划任务 (每周一 00:00 全量基准, 已手动验证 Last Result 0)
 - 首轮全量基准: 整体 98.5/100, 8/8 域 PASS (基线 2026-08-16T15:36)
 
 ### 修复

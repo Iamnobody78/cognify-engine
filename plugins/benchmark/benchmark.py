@@ -7,10 +7,13 @@ benchmark.py — BENCHMARK-AUTO + BENCHMARK-CONTINUOUS 基准测试控制器
 B.E.N.C.H. 五步法 + T.R.E.N.D. 趋势验证 (阈值 ≥90/80-89/70-79/<70)
 
 用法:
-  python benchmark.py all                 # 全部基准
+  python benchmark.py all                 # 全部基准 (+ trend/degradation 报告)
   python benchmark.py score               # 健康评分
+  python benchmark.py domain <域>         # 特定域
+  python benchmark.py report --format json|html|markdown
   python benchmark.py trend               # 趋势
-  python benchmark.py warnings            # 退化警告
+  python benchmark.py warnings            # 退化警告 (域级 >5% 告警, >10% 修复模式)
+  python benchmark.py fix                 # 修复模式 (D Decide)
 """
 import faulthandler
 import json
@@ -213,24 +216,122 @@ def trend() -> list:
 
 
 def warnings() -> dict:
+    """T.R.E.N.D. E-Escalate: 总分与域级双维度退化告警。
+    - 相邻运行总分下降 ≥5 → 告警
+    - 域得分较上一运行下降 >5% → 告警, >10% → 修复模式 (fix_required)"""
     runs = trend()
     if len(runs) < 2:
         return {"warnings": [], "latest": runs[-1]["total_score"] if runs else None,
                 "note": "历史不足 (需 ≥2 次运行)"}
-    last3 = runs[-3:]
+    last2 = runs[-2:]
     w = []
-    for i in range(1, len(last3)):
-        delta = last3[i]["total_score"] - last3[i - 1]["total_score"]
-        if delta <= -5:
-            w.append({"ts": last3[i]["ts"], "delta": round(delta, 1), "level": "告警"})
-    return {"warnings": w, "latest": last3[-1]["total_score"]}
+    # 总分维度
+    d_total = last2[1]["total_score"] - last2[0]["total_score"]
+    if d_total <= -5:
+        w.append({"ts": last2[1]["ts"], "domain": "总体", "delta": round(d_total, 1), "level": "告警"})
+    # 域级维度
+    for dom in set(last2[0]["domains"]) | set(last2[1]["domains"]):
+        p, c = last2[0]["domains"].get(dom), last2[1]["domains"].get(dom)
+        if p is None or c is None:
+            continue
+        d = c - p
+        if d <= -10:
+            w.append({"ts": last2[1]["ts"], "domain": dom, "delta": round(d, 1), "level": "修复模式"})
+        elif d <= -5:
+            w.append({"ts": last2[1]["ts"], "domain": dom, "delta": round(d, 1), "level": "告警"})
+    return {"warnings": w, "latest": last2[1]["total_score"],
+            "fix_required": any(x["level"] == "修复模式" for x in w)}
+
+
+def _rating(t: float) -> str:
+    if t >= 90:
+        return "🟢 优秀"
+    if t >= 80:
+        return "🟡 良好"
+    if t >= 70:
+        return "🟠 警告"
+    return "🔴 危险"
+
+
+def write_reports() -> None:
+    """T.R.E.N.D. 产物: trend_report.md (N Notify) + degradation_report.md (R Review)。"""
+    runs = trend()
+    w = warnings()
+    latest = w.get("latest")
+    # ---- trend_report.md (N) ----
+    tl = ["# 基准趋势报告 (T.R.E.N.D. — Notify)", "",
+          f"**最新总分**: {latest}/100 ({_rating(latest) if latest is not None else '?'}) | "
+          f"**累计运行**: {len(runs)} 次", "", "| 时间 | 总分 | 评级 |", "|---|---|---|"]
+    for r in runs:
+        tl.append(f"| {r['ts'][:16]} | {r['total_score']} | {_rating(r['total_score'])} |")
+    tl.append("")
+    (BM / "trend_report.md").write_text("\n".join(tl), encoding="utf-8")
+    # ---- degradation_report.md (R) ----
+    dl = ["# 退化审查报告 (T.R.E.N.D. — Review)", "",
+          f"**审查窗口**: 最近 {min(len(runs), 3)} 次运行 | 告警阈值: 域级下降 >5% (修复模式 >10%)", ""]
+    if len(runs) >= 2:
+        prev, cur = runs[-2], runs[-1]
+        dl += ["| 测试域 | 上轮 | 本轮 | 变化 | 判定 |", "|---|---|---|---|---|"]
+        doms = sorted(set(prev["domains"]) | set(cur["domains"]))
+        for dom in doms:
+            p, c = prev["domains"].get(dom), cur["domains"].get(dom)
+            if p is None or c is None:
+                dl.append(f"| {dom} | {p if p is not None else '-'} | {c if c is not None else '-'} | — | 新增/缺失 |")
+                continue
+            d = c - p
+            verdict = "🟢" if d > 0 else ("🔴 修复模式" if d <= -10 else ("⚠️ 告警" if d <= -5 else "🟡 持平"))
+            dl.append(f"| {dom} | {p} | {c} | {d:+.1f} | {verdict} |")
+    else:
+        dl.append("_历史不足 (需 ≥2 次运行), 基线建立中。_")
+    dl.append("")
+    if w.get("warnings"):
+        dl.append("**退化项**")
+        for x in w["warnings"]:
+            dl.append(f"- {'🔴' if x['level'] == '修复模式' else '⚠️'} {x.get('domain', '总体')}: "
+                      f"{x['delta']}% ({x['ts'][:16]})")
+    else:
+        dl.append("**无退化项** ✅")
+    (BM / "degradation_report.md").write_text("\n".join(dl), encoding="utf-8")
+
+
+# ---------------------------------------------------------------- 命令
+FIX_MAP = {
+    "元能力体系": "python daemon/meta_capabilities.py status (核对 30 维 active 与闭环率)",
+    "MCP生态": "python daemon/mcp_sync.py (三端镜像重同步)",
+    "三系统同步": "python daemon/sync_daemon.py (守护恢复)",
+    "治理引擎": "python -m pytest tests (cognify-engine 回归)",
+    "认知引擎": "python daemon/mmc_agent.py heartbeat (MMC 自检)",
+    "统一工程": "核对 VERSION 与 config/unified.yaml",
+    "磁盘健康": "cognify meta-disk (磁盘治理)",
+    "元自动化": "核对 meta-exec/bootstrap_report.json 与版本账本",
+}
+
+
+def cmd_fix() -> int:
+    """修复模式 (D Decide): 退化 >5% 告警, >10% 暂停新功能强制修复。"""
+    w = warnings()
+    print(f"[bench] 最新总分: {w.get('latest', '?')}")
+    if not w.get("warnings"):
+        print("[bench] 无退化, 无需修复模式")
+        return 0
+    for x in w["warnings"]:
+        dom = x.get("domain", "总体")
+        print(f"  {'🔴' if x['level'] == '修复模式' else '⚠️'} {dom}: 下降 {x['delta']}% "
+              f"→ {FIX_MAP.get(dom, '人工介入 (无预置修复命令)')}")
+    if w.get("fix_required"):
+        print("[bench] 🔴 触发修复模式 (退化 >10%): 先修退化域, 暂停新功能合入")
+        return 2
+    print("[bench] ⚠️ 存在退化告警 (5%-10%): 优先安排修复")
+    return 1
 
 
 def main():
-    cmd = (sys.argv[1] if len(sys.argv) > 1 else "all").lstrip("-")
+    argv = sys.argv[1:]
+    cmd = (argv[0] if argv else "all").lstrip("-")
     BM.mkdir(parents=True, exist_ok=True)
     if cmd in ("all", "run"):
         s = run_all()
+        write_reports()
         print(f"[bench] 整体健康评分: {s['total_score']}/100 | 通过 {s['passed']}/{s['total']}")
         for r in s["domains"]:
             print(f"  {'✅' if r['passed'] else '❌'} {r['domain']}: {r['score']}")
@@ -240,6 +341,42 @@ def main():
         s = run_all()
         print(f"[bench] 健康评分: {s['total_score']}/100")
         return 0 if s["total_score"] >= 80 else 1
+    if cmd == "domain":
+        if len(argv) < 2:
+            print("用法: benchmark --domain <域> | 可用域: " + " / ".join(d().get("domain", "?") for d in DOMAINS))
+            return 1
+        want = argv[1]
+        for f in DOMAINS:
+            r = f()
+            if want in r["domain"] or r["domain"] in want or want.lower() in r["domain"].lower():
+                r["score"] = min(max(r["score"], 0.0), 100.0)
+                print(f"{'✅' if r['passed'] else '❌'} {r['domain']}: {r['score']}")
+                print(f"  详情: {json.dumps(r['details'], ensure_ascii=False)}")
+                return 0 if r["passed"] else 1
+        print(f"[bench] 未知域: {want}")
+        return 1
+    if cmd == "report":
+        fmt = argv[argv.index("--format") + 1] if "--format" in argv else "markdown"
+        run_all()
+        write_reports()
+        if fmt == "json":
+            s = json.loads(REPORT.read_text(encoding="utf-8") if False else "{}")
+            out = BM / "benchmark_report.json"
+            import re
+            snap = trend()[-1] if trend() else {}
+            out.write_text(json.dumps(snap, ensure_ascii=False, indent=2), encoding="utf-8")
+            print(f"[bench] → {out}")
+        elif fmt == "html":
+            md = REPORT.read_text(encoding="utf-8")
+            esc = md.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+            html = (f"<!doctype html><html><head><meta charset='utf-8'>"
+                    f"<title>Benchmark Report</title></head><body><pre>{esc}</pre></body></html>")
+            out = BM / "benchmark_report.html"
+            out.write_text(html, encoding="utf-8")
+            print(f"[bench] → {out}")
+        else:
+            print(f"[bench] → {REPORT}")
+        return 0
     if cmd == "trend":
         for t in trend()[-10:]:
             print(f"  {t['ts'][:16]} | {t['total_score']}")
@@ -247,9 +384,13 @@ def main():
     if cmd == "warnings":
         w = warnings()
         print(f"[bench] 最新: {w.get('latest', '?')}")
+        if w.get("note"):
+            print(f"[bench] {w['note']}")
         for x in w.get("warnings", []):
-            print(f"  ⚠️ {x['ts'][:16]} 下降 {x['delta']}% ({x['level']})")
+            print(f"  ⚠️ {x.get('domain', '总体')} {x['ts'][:16]} 下降 {x['delta']}% ({x['level']})")
         return 0
+    if cmd == "fix":
+        return cmd_fix()
     print(__doc__)
     return 1
 
