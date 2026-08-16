@@ -48,6 +48,13 @@ def gh_token() -> str:
         return ""
 
 
+def _win(p: str) -> str:
+    """Windows: 路径统一反斜杠 (Node CreateProcess 不吃正斜杠 exe 路径)。"""
+    if sys.platform == "win32" and isinstance(p, str) and "C:/" in p:
+        return p.replace("/", "\\")
+    return p
+
+
 def sync_hermes(servers) -> list:
     """Hermes: config.yaml mcp_servers 合并 (幂等)。"""
     added = []
@@ -58,14 +65,14 @@ def sync_hermes(servers) -> list:
         name = s["id"]
         if f"\n  {name}:" in txt or f"  {name}:" in txt.split("mcp_servers:")[-1]:
             continue
-        args = "".join(f"\n    - {json.dumps(a)}" for a in s.get("args", []))
+        args = "".join(f"\n    - {json.dumps(_win(a))}" for a in s.get("args", []))
         env = ""
         for k, v in (s.get("env") or {}).items():
             if k == "GITHUB_PERSONAL_ACCESS_TOKEN" and v == "<gh-auth-token>":
                 v = gh_token()
             if v:
                 env += f"\n    {k}: {v}"
-        block = f"\n  {name}:\n    command: {s['command']}\n    args:{args}{env}\n    enabled: true"
+        block = f"\n  {name}:\n    command: {_win(s['command'])}\n    args:{args}{env}\n    enabled: true"
         # 插入到 mcp_servers: 之后第一行 (对齐 2 空格缩进)
         marker = "mcp_servers:"
         idx = txt.index(marker) + len(marker)
@@ -90,7 +97,7 @@ def sync_aionui(servers) -> list:
                              (name,)).fetchone()
         if exists:
             continue
-        cfg = {"command": s["command"], "args": s.get("args", [])}
+        cfg = {"command": _win(s["command"]), "args": [_win(a) for a in s.get("args", [])]}
         env = {}
         for k, v in (s.get("env") or {}).items():
             if k == "GITHUB_PERSONAL_ACCESS_TOKEN" and v == "<gh-auth-token>":

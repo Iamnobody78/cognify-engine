@@ -44,3 +44,11 @@
 - VERSION-AUTO-UPDATE: cognify version --check/--upstream/--history/--sync + update --auto (备份+回滚)
 - ME/EE MCP 接入: loki-cad-mcp / mcp-cad-studio / cad-mcp-server (ready 13) 三系统同步
 - 注册表 77 项 (ME 15 / EE 9 / pending-* 分类)
+
+## v2.1.0 (2026-08-15) — MCP-DEPLOY-TRACK + MCP 握手修复
+
+- MCP-DEPLOY-TRACK v1.0: mcp_deploy_track.py (D1-D5 五维模型 + T.R.A.C.K. 五步法 + 四门禁)
+- cognify mcp track --full/--status/--history/--compliance
+- 清单: ~/.cognify/mcp_registry/deployment_manifest.yaml (13 条)
+- MCP 握手修复: 路径斜杠规范化 (Node CreateProcess) + npx 缓存预热
+- 部署追踪诚实门禁: 7/13 healthy → WARN (待 AionUi 重测后转 PASS)
