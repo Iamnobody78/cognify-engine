@@ -89,6 +89,10 @@ def generate_status() -> dict:
         f"## 插件: {data['plugins']}",
         f"## 进化: 最近整体 {data['evolve_overall']}" if data["evolve_overall"] is not None else "",
     ]
+    # 0.2 证书-文档联动: cert NOT_CERTIFIED 时 STATUS 必须渲染 (批判 C2 修复)
+    cert_state = _json(PROD / "certificate.json", {})
+    if cert_state.get("overall") == "NOT_CERTIFIED":
+        lines.insert(2, "## ⚠️ 认证状态: NOT_CERTIFIED — 文档不得宣称 CERTIFIED (红线)")
     (PROD / "STATUS.md").write_text("\n".join(l for l in lines if l), encoding="utf-8")
     cert_out = {"ts": data["ts"], "meta_active": data["meta_active"],
                 "closure_rate": data["closure_rate"], "debt": data["debt"],

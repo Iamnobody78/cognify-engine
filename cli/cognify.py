@@ -185,15 +185,17 @@ def cert():
 
 
 def observe():
-    """O: 观测 — 快照进 observations/"""
+    """O: 观测 — 快照进 ~/.cognify/observations/ (1.2 输出隔离, 不再污染仓库)"""
     snap = {"ts": NOW.isoformat(timespec="seconds"),
             "meta": json.loads((TRI / "meta/status.json").read_text(encoding="utf-8"))
             if (TRI / "meta/status.json").exists() else {},
             "debts": json.loads((TRI / "debt/debt_inventory.json").read_text(encoding="utf-8"))
             if (TRI / "debt/debt_inventory.json").exists() else {}}
-    f = PROD / "observations" / f"snapshot_{NOW.strftime('%Y%m%d_%H%M%S')}.json"
+    obs_dir = Path(os.environ.get("COGNIFY_OUT", str(Path.home() / ".cognify"))) / "observations"
+    obs_dir.mkdir(parents=True, exist_ok=True)
+    f = obs_dir / f"snapshot_{NOW.strftime('%Y%m%d_%H%M%S')}.json"
     f.write_text(json.dumps(snap, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"[observe] → {f.name}")
+    print(f"[observe] → {f}")
     return 0
 
 
