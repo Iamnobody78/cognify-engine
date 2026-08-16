@@ -145,7 +145,9 @@ def _repo_integrity(repo: str, repo_dir: Path) -> str:
                     and d.name in ("Game", "Frontend", "Backend", "Code", "Research", "MCP")]
             scens = sum(1 for c in caps for d in c.iterdir() if d.is_dir() and d.name.startswith("scenario"))
             descs = sum(1 for c in caps for d in c.iterdir() if (d / "description.json").exists())
-            return f"克隆在位: {len(caps)} 能力域 × {scens} 场景, 任务定义 {descs} 份 (数据完整性验证通过)"
+            evals = sum(1 for c in caps for d in c.iterdir() if (d / "eval_task.py").exists())
+            return (f"克隆在位: {len(caps)} 能力域 × {scens} 场景, "
+                    f"description {descs} + eval_task {evals} 双文件 (数据完整性验证通过)")
         if repo == "AgentGym":
             envs = [d.name for d in repo_dir.iterdir() if d.is_dir() and d.name.startswith("agentenv")]
             return f"克隆在位: {len(envs)} 个 agentenv 环境 (AgentGym2 未见独立仓库, 以 AgentGym 框架为载体)"
