@@ -60,3 +60,10 @@
 - 根因2: @modelcontextprotocol/server-git/fetch/sqlite 官方 npm 未发布 (404) → 注册表降级 registry-only + 三系统清理
 - SDK 同款客户端验证: cognify 291ms / sequential-thinking / memory (9 tools) / mcp-cad-studio (13 tools) 全 PASS
 - 三方统一清单: mcp-registry/ 分发至 Hermes/DSH/AionUi 三域
+
+## v2.1.0 (2026-08-16) — AI/ML/DL + 具身/CV MCP 接入 (~120 项注册表)
+
+- AI/ML/DL 23 项: three-ws-vision/image-recognition/llm-vision/visionsearch (npx 验证) +
+  tabicl/automl/mlflow/neo/ultimate (uvx pypi 验证) + zerofit/predicatalot (docker)
+- 具身/CV 30 项: 精确分类 (pending-hardware 5 / pending-app 14 / registry-only 8 / pending-key 3)
+- pypi/npm 核查: 12 存在 / 5 缺失 (ml-lab/datascience/tabpfn/mujoco 包名待确认, 如实 registry-only)
