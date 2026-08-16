@@ -1,5 +1,18 @@
 # Changelog
 
+## v2.2.3 (2026-08-16) — 元尝自己: 记忆影响决策 + 反思生成约束
+
+### 新增 (元执行: 附加调用 → 改造自身)
+- **元记忆→决策**: run_chain 执行前加载 constraints.json (元反思产物), 注入 MCE 编译输入 — 历史约束真实改变思考输入
+- **元反思→约束**: 调用链失败模块自动生成硬约束 (constraints.json, 保留最近 10 条), 下次执行自动加载
+- **低风险自动应用**: bootstrap-fix (占位/注册) + generate-dashboard (产物刷新) 为已启用的低风险自动应用管道; 高风险提案走债务请示
+
+### 实证核验 (批判报告反驳)
+- 外部审查声称 core/plugin_base.py、cli/cognify.py、certificate.json 等 8 文件"无法访问" — 实测全部存在且可运行 (core 三件套 2.3-12KB / cognify.py 53KB / serve.py 5.3KB / certificate.json 239B), `cognify status` 实时输出; 报告基于错误前提, 不成立
+
+### 工程
+- 调用链 CERTIFIED 6/6 | 约束管道就绪 (基线 0 失败 → 0 约束, 诚实) | 注入管道就绪 (约束非空时生效)
+
 ## v2.2.2 (2026-08-16) — 元批判三项断裂补全
 
 ### 新增

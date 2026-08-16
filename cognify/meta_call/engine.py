@@ -70,17 +70,21 @@ def call_memory() -> dict:
             "sample": (rows[-1].get("entry", "")[:50] if rows else None)}
 
 
-def call_thinking() -> dict:
-    """元思考: cve_s MCE 认知编译 (真实引擎调用)。"""
+def call_thinking(inject: str = "") -> dict:
+    """元思考: cve_s MCE 认知编译 (真实引擎调用)。
+    inject: 元记忆检索到的历史约束注入 — 改变输入即改变决策 (元尝自己)。"""
     try:
         sys.path.insert(0, str(PROD / "plugins/cognitive/src"))
         sys.path.insert(0, str(PROD / "plugins/sync/src"))
         import cve_s  # noqa: PLC0415
         text = "分析当前系统同步状态与自主迭代方向"
+        if inject:
+            text = f"{text}\n[历史约束注入] {inject}"
         mce = cve_s.mce_compile(text)
         ok = bool(mce) and mce.get("detected_model", "未识别") != "未识别"
         return {"module": "元思考", "ok": ok,
-                "detail": f"MCE 编译 → 主导模型: {mce.get('detected_model')}"}
+                "detail": f"MCE 编译 → 主导模型: {mce.get('detected_model')}"
+                          + (f" | 注入: {inject[:40]}" if inject else "")}
     except Exception as exc:  # noqa: BLE001
         return {"module": "元思考", "ok": False, "detail": f"{type(exc).__name__}: {exc}"}
 
@@ -135,7 +139,10 @@ CALLS = [call_memory, call_thinking, call_decision, call_cognition, call_reflect
 
 def run_chain() -> dict:
     MC.mkdir(parents=True, exist_ok=True)
-    # 路径 A/C: 执行前查询历史失败模式, 注入本次上下文 (经验→行为映射)
+    # 路径 A/C + 元尝自己: 加载历史约束 (元反思产物) → 注入元思考输入 (影响决策)
+    constraints = _json(MC / "constraints.json", {"constraints": []})
+    inject = "；".join(c["text"] for c in constraints.get("constraints", [])[-3:])
+    # 路径 A/C: 执行前查询历史失败模式
     adaptive = []
     pat = _json(MC / "failure_patterns.json", None)
     if pat is None:
@@ -143,17 +150,33 @@ def run_chain() -> dict:
     for rec in pat.get("recommendations", []):
         if rec.get("streak", 0) >= 3:
             adaptive.append(f"{rec['module']} 连续失败 {rec['streak']} 次 — 本次降权/重点核查")
-    results = [f() for f in CALLS]
+    results = [call_memory(), call_thinking(inject),
+               call_decision(), call_cognition(), call_reflection()]
     verify = call_verify(results)
     results.append(verify)
+    # 元反思约束生成: 认证失败或模块失败 → 生成下次执行的硬约束
+    new_constraints = []
+    for r in results:
+        if not r.get("ok") and r["module"] != "元验证":
+            new_constraints.append({"module": r["module"], "text": f"{r['module']} 需重点核查 (最近失败)",
+                                    "ts": _now(), "source": "meta-reflection"})
+    if new_constraints:
+        cur = constraints.get("constraints", [])
+        cur.extend(new_constraints)
+        (MC / "constraints.json").write_text(json.dumps(
+            {"constraints": cur[-10:]}, ensure_ascii=False, indent=2), encoding="utf-8")
     entry = {"id": f"MC-{datetime.now().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:4]}",
              "ts": _now(), "version": VERSION, "results": results,
-             "certified": verify["ok"], "adaptive": adaptive}
+             "certified": verify["ok"], "adaptive": adaptive,
+             "injected_constraints": inject or None,
+             "generated_constraints": new_constraints}
     with open(LOG, "a", encoding="utf-8") as fh:
         fh.write(json.dumps(entry, ensure_ascii=False) + "\n")
     CERT.write_text(json.dumps({"id": entry["id"], "ts": entry["ts"],
                                 "certified": entry["certified"],
                                 "adaptive": adaptive,
+                                "injected": inject or None,
+                                "generated": len(new_constraints),
                                 "checklist": {r["module"]: r["ok"] for r in results}},
                                ensure_ascii=False, indent=2), encoding="utf-8")
     return entry

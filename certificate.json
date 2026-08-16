@@ -1,10 +1,33 @@
 {
-  "ts": "2026-08-16T20:00:47",
-  "meta_active": "30/30",
-  "closure_rate": 0.917,
-  "debt": "13/21",
-  "call_certified": true,
-  "benchmark_total": 98.5,
-  "source": "dynamic (generate-status)",
-  "generated_by": "meta_dev.py"
+  "product": "cognify-engine",
+  "version": "2.0.0",
+  "certified_at": "2026-08-16T20:21:11",
+  "checks": [
+    {
+      "item": "30 维元能力全部 active",
+      "pass": true,
+      "detail": "30/30"
+    },
+    {
+      "item": "元闭环率 ≥90%",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "item": "治理回归证据 (0 failed)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "item": "同步镜像规模 (hub/sessions >100)",
+      "pass": true,
+      "detail": "179"
+    },
+    {
+      "item": "插件平台 (7 插件 + 生命周期冒烟)",
+      "pass": false,
+      "detail": "10 插件"
+    }
+  ],
+  "overall": "NOT_CERTIFIED"
 }
