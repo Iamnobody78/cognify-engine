@@ -22,6 +22,9 @@ cognify CLI v2.0.0 — 认知操作产品统一入口 (插件平台 PLUGINIFY)
   cognify plugin info <id>  # 插件详情
   cognify plugin enable <id> / disable <id>   # 热插拔
   cognify pluginify --all   # 插件化改造验证 (P.L.U.G.I.N. 全流程)
+  cognify benchmark --all   # 基准测试 (8 域 B.E.N.C.H. + T.R.E.N.D.)
+  cognify self-validate --start|--status|--history   # 自使用验证 (SELF-VALIDATE-ITERATE 轨 B)
+  cognify iterate --report|--sprint   # 双轨融合报告 / 冲刺模式 (轨 C/D)
 """
 import json
 import subprocess
@@ -959,6 +962,18 @@ def main():
         r = subprocess.run([PY, str(TRI / "daemon/benchmark.py"), *sys.argv[2:]],
                            capture_output=True, text=True, encoding="utf-8",
                            errors="replace")
+        print((r.stdout or r.stderr or "")[-2000:])
+        return r.returncode
+    if cmd == "self-validate":
+        r = subprocess.run([PY, str(TRI / "daemon/self_validate.py"), *sys.argv[2:]],
+                           capture_output=True, text=True, encoding="utf-8",
+                           errors="replace", timeout=120)
+        print((r.stdout or r.stderr or "")[-2000:])
+        return r.returncode
+    if cmd == "iterate":
+        r = subprocess.run([PY, str(TRI / "daemon/iterate.py"), *sys.argv[2:]],
+                           capture_output=True, text=True, encoding="utf-8",
+                           errors="replace", timeout=180)
         print((r.stdout or r.stderr or "")[-2000:])
         return r.returncode
     if cmd == "product":

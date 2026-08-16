@@ -1,5 +1,25 @@
 # Changelog
 
+## v2.1.2 (2026-08-16) — 双轨验证闭环 (SELF-VALIDATE-ITERATE)
+
+### 新增
+- **P0 自使用验证引擎**: `cognify self-validate --start/--status/--history` (cognify/self_validate/engine.py)
+  - 轨 B 5 场景真实调用 (不造假): 认知引擎自用 (MCE/VCE/CEE 编译最近真实输入) / 治理引擎自用 (协议网关裁决真实决策, 触发 entropy_denoise 规则 → ESCALATE) / 元记忆自用 (学习账本记录+检索) / MCP工具自用 (真实启动 cognify MCP 服务器, 5 工具注册 + cognify_meta 调用) / 元能力自评 (30 维 status)
+  - SQLite 持久化 (schema.sql: runs + scenarios), 首轮实测 **94.0/100, 5/5 通过**
+- **P0 双轨融合分析** (轨 C): cognify/iterate/fusion.py — benchmark_only / self_validation_only 缺口识别 + 一致性评分 + 双轨差异 >10 触发深度审查 (首轮实测: 一致性 75%, 4 缺口, 治理引擎差异 30 分触发审查)
+- **P0 每日迭代报告 + 冲刺模式** (轨 D): cognify/iterate/report.py — daily_iteration_report.md (整体 96.2 🟢 优秀) + 连续 3 天无改进 → sprint_mode.json
+- **P2 插件 `cognify.self_validate`**: plugins/self_validate/ (manifest + plugin.py + VENDORED.md), 冒烟通过
+- **调度**: SELF-VALIDATE-MINUTE (每分钟自使用验证) + DAILY-FUSION (每日 08:00 融合报告), 均已手动验证 Last Result 0
+- **元提示词入库**: SELF-VALIDATE-ITERATE v1.0 → meta_prompts 索引 (json+yaml, 65 条)
+
+### 修复
+- MCP 自用场景卡死: cognify_sync 工具内部同步执行 CLI sync (慢且有副作用) → 改用 cognify_meta + JSON-RPC 通知与请求分离 (notifications/initialized 无响应不再等待) + 线程队列超时保护 (15s)
+- 治理自用误判: 裸文本不命中规则 (规则条件为 governance.protocols.{module}.triggered) → 携带真实协议模块触发声明, 实测命中 protocol-entropy_denoise-enforce
+- daemon 调度壳接受 `--status/--report` 带横线参数 (lstrip("-"))
+
+### 工程
+- 门禁: 自使用验证 5/5 (94.0) | 基准 8/8 (98.5) | 双轨整体 96.2 | 深度审查标记在位 (治理引擎 30 分差)
+
 ## v2.1.1 (2026-08-16) — 基准测试体系 (BENCHMARK-AUTO + BENCHMARK-CONTINUOUS)
 
 ### 新增

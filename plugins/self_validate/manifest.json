@@ -1,0 +1,18 @@
+{
+  "id": "cognify.self_validate",
+  "name": "Self-Validate Iterate",
+  "version": "0.1.0",
+  "description": "SELF-VALIDATE-ITERATE 双轨验证闭环: 自使用验证引擎 (5 场景) + 融合分析 (轨 C) + 迭代报告 (轨 D)",
+  "author": "Iamnobody78",
+  "license": "MIT",
+  "main": "plugin.py",
+  "dependencies": {
+    "cognify.core": ">=1.0.0 <3.0.0",
+    "cognify.governance": ">=0.1.0",
+    "cognify.cognitive": ">=1.0.0"
+  },
+  "capabilities": ["self-validate", "dual-track-fusion", "iteration-report", "sprint-mode"],
+  "hooks": ["on_load", "on_enable", "on_disable", "on_unload"],
+  "verified": true,
+  "source": "cognify/self_validate/engine.py + cognify/iterate/ (产品模块, 见 VENDORED.md)"
+}
