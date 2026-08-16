@@ -990,6 +990,12 @@ def main():
                            errors="replace", timeout=300)
         print((r.stdout or r.stderr or "")[-2000:])
         return r.returncode
+    if cmd == "meta-call":
+        r = subprocess.run([PY, str(TRI / "daemon/meta_call.py"), *sys.argv[2:]],
+                           capture_output=True, text=True, encoding="utf-8",
+                           errors="replace", timeout=180)
+        print((r.stdout or r.stderr or "")[-2000:])
+        return r.returncode
     if cmd == "product":
         return product_cmd(sys.argv[2:])
     if cmd == "whoami":

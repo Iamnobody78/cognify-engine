@@ -1,5 +1,19 @@
 # Changelog
 
+## v2.1.9 (2026-08-16) — 元能力强制调用 (META-CALL-FORCE) + 元层面 MCP 探测
+
+### 新增
+- **META-CALL-FORCE 强制调用引擎**: `cognify meta-call force/status/log` (cognify/meta_call/engine.py)
+  - 6 步真实调用链: 元记忆 (learning/ledger 检索) → 元思考 (cve_s MCE) → 元决策 (协议网关五层裁决) → 元认知 (30 维核验) → 元反思 (mmce 心跳闭环) → 元验证 (完整性认证)
+  - 首轮实测: **CERTIFIED 6/6** (50 条记忆检索/系统动力学/ESCALATE/30/30/闭环/5/5), call_log.jsonl 审计
+- **元层面 MCP 探测 (npm 实证)**: 39 候选 → **14 真实存在** (sequential-thinking/structured-thinking/memento/engram/alexandria/logic-validator/mentu/metasearch2/figma/neo/cortex/vibe-check/ahxxm; lsp-mcp 0.0.1-security 为 npm 安全占位假阳性)
+- **MCP 生态扩展**: 安装 metasearch2-mcp/figma-design-bridge/neo-mcp/cortex-mcp 至固定目录 (81 包), 注册表 4 项登记 (总数 271)
+- **DSH 插件克隆评估 (PM 路径2)**: dsh-skill-evolve (TS) + dsh-continual-evolve (Cordis) 已克隆待互补性评估
+- **元提示词**: META-CALL-FORCE v1.0 入库 (索引 72 条)
+
+### 工程
+- 他证: AgencyBench Code 2/2 (10/10) | 调用链 CERTIFIED 6/6 | 审计 47 模块 (22/25) | 元层面 14/39 可部署
+
 ## v2.1.8 (2026-08-16) — DSH 生态找回 + 模块清单扩至 47 项
 
 ### 新增
