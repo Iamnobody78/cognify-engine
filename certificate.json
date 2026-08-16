@@ -1,7 +1,7 @@
 {
   "product": "cognify-engine",
   "version": "2.2.3",
-  "certified_at": "2026-08-16T20:51:09",
+  "certified_at": "2026-08-16T21:21:09",
   "checks": [
     {
       "item": "30 维元能力全部 active",
