@@ -1,5 +1,25 @@
 # Changelog
 
+## v2.1.7 (2026-08-16) — 元能力部署审计 + subtask2 他证分数
+
+### 新增
+- **AgencyBench subtask2 端到端**: 模型实现 Langmuir 饱和项 p0·t·A/(1+p1·A) + 混合幂项 p2·t·A² (含 NaN 防护) → 本地独立执行 **MSE 3.05e-4 → rubric 10/10**
+  - **首个有区分度的他证对比: 模型 10/10 vs 基线 0/10** (线性基线缺非线性项, rubric 明文判 0)
+  - 产物: benchmark/external/agencybench_code_full_2.json (2 次推理 724s, 失败记录透明)
+- **DSH 元能力审计引擎**: `cognify meta-deploy audit` (cognify/meta_deploy/audit.py)
+  - 28 模块清单 × 本地实现映射 + **社区源真实探测 (git ls-remote)**
+  - 实测: 22/28 本地已有 (30 维元能力 active), 6 个待接入 (元EE/ML/DL/搜索/设计/沟通)
+  - **关键实证: 用户列出的 7 个社区仓库全部真实存在** (dsh-hermes-memory/engram-relay/skill-evolve/continual-evolve/anchored-flash/CommonTrustProtocol/AgentGym)
+- **元提示词 3 份入库**: DSH-META-DEPLOY v1.0 / META-DEPLOY-ALL v2.0 / DSH-SELF-RECOVER v1.0 → 源目录 + meta_system.py 重建 (70 条)
+
+### 修复
+- 评估脚本: py_compile 误用文件 API → 改用 compile(); 推理输出先存 raw 再提取 (防覆盖)
+- 审计 local_ok 判断: "待接入" 子串匹配
+
+### 工程
+- 他证: AgencyBench Code 2/2 任务 10/10 (subtask2 区分度验证) | 本地适配器 5/5 (98.0) | 注册表 26 项
+- 元能力: 28 模块审计 (22 已有/6 待接入) | DSH profiles: cognify/headless/web
+
 ## v2.1.6 (2026-08-16) — 首个真实外部基准分数 (AgencyBench Code 域)
 
 ### 新增
