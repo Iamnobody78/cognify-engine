@@ -52,3 +52,11 @@
 - 清单: ~/.cognify/mcp_registry/deployment_manifest.yaml (13 条)
 - MCP 握手修复: 路径斜杠规范化 (Node CreateProcess) + npx 缓存预热
 - 部署追踪诚实门禁: 7/13 healthy → WARN (待 AionUi 重测后转 PASS)
+
+## v2.1.0 (2026-08-15) — MCP 握手根因修复 (SDK 双模帧)
+
+- 根因1: 新版 MCP SDK (2025-11-25+) stdio 用换行分隔 JSON, 服务器只认 Content-Length → 握手超时
+- 修复: cognify_mcp_server.py 双模帧 (自动检测, 兼容新旧客户端)
+- 根因2: @modelcontextprotocol/server-git/fetch/sqlite 官方 npm 未发布 (404) → 注册表降级 registry-only + 三系统清理
+- SDK 同款客户端验证: cognify 291ms / sequential-thinking / memory (9 tools) / mcp-cad-studio (13 tools) 全 PASS
+- 三方统一清单: mcp-registry/ 分发至 Hermes/DSH/AionUi 三域

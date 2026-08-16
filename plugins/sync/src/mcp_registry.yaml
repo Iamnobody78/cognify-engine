@@ -21,11 +21,8 @@ servers:
   - id: git
     name: Git
     domain: 开发
-    status: ready
-    transport: stdio
-    command: npx
-    args: ["-y", "@modelcontextprotocol/server-git"]
-    systems: [hermes, aionui]
+    status: registry-only
+    note: "官方 npm 未发布 (@modelcontextprotocol/server-git 404); 社区 mcp-server-git@0.0.2 未验证, 不自动接入"
   - id: github
     name: GitHub
     domain: 开发
@@ -38,11 +35,8 @@ servers:
   - id: fetch
     name: Fetch
     domain: 信息检索
-    status: ready
-    transport: stdio
-    command: npx
-    args: ["-y", "@modelcontextprotocol/server-fetch"]
-    systems: [hermes, aionui]
+    status: registry-only
+    note: "官方 npm 未发布 (@modelcontextprotocol/server-fetch 404); 社区包未验证"
   - id: memory
     name: Memory (KVS)
     domain: 记忆
@@ -62,11 +56,8 @@ servers:
   - id: sqlite
     name: SQLite
     domain: 数据库
-    status: ready
-    transport: stdio
-    command: npx
-    args: ["-y", "@modelcontextprotocol/server-sqlite", "C:/Users/ivy/.aionui-tri-sync/state/unified.db"]
-    systems: [hermes, aionui]
+    status: registry-only
+    note: "官方 npm 未发布 (@modelcontextprotocol/server-sqlite 404); 本地能力经 cognify debt/平台 sqlite 提供"
   - id: playwright
     name: Playwright
     domain: 浏览器自动化

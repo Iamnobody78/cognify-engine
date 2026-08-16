@@ -87,37 +87,68 @@ def call_tool(name: str, args: dict) -> dict:
     raise ValueError(f"未知工具: {name}")
 
 
-def _read_frame() -> str | None:
-    headers = {}
-    while True:
-        line = sys.stdin.buffer.readline()
-        if not line:
-            return None
-        line = line.decode("utf-8", errors="replace").strip()
-        if not line:
+def _read_line() -> bytes | None:
+    """读一行 (含换行)。EOF 返回 None。"""
+    line = sys.stdin.buffer.readline()
+    return line if line else None
+
+
+def _read_n(n: int) -> bytes:
+    buf = b""
+    while len(buf) < n:
+        chunk = sys.stdin.buffer.read(n - len(buf))
+        if not chunk:
             break
-        key, _, value = line.partition(":")
-        headers[key.strip().lower()] = value.strip()
-    length = int(headers.get("content-length", 0))
-    if length <= 0:
-        return None
-    return sys.stdin.buffer.read(length).decode("utf-8", errors="replace")
+        buf += chunk
+    return buf
+
+
+def _read_message():
+    """双模帧读取: 换行 JSON (新 SDK 2025-11-25+) / Content-Length (旧协议)。
+
+    返回 (message, mode); mode ∈ {"newline", "lsp"} 用于统一响应格式。
+    """
+    line = _read_line()
+    if line is None:
+        return None, None
+    stripped = line.strip()
+    if not stripped:
+        return _read_message()  # 跳过空行
+    if stripped.startswith(b"Content-Length"):
+        headers = {}
+        while True:
+            h = _read_line()
+            if h is None:
+                return None, None
+            if h.strip() in (b"", b"\r"):
+                break
+            k, _, v = h.partition(b":")
+            headers[k.strip().lower()] = v.strip()
+        n = int(headers.get(b"content-length", b"0"))
+        body = _read_n(n)
+        return json.loads(body.decode("utf-8", errors="replace")), "lsp"
+    return json.loads(stripped.decode("utf-8", errors="replace")), "newline"
+
+
+_mode = {"current": "newline"}  # 默认新帧; 首条消息后按检测结果固定
 
 
 def _write_frame(payload: dict) -> None:
     body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
-    sys.stdout.buffer.write(b"Content-Length: %d\r\n\r\n" % len(body))
-    sys.stdout.buffer.write(body)
+    if _mode["current"] == "lsp":
+        sys.stdout.buffer.write(b"Content-Length: %d\r\n\r\n" % len(body))
+    sys.stdout.buffer.write(body + b"\n")
     sys.stdout.buffer.flush()
 
 
 def main() -> int:
     while True:
-        msg = _read_frame()
+        msg, mode = _read_message()
         if msg is None:
             break
+        _mode["current"] = mode  # 按首条消息固定响应帧格式
         try:
-            req = json.loads(msg)
+            req = msg if isinstance(msg, dict) else {}
         except json.JSONDecodeError:
             continue
         rid = req.get("id")
