@@ -15,7 +15,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install deps
-        run: pip install pytest
+        run: pip install pytest pyyaml
       - name: Run plugin core tests
         run: python -m pytest tests/ -q
       - name: Plugin lifecycle smoke

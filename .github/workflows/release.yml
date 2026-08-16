@@ -14,7 +14,7 @@ jobs:
   pypi:
     runs-on: ubuntu-latest
     permissions:
-      id-token: write        # OIDC: GitHub 向 PyPI 证明本工作流身份
+      id-token: write        # OIDC: 发布到已存在项目时可用
       contents: read
     steps:
       - uses: actions/checkout@v4
@@ -26,8 +26,13 @@ jobs:
         run: pip install build
       - name: Build package
         run: python -m build
-      - name: Publish to PyPI (OIDC, no token)
-        uses: pypa/gh-action-pypi-publish@release/v1
+      - name: Publish to PyPI
+        # 首次发布 (项目不存在): PyPI 拒绝 OIDC 创建新项目 ("Non-user identities cannot create new projects")
+        # → 使用 Token 路径; 项目存在后可切回 OIDC (pypa/gh-action-pypi-publish@release/v1 无 env)
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        run: pip install twine && twine upload dist/*
 
   github-release:
     runs-on: ubuntu-latest
