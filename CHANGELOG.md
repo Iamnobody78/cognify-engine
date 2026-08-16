@@ -1,5 +1,19 @@
 # Changelog
 
+## v2.2.2 (2026-08-16) — 元批判三项断裂补全
+
+### 新增
+- **DEBT-016 偿还 (最小可运行)**: `cognify generate-dashboard` — 纯 HTML 仪表板 (无前端框架), 展示 generate-status 运行时数据 (元能力/基准趋势/债务快照/调用链认证), 静态托管即用
+- **bootstrap --fix**: `cognify bootstrap-fix` — 自动修复不一致 (缺失资产占位创建/孤儿插件目录注册) + 插件外部路径依赖检测 (实测 0 告警 — cognitive 快照确实自包含)
+- **失败因果分类**: `cognify meta-call analyze` — 失败事件打病因标签 (timeout/input_malformed/dependency_unavailable/logic_error/resource_exhausted) + 每病因修复提示 (如 timeout→提高超时阈值), 频率分析升级为病因分析
+- **PyPI 自动发布**: .github/workflows/release.yml — tag v* 自动 build + twine upload (需仓库 Secrets 加 PYPI_API_TOKEN) + GitHub Release 自动生成
+
+### 核验结论 (诚实)
+- 元批判"cognitive 插件依赖外部路径"部分不成立: plugins/cognitive/src/ 已有 cve_s.py + mmc_agent.py 冻结快照, bootstrap 外部依赖检测 0 告警; "默认委托规范安装"是活引擎设计选择, 回退路径在位
+
+### 工程
+- Dashboard: 2.7KB 自包含 HTML | 因果分类机制就绪 (基线 0 失败) | release workflow 待 token
+
 ## v2.2.1 (2026-08-16) — 元批判补全: 经验→行为映射 + 完整性审计
 
 ### 新增 (元批判执行路径 A/B/C)

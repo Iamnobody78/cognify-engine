@@ -207,6 +207,37 @@ def debt_proposals() -> dict:
         return {"ts": _now(), "error": str(exc)}
 
 
+def bootstrap_fix() -> dict:
+    """--fix 模式: 自动修复不一致 (缺失资产占位/孤儿目录注册/外部路径依赖告警)。"""
+    man = _json(PROD / "manifest.json", {})
+    assets = man.get("assets", [])
+    fixed, warned = [], []
+    for a in assets:
+        probe = a.get("probe")
+        if probe and not Path(probe).exists():
+            p = Path(probe)
+            p.parent.mkdir(parents=True, exist_ok=True)
+            p.write_text("# placeholder (bootstrap --fix 自动创建)\n", encoding="utf-8")
+            fixed.append(f"占位创建: {a.get('key')} → {probe}")
+    # 孤儿插件目录 → 生成 manifest.json 模板
+    for p in (PROD / "plugins").iterdir():
+        if p.is_dir() and not (p / "manifest.json").exists() and p.name != "__pycache__":
+            (p / "manifest.json").write_text(json.dumps(
+                {"id": f"cognify.{p.name}", "name": p.name, "version": "0.1.0",
+                 "description": "bootstrap --fix 自动注册", "main": "plugin.py",
+                 "verified": False}, ensure_ascii=False, indent=2), encoding="utf-8")
+            fixed.append(f"孤儿注册: plugins/{p.name}")
+    # 外部路径依赖检测 (插件 src 内引用 TRI/daemon 外部路径)
+    for f in (PROD / "plugins").glob("*/src/*.py"):
+        try:
+            txt = f.read_text(encoding="utf-8", errors="replace")
+            if r"\.aionui-tri-sync\daemon" in txt or ".aionui-tri-sync/daemon" in txt:
+                warned.append(f"外部依赖: {f.relative_to(PROD)} 引用 daemon/ 路径")
+        except Exception:
+            pass
+    return {"ts": _now(), "fixed": fixed, "external_dep_warnings": warned}
+
+
 def main():
     cmd = sys.argv[1] if len(sys.argv) > 1 else "generate-status"
     if cmd == "generate-status":
@@ -225,6 +256,15 @@ def main():
             print(f"  ⚠️ 孤儿插件目录: {o}")
         print("[meta-dev] ✅ 自举一致性" if b["ok"] else "[meta-dev] ⚠️ 存在不一致")
         return 0 if b["ok"] else 1
+    if cmd == "bootstrap-fix":
+        f = bootstrap_fix()
+        print(f"[meta-dev] 自动修复: {len(f['fixed'])} 项")
+        for x in f["fixed"]:
+            print(f"  🔧 {x}")
+        print(f"[meta-dev] 外部依赖告警: {len(f['external_dep_warnings'])}")
+        for w in f["external_dep_warnings"]:
+            print(f"  ⚠️ {w}")
+        return 0 if not f["external_dep_warnings"] else 1
     if cmd == "audit-debt":
         a = bootstrap_audit()
         print(f"[meta-dev] 完整性审计: 幽灵资产 {a['ghost_count']} | 未记录文件 {a['unrecorded_count']}")

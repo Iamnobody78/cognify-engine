@@ -159,9 +159,24 @@ def run_chain() -> dict:
     return entry
 
 
+def _classify_cause(detail: str) -> str:
+    """因果分类: 从失败详情文本打病因标签 (不再只有频率, 还有病因)。"""
+    d = detail or ""
+    if any(k in d for k in ("timeout", "超时", "Timeout")):
+        return "timeout"
+    if any(k in d for k in ("ModuleNotFound", "No module", "找不到", "missing", "缺失")):
+        return "dependency_unavailable"
+    if any(k in d for k in ("SyntaxError", "invalid", "TypeError", "ValueError", "错误")):
+        return "input_malformed"
+    if any(k in d for k in ("denied", "拒绝", "Permission", "无响应", "closed")):
+        return "resource_exhausted"
+    return "logic_error"
+
+
 def analyze_failures() -> dict:
-    """路径 A/C: 失败模式分析 — 从调用历史提取失败模式, 供调用链自适应。"""
-    patterns = {"total_calls": 0, "per_module": {}, "failed_streak": {}, "trends": {}}
+    """路径 A/C: 失败模式分析 — 频率 + 因果分类 (病因标签)。"""
+    patterns = {"total_calls": 0, "per_module": {}, "failed_streak": {}, "trends": {},
+                "cause_distribution": {}}
     rows = []
     if LOG.exists():
         for line in LOG.read_text(encoding="utf-8", errors="replace").splitlines():
@@ -175,10 +190,14 @@ def analyze_failures() -> dict:
             mod = r.get("module")
             if not mod:
                 continue
-            m = patterns["per_module"].setdefault(mod, {"calls": 0, "fails": 0, "last_ts": None})
+            m = patterns["per_module"].setdefault(mod, {"calls": 0, "fails": 0, "last_ts": None,
+                                                        "causes": {}})
             m["calls"] += 1
             if not r.get("ok"):
                 m["fails"] += 1
+                cause = _classify_cause(r.get("detail", ""))
+                m["causes"][cause] = m["causes"].get(cause, 0) + 1
+                patterns["cause_distribution"][cause] = patterns["cause_distribution"].get(cause, 0) + 1
             m["last_ts"] = e.get("ts")
     # 连续失败 streak (按最近 N 条)
     for mod in patterns["per_module"]:
@@ -190,14 +209,19 @@ def analyze_failures() -> dict:
             elif r:
                 break
         patterns["failed_streak"][mod] = streak
-    # 建议 (数据驱动)
+    # 建议 (数据驱动: 频率 + 病因)
     patterns["recommendations"] = []
     for mod, m in patterns["per_module"].items():
         rate = m["fails"] / m["calls"] if m["calls"] else 0
         if m["fails"] > 0:
+            top_cause = max(m["causes"], key=m["causes"].get) if m["causes"] else "unknown"
+            action = "降权/跳过" if patterns["failed_streak"][mod] >= 3 else "关注"
+            fix_hint = {"timeout": "提高超时阈值", "input_malformed": "修正输入格式/解析",
+                        "dependency_unavailable": "安装/恢复依赖", "logic_error": "审查调用逻辑",
+                        "resource_exhausted": "释放资源/权限", "unknown": "人工审查"}.get(top_cause, "人工审查")
             patterns["recommendations"].append(
                 {"module": mod, "fail_rate": round(rate, 2), "streak": patterns["failed_streak"][mod],
-                 "action": "降权/跳过" if patterns["failed_streak"][mod] >= 3 else "关注"})
+                 "top_cause": top_cause, "fix_hint": fix_hint, "action": action})
     (MC / "failure_patterns.json").write_text(
         json.dumps(patterns, ensure_ascii=False, indent=2), encoding="utf-8")
     return patterns
