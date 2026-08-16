@@ -99,17 +99,22 @@ def scan_evidence() -> dict:
     d_ok = len(docs_rows) >= 1
     # 5) 新功能上线
     n_ok = len(feat_rows) >= 1
+    # 6) 元调用链认证 (META-CALL-FORCE: 部署了≠用上了, 认证失败=证据缺口)
+    cert = _json(TRI / "meta-call/certification_report.json", None)
+    m_ok = bool(cert and cert.get("certified"))
     checks = [
         {"item": "新 commit", "ok": c_ok, "detail": f"{len(rows)} 个提交"},
         {"item": "测试通过率", "ok": t_ok, "detail": f"{test_rate}%" if test_rate is not None else "无证据"},
         {"item": "性能改进", "ok": p_ok, "detail": f"{perf_delta:+.1f}" if perf_delta is not None else "首日无对比"},
         {"item": "文档更新", "ok": d_ok, "detail": f"{len(docs_rows)} 处"},
         {"item": "新功能", "ok": n_ok, "detail": f"{len(feat_rows)} 个 feat"},
+        {"item": "元调用链认证", "ok": m_ok,
+         "detail": f"{cert.get('ts', '无')[:16]} {'✅ CERTIFIED' if m_ok else '❌ 未认证'}"},
     ]
     passed_n = sum(1 for c in checks if c["ok"])
     return {"ts": _now(), "since": since, "checks": checks, "passed": passed_n,
             "total": len(checks), "commits": [r.split("|", 1)[0] for r in rows],
-            "gate": passed_n >= 3, "force_required": passed_n < 3}
+            "gate": passed_n >= 4, "force_required": passed_n < 4}
 
 
 def evidence_report() -> dict:

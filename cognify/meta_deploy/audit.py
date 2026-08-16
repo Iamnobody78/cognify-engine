@@ -135,6 +135,40 @@ def audit() -> dict:
     return report
 
 
+def assess_plugins(names: list) -> list:
+    """插件互补性评估: 关键词重叠检测 → complementary/deprecated 决策。"""
+    # 现有引擎能力关键词表
+    existing = {
+        "memory": ["记忆", "memory", "ledger", "recall", "知识", "knowledge", "remember"],
+        "skill": ["skill", "技能", "工作流", "workflow", "蒸馏", "distill", "learn"],
+        "evolve": ["evolve", "进化", "版本", "rollback", "回滚", "version", "audit"],
+        "thinking": ["思考", "think", "推理", "reason", "reflection", "反思"],
+        "sync": ["同步", "sync", "镜像", "mirror"],
+    }
+    out = []
+    for name in names:
+        d = TRI / "benchmarks" / name
+        text = ""
+        for f in ("README.md", "package.json", "cordis.patch.yml", "src/index.ts"):
+            p = d / f
+            if p.exists():
+                try:
+                    text += p.read_text(encoding="utf-8", errors="replace")[:8000].lower()
+                except Exception:
+                    pass
+        scores = {}
+        for cap, kws in existing.items():
+            scores[cap] = sum(1 for k in kws if k.lower() in text)
+        max_cap = max(scores, key=scores.get) if any(scores.values()) else None
+        overlap = scores[max_cap] if max_cap else 0
+        verdict = "deprecated" if overlap >= 4 else ("complementary" if max_cap else "unknown")
+        out.append({"plugin": name, "overlap_scores": scores, "max_cap": max_cap,
+                    "overlap": overlap, "verdict": verdict,
+                    "decision": f"功能与现有 {max_cap} 引擎重叠 ({overlap} 词)" if verdict == "deprecated"
+                                else ("提供补位能力" if verdict == "complementary" else "需人工审查")})
+    return out
+
+
 def main():
     cmd = sys.argv[1] if len(sys.argv) > 1 else "audit"
     if cmd == "audit":
@@ -147,6 +181,23 @@ def main():
             if m["source_note"] and "❌" in m["source_note"]:
                 print(f"      {m['source_note']}")
         print(f"[meta-deploy] → {OUT}")
+        return 0
+    if cmd == "assess":
+        args = sys.argv[2:]
+        names = []
+        if args and args[0] == "--plugins":
+            names = [a for a in args[1:] if a]
+        if not names:
+            print("用法: meta-deploy assess --plugins <dir1,dir2,...>")
+            return 1
+        results = assess_plugins(names)
+        print("[meta-deploy] 插件互补性评估:")
+        for r in results:
+            tag = "✅ 部署候选" if r["verdict"] == "complementary" else ("⛔ 重叠弃用" if r["verdict"] == "deprecated" else "❓ 需人工")
+            print(f"  {tag} {r['plugin']}: {r['decision']} (top: {r['max_cap']} 重叠 {r['overlap']} 词)")
+        (Path(r"C:\Users\ivy\.aionui-tri-sync\meta-deploy\plugin_assessment.json")).write_text(
+            json.dumps({"ts": time.strftime("%Y-%m-%dT%H:%M:%S"), "results": results},
+                       ensure_ascii=False, indent=2), encoding="utf-8")
         return 0
     if cmd == "status":
         import json as j
