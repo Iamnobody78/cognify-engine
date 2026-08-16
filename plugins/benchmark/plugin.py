@@ -9,6 +9,7 @@ Benchmark Controller 插件 (cognify.benchmark)
 本插件为仓库自包含快照, 提供同构接口 (不启动第二份写者)。
 """
 import subprocess
+import os
 import sys
 from pathlib import Path
 from typing import Any, Dict
@@ -17,7 +18,7 @@ from core.plugin_base import Plugin as BasePlugin
 
 HERE = Path(__file__).resolve().parent
 SNAPSHOT = HERE / "benchmark.py"
-PY = r"C:\Users\ivy\AppData\Local\Programs\Python\Python312\python.exe"
+PY = os.environ.get("COGNIFY_PY", r"C:\Users\ivy\AppData\Local\Programs\Python\Python312\python.exe")
 
 
 class Plugin(BasePlugin):

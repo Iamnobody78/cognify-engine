@@ -5,6 +5,7 @@ Debt Engine 插件 (cognify.debt)
 内容: debt_engine/debt_miner/debt_library.yaml 冻结快照 (src/, VENDORED.md)。
 职责: 债务挖掘 / YAML 驱动偿还 / 验证报告。
 """
+import os
 import json
 from pathlib import Path
 from typing import Any, Dict
@@ -13,7 +14,7 @@ from core.plugin_base import Plugin as BasePlugin
 
 HERE = Path(__file__).resolve().parent
 SNAP = HERE / "src"
-TRI = Path(r"C:\Users\ivy\.aionui-tri-sync")
+TRI = Path(os.environ.get("COGNIFY_TRI", r"C:\Users\ivy\.aionui-tri-sync"))
 
 
 class Plugin(BasePlugin):

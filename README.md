@@ -1,5 +1,8 @@
 ﻿# Cognify Engine
 
+![CI](https://github.com/Iamnobody78/cognify-engine/actions/workflows/ci.yml/badge.svg)
+
+
 **认知操作产品 (插件平台 v2.0)**: 融合元模型控制工程 (MMCE)、价值控制工程 (VCE)、
 认知演化工程 (CEE) 的 AI 代理治理与认知操作系统。
 
@@ -42,3 +45,4 @@ python cli/cognify.py serve --port 8080   # 认知服务 API (P0)
 ## 文档
 
 - STATUS.md (运行状态) / manifest.json (资产清单) / demo/DEMO.md (演示)
+

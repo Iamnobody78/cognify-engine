@@ -10,6 +10,7 @@ Self-Validate Iterate 插件 (cognify.self_validate)
 本插件为仓库自包含入口 (不启动第二份写者)。
 """
 import subprocess
+import os
 import sys
 from pathlib import Path
 from typing import Any, Dict
@@ -18,7 +19,7 @@ from core.plugin_base import Plugin as BasePlugin
 
 HERE = Path(__file__).resolve().parent
 PROD = HERE.parents[1]  # cognify-engine 仓库根
-PY = r"C:\Users\ivy\AppData\Local\Programs\Python\Python312\python.exe"
+PY = os.environ.get("COGNIFY_PY", r"C:\Users\ivy\AppData\Local\Programs\Python\Python312\python.exe")
 SV_ENGINE = PROD / "cognify" / "self_validate" / "engine.py"
 IT_ENGINE = PROD / "cognify" / "iterate" / "report.py"
 

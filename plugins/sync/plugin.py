@@ -6,6 +6,7 @@ Tri-Sync Daemon 插件 (cognify.sync)
 职责: 三方同步守护管理。活守护运行于规范安装 (~/.aionui-tri-sync),
       本插件为快照 + 状态委派 (不启动第二份守护 — 防双写漂移)。
 """
+import os
 import json
 import subprocess
 from pathlib import Path
@@ -15,8 +16,8 @@ from core.plugin_base import Plugin as BasePlugin
 
 HERE = Path(__file__).resolve().parent
 SNAP = HERE / "src"
-TRI = Path(r"C:\Users\ivy\.aionui-tri-sync")
-PY = r"C:\Users\ivy\AppData\Local\Programs\Python\Python312\python.exe"
+TRI = Path(os.environ.get("COGNIFY_TRI", r"C:\Users\ivy\.aionui-tri-sync"))
+PY = os.environ.get("COGNIFY_PY", r"C:\Users\ivy\AppData\Local\Programs\Python\Python312\python.exe")
 
 
 class Plugin(BasePlugin):

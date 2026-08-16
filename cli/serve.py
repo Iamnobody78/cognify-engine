@@ -12,6 +12,7 @@ serve.py — cognify serve: 认知服务 API + 治理网关 (PRODUCT-ROADMAP P0/
 
 运行: python cli/serve.py [--port 8080]
 """
+import os
 import json
 import sys
 from pathlib import Path
@@ -21,7 +22,7 @@ try:
 except (AttributeError, ValueError):
     pass
 
-TRI = Path(r"C:\Users\ivy\.aionui-tri-sync")
+TRI = Path(os.environ.get("COGNIFY_TRI", r"C:\Users\ivy\.aionui-tri-sync"))
 PROD = Path(r"C:\Users\ivy\AppData\Roaming\AionUi\aionui\conversations\2026\07\27\aionrs-temp-48324704\cognify-engine")
 GOV_REPO = PROD / "plugins/governance/src"
 sys.path.insert(0, str(TRI / "daemon"))

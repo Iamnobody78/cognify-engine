@@ -17,7 +17,7 @@ from core.plugin_base import Plugin as BasePlugin
 
 HERE = Path(__file__).resolve().parent
 PROD = HERE.parents[1]
-PY = r"C:\Users\ivy\AppData\Local\Programs\Python\Python312\python.exe"
+PY = os.environ.get("COGNIFY_PY", r"C:\Users\ivy\AppData\Local\Programs\Python\Python312\python.exe")
 ENGINE = PROD / "cognify" / "evolve" / "engine.py"
 
 

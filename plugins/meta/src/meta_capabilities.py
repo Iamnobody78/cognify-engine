@@ -26,6 +26,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 from trisync_paths import WS, TRI, HOME  # noqa: E402
 
 META = TRI / "meta"
+EXEC_DIR = TRI / "meta-exec"
 
 # ---------------------------------------------------------------- 16 维映射
 # (维度, 层, 真实组件证据, 状态判定函数)
@@ -45,7 +46,8 @@ CAPS = [
     ("元理论", "逻辑语言", "META-ARCHITECT 导出 (理论栈=协议栈 42 条)",
      lambda: (TRI / "architecture_export/ARCHITECTURE.md").exists()),
     ("元哲学", "逻辑语言", "BOUNDARY.md 代理宣言 + HONEST-BOUNDARY 协议",
-     lambda: (WS / "bottlesumo_pi/governance/anchors/BOUNDARY.md").exists()),
+     lambda: (WS / "bottlesumo_pi/governance/boundary/BOUNDARY.md").exists()
+     or (WS / "bottlesumo_pi/governance/anchors/BOUNDARY.md").exists()),
     ("元伦理", "行为伦理", "CONTEXT-GOVERN 行为规则 8 条 + 红线库",
      lambda: (TRI / "context/behavior_rules.yaml").exists()),
     ("元审视", "行为伦理", "honesty_guard scan + meta_cognition.audit",
@@ -82,6 +84,17 @@ CAPS = [
      lambda: (META / "decision/decision_rules.yaml").exists()),
     ("元学习决策", "元决策层", "decision_history.jsonl (用户纠正学习)",
      lambda: (META / "decision/decision_history.jsonl").exists()),
+    # ---- M26-M30 元执行层 (META-EXECUTOR) ----
+    ("元执行监督", "元执行层", "META-EXECUTOR pre_exec_hook (E.X.E.C.U.T.E. 七步法)",
+     lambda: (TRI / "daemon/meta_executor.py").exists()),
+    ("元解耦执行", "元执行层", "原子单元拆解 + 独立子进程执行 (execution_units.json)",
+     lambda: (EXEC_DIR / "execution_units.json").exists()),
+    ("元自举恢复", "元执行层", "健康检查 + 崩溃恢复 (bootstrap_report.json)",
+     lambda: (EXEC_DIR / "bootstrap_report.json").exists()),
+    ("元执行审计", "元执行层", "全执行审计 (execution_audit_log.jsonl)",
+     lambda: (EXEC_DIR / "execution_audit_log.jsonl").exists()),
+    ("元执行回滚", "元执行层", "失败回滚记录 (rollback_log.jsonl)",
+     lambda: (EXEC_DIR / "rollback_log.jsonl").exists()),
 ]
 
 

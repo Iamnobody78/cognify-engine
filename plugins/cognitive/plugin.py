@@ -7,6 +7,7 @@ Cognitive Engine 插件 (cognify.cognitive)
 运行模式: 默认委托规范安装 (~/.aionui-tri-sync/daemon) 的活引擎;
           规范安装缺失时使用本插件快照 (只读自检)。
 """
+import os
 import json
 import subprocess
 from pathlib import Path
@@ -16,8 +17,8 @@ from core.plugin_base import Plugin as BasePlugin
 
 HERE = Path(__file__).resolve().parent
 SNAP = HERE / "src"
-TRI = Path(r"C:\Users\ivy\.aionui-tri-sync")
-PY = r"C:\Users\ivy\AppData\Local\Programs\Python\Python312\python.exe"
+TRI = Path(os.environ.get("COGNIFY_TRI", r"C:\Users\ivy\.aionui-tri-sync"))
+PY = os.environ.get("COGNIFY_PY", r"C:\Users\ivy\AppData\Local\Programs\Python\Python312\python.exe")
 
 
 class Plugin(BasePlugin):

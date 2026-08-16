@@ -5,6 +5,7 @@ Meta Capability Suite 插件 (cognify.meta)
 内容: meta_capabilities/meta_cognition/meta_decision/meta_architect 冻结快照 (src/, VENDORED.md)。
 职责: 25 维元能力自检 / 元认知评估 / 元决策规则 / 能力演进。
 """
+import os
 import json
 import subprocess
 from pathlib import Path
@@ -14,8 +15,8 @@ from core.plugin_base import Plugin as BasePlugin
 
 HERE = Path(__file__).resolve().parent
 SNAP = HERE / "src"
-TRI = Path(r"C:\Users\ivy\.aionui-tri-sync")
-PY = r"C:\Users\ivy\AppData\Local\Programs\Python\Python312\python.exe"
+TRI = Path(os.environ.get("COGNIFY_TRI", r"C:\Users\ivy\.aionui-tri-sync"))
+PY = os.environ.get("COGNIFY_PY", r"C:\Users\ivy\AppData\Local\Programs\Python\Python312\python.exe")
 
 
 class Plugin(BasePlugin):
