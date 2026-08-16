@@ -1,0 +1,31 @@
+# Cognify Engine — 一键部署 (docker-compose)
+
+version: "3.8"
+
+services:
+  cognify-api:
+    build: .
+    image: cognify/engine:2.1.0
+    ports:
+      - "8080:8080"
+    environment:
+      - COGNIFY_MODE=production
+      - MCP_ENABLED=true
+      - META_ENABLED=true
+    volumes:
+      - ./config:/app/config
+      - ./data:/app/data
+    healthcheck:
+      test: ["CMD", "python", "cli/cognify.py", "serve", "--health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  cognify-dashboard:
+    image: cognify/dashboard:latest
+    ports:
+      - "3000:3000"
+    depends_on:
+      - cognify-api
+    profiles: ["dashboard"]

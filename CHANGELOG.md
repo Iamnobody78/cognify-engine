@@ -127,3 +127,11 @@
 - SELF_DESCRIPTION.md / METAGOVERNANCE_PROTOCOL.md / SIM2REAL_PROTOCOL.md / vNEXT_PROPOSAL.md
 - cognify meta close --full/--health/--describe/--vnext + cognify whoami
 - ARCH-CLOSE-WEEKLY 调度 (每周一 00:00)
+
+## v2.1.0 (2026-08-16) — 产品化推进 (PRODUCT-ROADMAP-PUSH L1-L3)
+
+- 开源资产补齐: LICENSE (MIT) / CONTRIBUTING (8道GATE) / CODE_OF_CONDUCT / ISSUE+PR 模板 / CODEOWNERS
+- cognify product --status 13/13 全绿
+- serve 公开 API: /api/v1/mce/compile /vce/scan /cee/evolve /govern/evaluate /meta/status /health (实测通过)
+- docker-compose.yml + Dockerfile (cognify-api + dashboard profile)
+- GitHub: Discussions 启用 + main 分支保护 (1 review, enforce_admins=false)

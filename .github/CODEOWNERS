@@ -1,0 +1,17 @@
+# CODEOWNERS — 模块维护者
+
+# 核心
+/cli/          @Iamnobody78
+/core/         @Iamnobody78
+/plugins/      @Iamnobody78
+
+# 认知与治理
+/plugins/governance/  @Iamnobody78
+/plugins/cognitive/   @Iamnobody78
+
+# 文档
+/docs/         @Iamnobody78
+README.md      @Iamnobody78
+
+# 工程
+/.github/      @Iamnobody78

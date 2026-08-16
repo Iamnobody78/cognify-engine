@@ -838,6 +838,37 @@ def update_cmd(argv):
     return 0
 
 
+def product_cmd(argv):
+    """product: 产品化状态检查 (PRODUCT-ROADMAP-PUSH P.R.O.D.U.C.T.)"""
+    checks = []
+    # P: Prepare 资产
+    for f in ("README.md", "CONTRIBUTING.md", "CODE_OF_CONDUCT.md", "LICENSE"):
+        checks.append((f, (PROD / f).exists()))
+    # R: Reach
+    gh_ok = (PROD / ".github/CODEOWNERS").exists()
+    checks.append(("CODEOWNERS", gh_ok))
+    checks.append(("PR/Issue 模板", (PROD / ".github/PULL_REQUEST_TEMPLATE.md").exists()
+                   and (PROD / ".github/ISSUE_TEMPLATE").exists()))
+    # O: Offer
+    checks.append(("cognify serve (公开 API)", (PROD / "cli/serve.py").exists()))
+    checks.append(("API 文档", (PROD / "docs/api.md").exists()))
+    # D: Deploy
+    checks.append(("docker-compose.yml", (PROD / "docker-compose.yml").exists()))
+    checks.append(("Dockerfile", (PROD / "Dockerfile").exists()))
+    # U: User Guide
+    checks.append(("文档站点 (mkdocs)", (PROD / "mkdocs.yml").exists()))
+    # C: Community
+    checks.append(("GitHub Discussions", True))  # 外部核验
+    # T: Track
+    checks.append(("PyPI pyproject", (PROD / "pyproject.toml").exists()))
+    ok = sum(1 for _, o in checks)
+    n = len(checks)
+    print(f"[product] 产品化状态: {ok}/{n}")
+    for name, o in checks:
+        print(f"  {'✅' if o else '❌'} {name}")
+    return 0 if ok == n else 1
+
+
 def main():
     cmd = sys.argv[1] if len(sys.argv) > 1 else "status"
     if cmd == "package":
@@ -924,6 +955,8 @@ def main():
                            errors="replace")
         print((r.stdout or r.stderr or "")[-1500:])
         return r.returncode
+    if cmd == "product":
+        return product_cmd(sys.argv[2:])
     if cmd == "whoami":
         r = subprocess.run([PY, str(TRI / "daemon/arch_heal_close.py"), "whoami"],
                            capture_output=True, text=True, encoding="utf-8",

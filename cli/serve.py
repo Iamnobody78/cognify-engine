@@ -116,6 +116,41 @@ async def governance_evaluate(req: Request):
         return JSONResponse({"error": str(exc)}, status_code=500)
 
 
+# ---- 产品化公开 API (PRODUCT-ROADMAP-PUSH L3) ----
+@app.post("/api/v1/mce/compile")
+async def api_mce(req: Request):
+    return await mce(req)
+
+
+@app.post("/api/v1/vce/scan")
+async def api_vce(req: Request):
+    return await vce(req)
+
+
+@app.post("/api/v1/cee/evolve")
+async def api_cee(req: Request):
+    return await cee(req)
+
+
+@app.post("/api/v1/govern/evaluate")
+async def api_govern(req: Request):
+    return await governance_evaluate(req)
+
+
+@app.get("/api/v1/meta/status")
+def api_meta_status():
+    try:
+        st = json.loads((TRI / "meta/status.json").read_text(encoding="utf-8"))
+        return {"active": st.get("active_count"), "health": st.get("overall_health")}
+    except Exception:  # noqa: BLE001
+        return {"error": "meta/status.json 不可用"}
+
+
+@app.get("/api/v1/health")
+def api_health():
+    return health()
+
+
 def main():
     port = 8080
     args = sys.argv[1:]
