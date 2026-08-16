@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cognify-engine"
-version = "2.2.3"
+version = "2.3.5"
 description = "认知操作产品 — AI 代理治理与认知操作系统 (插件平台 PLUGINIFY v1.0)"
 readme = "README.md"
 requires-python = ">=3.10"
