@@ -29,9 +29,10 @@ jobs:
       - name: Publish to PyPI
         # 首次发布 (项目不存在): PyPI 拒绝 OIDC 创建新项目 ("Non-user identities cannot create new projects")
         # → 使用 Token 路径; 项目存在后可切回 OIDC (pypa/gh-action-pypi-publish@release/v1 无 env)
+        # Secret 名兼容: PYPI_API_TOKEN 或 PYPI
         env:
           TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN || secrets.PYPI }}
         run: pip install twine && twine upload dist/*
 
   github-release:
