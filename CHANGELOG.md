@@ -91,3 +91,10 @@
 - 元知识/元数学/元类别 21 项 (MKG/memento/plexus/sagemath/axiom/open-ontologies/OAK/EBi-OLS...)
 - npm 18 + pypi 7 核查; 未验证项 registry-only 待 SDK 验证
 - 部署追踪门禁全 PASS: 覆盖率 100% 健康度 100% (14 ready 全 connected)
+
+## v2.1.0 (2026-08-16) — 元自动化/元CICD/元领域 + 论文基准矩阵 (注册表 269 项)
+
+- 元自动化/元CICD 12 项 (meta-automation-architect/mcp-tools-orchestrator/loopsense/cicd-orchestrator/circleci/jenkins/woodpecker...)
+- 元CV/ML/DL/具身/ME/EE/AI 12 项 (cv-mcp/hf-cv-server/cadquery/pcbparts/meta-prompt-mcp/rosbag...)
+- 论文/源码/基准支撑矩阵 → docs/adaptation/meta_mcp_matrix.md (MR-Ben/Reflection-Bench 等 7 基准)
+- 门禁全 PASS (14 ready 100% healthy)

@@ -1381,3 +1381,123 @@ servers:
   domain: 元类别
   status: pending-app
   note: Apache Atlas 数据目录; 需实例
+- id: meta-automation-architect
+  name: Meta Automation Architect
+  domain: 元自动化
+  status: registry-only
+  note: 自动设计子代理自动化系统; skill 形态 (github comzine/claude-code-marketplace)
+- id: mcp-tools-orchestrator
+  name: MCP Tools Orchestrator
+  domain: 元自动化
+  status: registry-only
+  note: 代码即策略多服务器编排; 来源待确认
+- id: n8n-meta-agent-ts
+  name: n8n Meta Agent TS
+  domain: 元自动化
+  status: pending-app
+  note: 需 n8n; npm @rogu3bear/n8n-meta-agent 未发布
+- id: loopsense
+  name: LoopSense
+  domain: 元自动化
+  status: registry-only
+  note: CI/部署/文件变更闭环反馈; npm @loopsense/mcp 0.1.5 存在, 待 SDK 验证
+- id: mcp-cicd-orchestrator
+  name: CICD Orchestrator
+  domain: 元CICD
+  status: pending-key
+  note: GitHub Actions/GitLab/CircleCI/Jenkins 统一; npm 0.1.0 存在+需多平台 token
+- id: circleci-mcp
+  name: CircleCI MCP
+  domain: 元CICD
+  status: pending-key
+  note: npm @circleci/mcp-server-circleci 0.20.0 存在+需 CIRCLECI_TOKEN
+- id: mcparmory-circleci
+  name: McParmory CircleCI
+  domain: 元CICD
+  status: pending-key
+  note: 106 工具流水线指标; 需 CircleCI token
+- id: devops-agent-kit
+  name: DevOps Agent Kit
+  domain: 元CICD
+  status: registry-only
+  note: 7 技能流水线可见性/发布就绪; git 形态 (cloudbees-oss)
+- id: multi-env-mcp
+  name: Multi-Environment MCP
+  domain: 元CICD
+  status: pending-app
+  note: Docker/SSH/K8s 统一管理; git 形态
+- id: mcp-server-environments
+  name: Environments MCP
+  domain: 元CICD
+  status: pending-app
+  note: 本地/预发布/生产环境控制; 来源待确认
+- id: jenkins-mcp
+  name: Jenkins MCP
+  domain: 元CICD
+  status: pending-key
+  note: Jenkins 完全访问; npm 0.2.1/pypi 0.1.1 存在+需 Jenkins
+- id: woodpecker-mcp
+  name: Woodpecker MCP
+  domain: 元CICD
+  status: pending-key
+  note: Woodpecker CI; pypi 0.2.0 存在+需 token
+- id: cv-mcp
+  name: CV MCP
+  domain: 元CV
+  status: pending-key
+  note: OpenRouter 图像识别; 需 OPENROUTER_API_KEY
+- id: hf-cv-server
+  name: HF CV Server
+  domain: 元CV
+  status: pending-key
+  note: 实时摄像头场景分析; 需 HF_TOKEN
+- id: cv-tools-mcp
+  name: CV Tools MCP
+  domain: 元CV
+  status: registry-only
+  note: OCR+图像生成+迭代验证; git 形态
+- id: mcp-server-api
+  name: MCP Server API
+  domain: 元ML
+  status: registry-only
+  note: JSON-LD ML 服务元数据; 来源待确认
+- id: lobehub-meta-mcp
+  name: LobeHub Meta MCP
+  domain: 元DL
+  status: pending-app
+  note: 智能工具路由; 需 Qdrant
+- id: metaads-mcp
+  name: MetaAds MCP
+  domain: 元DL
+  status: pending-key
+  note: Meta Ads 数据; 需广告凭据
+- id: rosbag-mcp
+  name: ROSBag MCP
+  domain: 元具身
+  status: pending-app
+  note: ROS/ROS2 bag 自然语言分析; git 形态
+- id: cadquery-mcp
+  name: CadQuery MCP
+  domain: 元ME
+  status: registry-only
+  note: 80+ 操作 AI CAD; pypi 0.1.0 存在, 待 SDK 验证
+- id: cognitive-design-systems
+  name: Cognitive Design Systems
+  domain: 元ME
+  status: registry-only
+  note: 机械零件全自主优化; 本地部署
+- id: pcbparts-mcp
+  name: PCB Parts MCP
+  domain: 元EE
+  status: registry-only
+  note: 150 万+ 元件搜索免 key; 远程 HTTP https://pcbparts.dev/mcp
+- id: polymath-mcp
+  name: Polymath MCP
+  domain: 元EE
+  status: registry-only
+  note: 17 数据源工程研究聚合; 来源待确认
+- id: ai-meta-mcp-server
+  name: AI Meta MCP Server
+  domain: 元AI
+  status: registry-only
+  note: 动态元函数架构; git 形态
