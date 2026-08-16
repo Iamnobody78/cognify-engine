@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 META-ENGINEER v3.0 — 16 维元能力运行时引擎
@@ -12,6 +12,7 @@ META-ENGINEER v3.0 — 16 维元能力运行时引擎
   evolve    — 元进化提案 (从 debt_tasks 待解决生成)
 自举原则: 每条映射必须有真实文件/端口证据, design 状态诚实标注。
 """
+import os
 import json
 import sys
 from datetime import datetime
@@ -541,3 +542,4 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
+

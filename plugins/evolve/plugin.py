@@ -9,6 +9,7 @@ Organize (分类+评分) → Log (审计 jsonl 只追加) → Validate (双轨�
 活引擎运行于规范安装 (daemon/evolve.py 转发, EVOLVE-DAILY 每日 23:30);
 本插件为仓库自包含入口。
 """
+import os
 import subprocess
 from pathlib import Path
 from typing import Any, Dict
