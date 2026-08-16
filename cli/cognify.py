@@ -141,16 +141,28 @@ def cert():
         closure_ok = json.loads(cl.read_text(encoding="utf-8"))["closure_rate"] >= 0.9
     checks.append(("元闭环率 ≥90%", closure_ok, ""))
     # 3. 治理拦截 (AST 守卫测试证据 — 动态读取实际通过数, 元规则③自检)
-    ev = TRI / "debt/pytest_full_20260815.txt"
-    gov_ok = (PROD / "plugins/governance/src/conftest.py").exists() and ev.exists()
+    # A2 内容化 (三期 N2): glob 最新证据 + 正则不匹配/含 failed → pass=false + detail 说明
+    ev = None
+    cands = sorted(TRI.glob("debt/pytest_full_*.txt"), reverse=True)
+    if cands:
+        ev = cands[0]
+    gov_ok = (PROD / "plugins/governance/src/conftest.py").exists() and ev is not None
     detail = ""
-    if ev.exists():
+    if ev is not None:
         import re as _re
-        m = _re.search(r"(\d+) passed.*?(\d+) failed", ev.read_text(encoding="utf-8", errors="replace"))
+        txt = ev.read_text(encoding="utf-8", errors="replace")
+        m = _re.search(r"(\d+) passed", txt)
+        m_f = _re.search(r"(\d+) (?:failed|error)", txt)
         if m:
-            passed, failed = int(m.group(1)), int(m.group(2))
+            failed = int(m_f.group(1)) if m_f else 0
             gov_ok = gov_ok and failed == 0
-            detail = f"{passed} passed / {failed} failed"
+            detail = f"{m.group(1)} passed / {failed} failed ({ev.name})"
+        else:
+            gov_ok = False
+            detail = f"证据格式异常: {ev.name} 无 passed 计数"
+    else:
+        gov_ok = False
+        detail = "无 pytest 证据文件 (glob debt/pytest_full_*.txt)"
     checks.append(("治理回归证据 (0 failed)", gov_ok, detail))
     # 4. 三方同步一致性 (sessions 镜像)
     sync_ok = False

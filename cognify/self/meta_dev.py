@@ -30,6 +30,16 @@ PROD = Path(os.environ.get("COGNIFY_PROD", r"C:\Users\ivy\AppData\Roaming\AionUi
 PY = os.environ.get("COGNIFY_PY", r"C:\Users\ivy\AppData\Local\Programs\Python\Python312\python.exe")
 
 
+def _load_version() -> str:
+    """A3 版本单一源: 从 pyproject.toml 读取 (cognify/__init__.py 亦同源)。"""
+    try:
+        import tomllib
+        with open(PROD / "pyproject.toml", "rb") as fh:
+            return tomllib.load(fh).get("project", {}).get("version", "?")
+    except Exception:
+        return "?"
+
+
 def _now():
     return datetime.now().isoformat(timespec="seconds")
 
@@ -76,8 +86,7 @@ def generate_status() -> dict:
                 except Exception:
                     pass
     data = {
-        "ts": _now(), "version": _json(PROD / "pyproject.toml", {}).get("version", "?")
-        if False else "2.1.9",
+        "ts": _now(), "version": _load_version(),
         "meta_active": meta.get("active_count"), "meta_health": meta.get("overall_health"),
         "closure_rate": closure.get("closure_rate"),
         "debt": f"{debt_done}/{len(debt)}",
@@ -109,18 +118,16 @@ def generate_status() -> dict:
         f"## 插件: {data['plugins']}",
         f"## 进化: 最近整体 {data['evolve_overall']}" if data["evolve_overall"] is not None else "",
     ]
-    # 0.2 证书-文档联动: cert NOT_CERTIFIED 时 STATUS 必须渲染 (批判 C2 修复)
-    cert_state = _json(PROD / "certificate.json", {})
-    if cert_state.get("overall") == "NOT_CERTIFIED":
+    # A1 单一写者 (三期 N1): certificate.json 只由 cert() 写 — generate-status 只读不写
+    cert_state = _json(PROD / "certificate.json", None)
+    if cert_state is None:
+        lines.insert(2, "## ⚠️ 认证状态: 未运行 cert — 请先 `cognify cert` (红线: 无认证不宣称)")
+    elif cert_state.get("overall") == "NOT_CERTIFIED":
         lines.insert(2, "## ⚠️ 认证状态: NOT_CERTIFIED — 文档不得宣称 CERTIFIED (红线)")
+    else:
+        lines.insert(2, f"## 认证: {cert_state.get('overall')} | grade={cert_state.get('grade', '?')} | "
+                        f"{cert_state.get('certified_at', '?')[:16]}")
     (PROD / "STATUS.md").write_text("\n".join(l for l in lines if l), encoding="utf-8")
-    cert_out = {"ts": data["ts"], "meta_active": data["meta_active"],
-                "closure_rate": data["closure_rate"], "debt": data["debt"],
-                "call_certified": data["call_certified"],
-                "benchmark_total": data["benchmark_total"],
-                "source": "dynamic (generate-status)", "generated_by": "meta_dev.py"}
-    (PROD / "certificate.json").write_text(json.dumps(cert_out, ensure_ascii=False, indent=2),
-                                           encoding="utf-8")
     return data
 
 
@@ -312,7 +319,7 @@ def main():
         return 0 if p["ready"] else 1
     if cmd == "generate-status":
         d = generate_status()
-        print(f"[meta-dev] STATUS.md + certificate.json 已动态生成")
+        print("[meta-dev] STATUS.md 已动态生成 (certificate.json 由 cert 单一写者维护)")
         for k, v in d.items():
             print(f"  {k}: {v}")
         return 0

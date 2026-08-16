@@ -1,5 +1,6 @@
 # Cognify Engine — 产品状态 (动态生成)
-> 2026-08-16T22:06:11 | 由 `cognify generate-status` 从运行时采集, 非手工维护
+## 认证: CERTIFIED | grade=smoke | 2026-08-16T22:19
+> 2026-08-16T22:20:44 | 由 `cognify generate-status` 从运行时采集, 非手工维护
 ## 元能力: 30/30 active | health=green
 ## 元闭环(静态): 91.7% | 元闭环(运行时): 5/8 (真实消费)
 ## 债务: 13/21 已解决

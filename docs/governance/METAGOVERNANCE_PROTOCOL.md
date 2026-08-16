@@ -14,3 +14,7 @@
 - 冲突: 任务请求 vs 边界 → 边界优先 → 请示包
 - 不确定: 置信度<70% → meta_cognition 深度审查 → 仍低则请示
 - 关键动作: 转账/发文/删除 → 强制外部校验
+## 三期红线 (2026-08-16)
+- 双写者禁令: 每个产物文件仅一个写者; generate-status 禁写 certificate.json (cert() 为唯一写者)
+- 无认证不宣称: certificate.json 缺失或 NOT_CERTIFIED 时, 文档禁止宣称 CERTIFIED
+- 检测力自检: benchmark selftest 负向用例随 CI 常驻, 检测力缺陷必须修复

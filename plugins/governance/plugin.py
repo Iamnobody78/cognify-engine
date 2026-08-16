@@ -6,6 +6,11 @@ Governance Engine 插件 (cognify.governance)
 职责: 协议网关 / VCE 扫描 / 声明验证 / 治理回归测试。
 """
 import sys
+try:
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+except (AttributeError, ValueError):
+    pass
+
 from pathlib import Path
 from typing import Any, Dict
 

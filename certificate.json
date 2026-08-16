@@ -1,7 +1,7 @@
 {
   "product": "cognify-engine",
   "version": "2.2.3",
-  "certified_at": "2026-08-16T22:00:09",
+  "certified_at": "2026-08-16T22:21:13",
   "grade": "smoke",
   "checks": [
     {
@@ -17,7 +17,7 @@
     {
       "item": "治理回归证据 (0 failed)",
       "pass": true,
-      "detail": ""
+      "detail": "1038 passed / 0 failed (pytest_full_20260815.txt)"
     },
     {
       "item": "同步镜像规模 (hub/sessions >100)",

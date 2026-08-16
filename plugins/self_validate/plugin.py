@@ -12,6 +12,11 @@ Self-Validate Iterate 插件 (cognify.self_validate)
 import subprocess
 import os
 import sys
+try:
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+except (AttributeError, ValueError):
+    pass
+
 from pathlib import Path
 from typing import Any, Dict
 
