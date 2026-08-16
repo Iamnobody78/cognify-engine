@@ -18,6 +18,7 @@ jobs:
         run: pip install pytest pyyaml
       - name: Run plugin core tests
         run: python -m pytest tests/ -q
-      - name: Plugin lifecycle smoke
+      - name: Benchmark selftest (负向用例)\n        run: python cli/cognify.py benchmark selftest\n      - name: Plugin lifecycle smoke
         run: python scripts/ci_smoke.py
+
 
