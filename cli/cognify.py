@@ -32,6 +32,7 @@ import json
 import subprocess
 import sys
 from datetime import datetime
+import os
 from pathlib import Path
 
 try:
@@ -39,10 +40,12 @@ try:
 except (AttributeError, ValueError):
     pass
 
-TRI = Path(r"C:\Users\ivy\.aionui-tri-sync")
-WS = Path(r"C:\Users\ivy\AppData\Roaming\AionUi\aionui\conversations\2026\07\27\aionrs-temp-48324704")
+# P0 整改 (元批判): 硬编码路径环境变量化 — COGNIFY_TRI/COGNIFY_WS/COGNIFY_PY
+# 默认值保持本机兼容; 换机器/换会话目录时通过环境变量覆盖即可移植。
+TRI = Path(os.environ.get("COGNIFY_TRI", r"C:\Users\ivy\.aionui-tri-sync"))
+WS = Path(os.environ.get("COGNIFY_WS", r"C:\Users\ivy\AppData\Roaming\AionUi\aionui\conversations\2026\07\27\aionrs-temp-48324704"))
 PROD = WS / "cognify-engine"
-PY = r"C:\Users\ivy\AppData\Local\Programs\Python\Python312\python.exe"
+PY = os.environ.get("COGNIFY_PY", r"C:\Users\ivy\AppData\Local\Programs\Python\Python312\python.exe")
 NOW = datetime.now()
 
 if str(PROD) not in sys.path:

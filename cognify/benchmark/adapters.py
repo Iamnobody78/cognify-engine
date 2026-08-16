@@ -9,6 +9,7 @@ adapters.py — 外部基准注册表 + 本地可执行适配器 (BENCHMARK-FULL
 外部基准 (Ecosystem 2026-08 清单, 集成阶段 1-5):
   阶段1 框架选型 / 阶段2 工具链 / 阶段3 特定能力 / 阶段4 CI/CD / 阶段5 展示
 """
+import os
 import json
 import queue
 import re
@@ -18,9 +19,9 @@ import threading
 import time
 from pathlib import Path
 
-TRI = Path(r"C:\Users\ivy\.aionui-tri-sync")
-PROD = Path(r"C:\Users\ivy\AppData\Roaming\AionUi\aionui\conversations\2026\07\27\aionrs-temp-48324704\cognify-engine")
-PY = r"C:\Users\ivy\AppData\Local\Programs\Python\Python312\python.exe"
+TRI = Path(os.environ.get("COGNIFY_TRI", r"C:\Users\ivy\.aionui-tri-sync"))
+PROD = Path(os.environ.get("COGNIFY_PROD", r"C:\Users\ivy\AppData\Roaming\AionUi\aionui\conversations\2026\07\27\aionrs-temp-48324704\cognify-engine"))
+PY = os.environ.get("COGNIFY_PY", r"C:\Users\ivy\AppData\Local\Programs\Python\Python312\python.exe")
 NODE = r"C:\Users\ivy\AppData\Local\hermes\node\node.exe"
 REPORTS = TRI / "benchmark/external"
 PREV = REPORTS / "full_report.json"

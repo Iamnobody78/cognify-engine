@@ -9,6 +9,7 @@ audit.py — DSH-SELF-RECOVER / META-DEPLOY-ALL 审计引擎 (Phase F: Find)
   python audit.py audit      # 全量审计 → meta_audit_before.json
   python audit.py status     # 简要状态
 """
+import os
 import json
 import subprocess
 import sys
@@ -20,9 +21,9 @@ try:
 except (AttributeError, ValueError):
     pass
 
-TRI = Path(r"C:\Users\ivy\.aionui-tri-sync")
+TRI = Path(os.environ.get("COGNIFY_TRI", r"C:\Users\ivy\.aionui-tri-sync"))
 DSH = Path(r"C:\Users\ivy\.dsh")
-PROD = Path(r"C:\Users\ivy\AppData\Roaming\AionUi\aionui\conversations\2026\07\27\aionrs-temp-48324704\cognify-engine")
+PROD = Path(os.environ.get("COGNIFY_PROD", r"C:\Users\ivy\AppData\Roaming\AionUi\aionui\conversations\2026\07\27\aionrs-temp-48324704\cognify-engine"))
 OUT = TRI / "meta-deploy/meta_audit_before.json"
 
 # 25+ 模块清单: 社区检索关键词 + 候选仓库 (真实探测用)

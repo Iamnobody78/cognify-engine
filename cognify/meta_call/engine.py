@@ -18,6 +18,7 @@ engine.py — META-CALL-FORCE v1.0 元能力强制调用引擎
   python engine.py status     # 认证状态 + 强制清单
   python engine.py log        # 调用日志尾部
 """
+import os
 import faulthandler
 import json
 import subprocess
@@ -33,8 +34,8 @@ try:
 except (AttributeError, ValueError):
     pass
 
-TRI = Path(r"C:\Users\ivy\.aionui-tri-sync")
-PROD = Path(r"C:\Users\ivy\AppData\Roaming\AionUi\aionui\conversations\2026\07\27\aionrs-temp-48324704\cognify-engine")
+TRI = Path(os.environ.get("COGNIFY_TRI", r"C:\Users\ivy\.aionui-tri-sync"))
+PROD = Path(os.environ.get("COGNIFY_PROD", r"C:\Users\ivy\AppData\Roaming\AionUi\aionui\conversations\2026\07\27\aionrs-temp-48324704\cognify-engine"))
 MC = TRI / "meta-call"
 LOG = MC / "call_log.jsonl"
 CERT = MC / "certification_report.json"

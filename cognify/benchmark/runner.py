@@ -13,6 +13,7 @@ runner.py — BENCHMARK-FULL-AUTO 统一基准执行器 (B.E.N.C.H.-F.U.L.L.)
 
 用法: python runner.py full|status|report
 """
+import os
 import json
 import sys
 from datetime import datetime
@@ -26,7 +27,7 @@ except (AttributeError, ValueError):
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from adapters import PREV, REPORTS, detect_external, run_local  # noqa: E402
 
-TRI = Path(r"C:\Users\ivy\.aionui-tri-sync")
+TRI = Path(os.environ.get("COGNIFY_TRI", r"C:\Users\ivy\.aionui-tri-sync"))
 FULL_MD = TRI / "benchmark/benchmark_full_report.md"
 
 

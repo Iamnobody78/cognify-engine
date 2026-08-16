@@ -20,6 +20,7 @@ E.V.O.L.V.E. 六步法:
   python engine.py force      # 触发强制进化模式
   python engine.py activate   # 创建每日调度任务
 """
+import os
 import faulthandler
 import json
 import re
@@ -35,8 +36,8 @@ try:
 except (AttributeError, ValueError):
     pass
 
-TRI = Path(r"C:\Users\ivy\.aionui-tri-sync")
-PROD = Path(r"C:\Users\ivy\AppData\Roaming\AionUi\aionui\conversations\2026\07\27\aionrs-temp-48324704\cognify-engine")
+TRI = Path(os.environ.get("COGNIFY_TRI", r"C:\Users\ivy\.aionui-tri-sync"))
+PROD = Path(os.environ.get("COGNIFY_PROD", r"C:\Users\ivy\AppData\Roaming\AionUi\aionui\conversations\2026\07\27\aionrs-temp-48324704\cognify-engine"))
 EV = TRI / "evolve"
 AUDIT = EV / "evolution_audit.jsonl"
 STATE = TRI / "state/evolve_force_mode.json"

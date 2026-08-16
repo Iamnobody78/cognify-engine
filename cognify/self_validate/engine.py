@@ -17,6 +17,7 @@ engine.py — SELF-VALIDATE-ITERATE v1.0 自使用验证引擎
   python engine.py status    # 最近结果 + 门禁状态
   python engine.py history   # 最近 12 次运行趋势
 """
+import os
 import faulthandler
 import json
 import sqlite3
@@ -32,9 +33,9 @@ try:
 except (AttributeError, ValueError):
     pass
 
-TRI = Path(r"C:\Users\ivy\.aionui-tri-sync")
-PROD = Path(r"C:\Users\ivy\AppData\Roaming\AionUi\aionui\conversations\2026\07\27\aionrs-temp-48324704\cognify-engine")
-PY = r"C:\Users\ivy\AppData\Local\Programs\Python\Python312\python.exe"
+TRI = Path(os.environ.get("COGNIFY_TRI", r"C:\Users\ivy\.aionui-tri-sync"))
+PROD = Path(os.environ.get("COGNIFY_PROD", r"C:\Users\ivy\AppData\Roaming\AionUi\aionui\conversations\2026\07\27\aionrs-temp-48324704\cognify-engine"))
+PY = os.environ.get("COGNIFY_PY", r"C:\Users\ivy\AppData\Local\Programs\Python\Python312\python.exe")
 SV = TRI / "self_validate"
 DB = SV / "self_validate.db"
 LATEST = SV / "self_validation_result.json"
