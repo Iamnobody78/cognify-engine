@@ -172,15 +172,26 @@ def cert():
             print(f"   [插件冒烟失败] {exc}")
     checks.append(("插件平台 (≥7 插件 + 生命周期冒烟)", plug_ok, f"{nplug} 插件"))
     ok = all(o for _, o, _ in checks)
+    # 2.2 认证分级: grade = existence|smoke|runtime — 由 meta-smoke 真实证据决定
+    grade = "existence"
+    ev = TRI / "meta-smoke/evidence.jsonl"
+    if ev.exists():
+        rows = [json.loads(l) for l in ev.read_text(encoding="utf-8", errors="replace").splitlines()
+                if l.strip()]
+        last6 = rows[-6:]
+        if len(last6) == 6 and all(r.get("exit") == 0 for r in last6):
+            grade = "smoke"
     cert = {"product": "cognify-engine", "version": "2.2.3",
             "certified_at": NOW.isoformat(timespec="seconds"),
+            "grade": grade,
             "checks": [{"item": n, "pass": o, "detail": d} for n, o, d in checks],
             "overall": "CERTIFIED" if ok else "NOT_CERTIFIED"}
     (PROD / "certificate.json").write_text(json.dumps(cert, ensure_ascii=False, indent=2),
                                            encoding="utf-8")
     for n, o, d in checks:
         print(f"  {'✅' if o else '❌'} {n} {d}")
-    print(f"[cert] 总体: {'✅ CERTIFIED' if ok else '❌ NOT_CERTIFIED'} → certificate.json")
+    print(f"[cert] 总体: {'✅ CERTIFIED' if ok else '❌ NOT_CERTIFIED'} | "
+          f"grade={grade} → certificate.json")
     return 0 if ok else 1
 
 
